@@ -10,7 +10,7 @@ include tox.ini
 include requirements_dev.txt
 recursive-include src/testspace_utils *
 recursive-include tests *
-recursive-exclude * __pycache__
+recursive-exclude * __pycache__to
 recursive-exclude * *.py[co]
 recursive-exclude docs/ *
 recursive-exclude .github/ *
