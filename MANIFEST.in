@@ -1,0 +1,19 @@
+include AUTHORS.rst
+include CONTRIBUTING.rst
+include CHANGELOG.rst
+include LICENSE
+include README.rst
+include setup.py
+include setup.cfg
+include pyproject.toml
+
+include tox.ini
+include requirements_dev.txt
+recursive-include src/testspace_utils *
+recursive-include tests *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+
+recursive-exclude docs/ *
+exclude .github/ *
+

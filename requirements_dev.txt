@@ -1,0 +1,5 @@
+-e .[doc,test]
+devpi-client
+twine
+watchdog
+black; python_version >= '3.6'
