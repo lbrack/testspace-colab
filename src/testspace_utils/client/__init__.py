@@ -42,7 +42,7 @@ class Binary:
     def version(self):
         if not self._version:
             output = subprocess.run(
-                f"{self._path} --version", capture_output=True, shell=True
+                f"{self._path} --version", stdout=subprocess.PIPE, shell=True
             ).stdout
             self._version = re.sub(
                 r".*version\s+", "", output.decode("utf-8").split("\n")[0]
