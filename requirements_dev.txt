@@ -1,5 +1,6 @@
 -e .[doc,test]
 devpi-client
+ipython
 twine
 watchdog
 black; python_version >= '3.6'

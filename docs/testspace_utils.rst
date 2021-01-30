@@ -1,6 +1,14 @@
 testspace\_utils package
 ========================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   testspace_utils.client
+
 Submodules
 ----------
 
@@ -12,10 +20,10 @@ testspace\_utils.cli module
    :undoc-members:
    :show-inheritance:
 
-testspace\_utils.testspace\_utils module
-----------------------------------------
+testspace\_utils.lib module
+---------------------------
 
-.. automodule:: testspace_utils.testspace_utils
+.. automodule:: testspace_utils.lib
    :members:
    :undoc-members:
    :show-inheritance:
