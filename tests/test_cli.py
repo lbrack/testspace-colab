@@ -21,7 +21,7 @@ def test_click_client():
     """Test the CLI."""
     runner = CliRunner()
 
-    result = runner.invoke(cli.client, ["push"])
+    result = runner.invoke(cli.client, ["push", "invalid"])
     assert result.exit_code == 2
 
     result = runner.invoke(cli.client, ["config"])
