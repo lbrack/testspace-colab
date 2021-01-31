@@ -4,15 +4,27 @@
 Installation
 ============
 
+Dev release
+-----------
+
+Install the devpi-client (if not already installed)
+
+.. code-block:: console
+
+    $ pip install devpi-client
+    $ devpi use https://m.devpi.net/testspace/dev
+    $ devpi install testspace-utils
 
 Stable release
 --------------
+
+**This project is not published on pypi but on** https://m.devpi.net/testspace
 
 To install testspace-utils, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install testspace_utils
+    $ pip install -i https://m.devpi.net/testspace/prod/+simple/ testspace_utils
 
 This is the preferred method to install testspace-utils, as it will always install the most recent stable release.
 
@@ -34,18 +46,12 @@ You can either clone the public repository:
 
     $ git clone git://github.com/lbrack/testspace_utils
 
-Or download the `tarball`_:
-
-.. code-block:: console
-
-    $ curl -OJL https://github.com/lbrack/testspace_utils/tarball/master
-
 Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-    $ python setup.py install
+    $ cd testspace-utils
+    $ pip install -e .
 
 
 .. _Github repo: https://github.com/lbrack/testspace_utils
-.. _tarball: https://github.com/lbrack/testspace_utils/tarball/master

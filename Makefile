@@ -48,6 +48,9 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+black: ## Runs black on the source for PEP8 compliance
+	black $(SOURCE_DIR) tests
+
 lint: ## check style with flake8
 	flake8 $(SOURCE_DIR) tests
 
@@ -84,3 +87,5 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	pip install -r requirements_dev.txt
+
+pre-commit: clean-test test lint coverage docs test-all ## Full monty before a commit

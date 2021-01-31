@@ -10,9 +10,6 @@ testspace-utils
         :target: https://testspace-utils.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-
-
-
 A set of utililities to interact with Testspace
 
 
@@ -23,7 +20,18 @@ A set of utililities to interact with Testspace
 Features
 --------
 
-* TODO
+* Contains testspace client binaries (2.5.4061)
+* Provides a CLI (ts-utils) as well as an API
+* See the `documentation`_ for more details
+* See the `user manual`_ to get started
+
+Development
+-----------
+
+Check the
+`contributing guidelines <https://m.devpi.net/testspace/dev/testspace-utils/latest/+d/contributing.html>`_
+to learn how to clone, install, develop and release this project.
+
 
 Credits
 -------
@@ -32,3 +40,5 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`documentation` : https://m.devpi.net/testspace/dev/testspace-utils/latest/+d/index.html
+.. _`user manual` : https://m.devpi.net/testspace/dev/testspace-utils/latest/+d/usage.html

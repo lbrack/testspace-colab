@@ -2,19 +2,24 @@
 
 """Tests for `testspace_utils` package."""
 
-import pytest
-
+import pkg_resources
 from click.testing import CliRunner
-import testspace_utils.client as client
-from testspace_utils import lib
 from testspace_utils import cli
+
+
+def test_click_version():
+    runner = CliRunner()
+    help_result = runner.invoke(cli.main, ["--version"])
+    assert help_result.exit_code == 0
+    assert (
+        pkg_resources.get_distribution("testspace-utils").version in help_result.output
+    )
 
 
 def test_click_help():
     runner = CliRunner()
     help_result = runner.invoke(cli.main, ["--help"])
     assert help_result.exit_code == 0
-    assert "--help  Show this message and exit." in help_result.output
 
 
 def test_click_client():

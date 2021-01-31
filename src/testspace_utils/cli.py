@@ -2,10 +2,14 @@
 import sys
 import click
 import testspace_utils.client as client_module
+import testspace_utils.lib as lib_module
+
+VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().version}"
 
 
 @click.group()
-def main():
+@click.version_option(version=VERSION)
+def main(version):
     """Console script for testspace_utils."""
     pass
 
