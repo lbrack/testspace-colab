@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-"""Tests for `testspace_utils` package."""
+"""Tests for `testspace_colab` package."""
 
 import pkg_resources
 from click.testing import CliRunner
-from testspace_utils import cli
+from testspace_colab import cli
 
 
 def test_click_version():
@@ -12,7 +12,7 @@ def test_click_version():
     help_result = runner.invoke(cli.main, ["--version"])
     assert help_result.exit_code == 0
     assert (
-        pkg_resources.get_distribution("testspace-utils").version in help_result.output
+        pkg_resources.get_distribution("testspace-colab").version in help_result.output
     )
 
 

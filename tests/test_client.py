@@ -1,6 +1,6 @@
 import pytest
 import platform
-import testspace_utils.client as client
+import testspace_colab.client as client
 
 
 @pytest.mark.parametrize("system_name", ["Linux", "Darwin", "Windows"])

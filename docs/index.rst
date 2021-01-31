@@ -1,4 +1,4 @@
-Welcome to testspace-utils's documentation!
+Welcome to testspace-colab's documentation!
 ===========================================
 
 .. toctree::

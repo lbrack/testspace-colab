@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=testspace_utils
+set SPHINXPROJ=testspace_colab
 
 if "%1" == "" goto help
 

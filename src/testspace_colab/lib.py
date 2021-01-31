@@ -15,4 +15,4 @@ class API:
     @staticmethod
     def get_version():
         """Return the distribution version"""
-        return pkg_resources.get_distribution("testspace-utils").version
+        return pkg_resources.get_distribution("testspace-colab").version

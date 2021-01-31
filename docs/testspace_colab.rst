@@ -1,4 +1,4 @@
-testspace\_utils package
+testspace\_colab package
 ========================
 
 Subpackages
@@ -7,23 +7,23 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   testspace_utils.client
+   testspace_colab.client
 
 Submodules
 ----------
 
-testspace\_utils.cli module
+testspace\_colab.cli module
 ---------------------------
 
-.. automodule:: testspace_utils.cli
+.. automodule:: testspace_colab.cli
    :members:
    :undoc-members:
    :show-inheritance:
 
-testspace\_utils.lib module
+testspace\_colab.lib module
 ---------------------------
 
-.. automodule:: testspace_utils.lib
+.. automodule:: testspace_colab.lib
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ testspace\_utils.lib module
 Module contents
 ---------------
 
-.. automodule:: testspace_utils
+.. automodule:: testspace_colab
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,4 +1,4 @@
-"""Top-level package for testspace-utils."""
+"""Top-level package for testspace-colab."""
 
 __author__ = """Laurent Brack"""
 __email__ = "laurent.brack@gmail.com"

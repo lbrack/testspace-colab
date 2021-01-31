@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = testspace_utils
+SPHINXPROJ    = testspace_colab
 SOURCEDIR     = .
 BUILDDIR      = _build
 

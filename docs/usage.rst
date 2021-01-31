@@ -12,7 +12,7 @@ Testspace. Those sub-commands leverage the API described below.
     (testspace)⚡ ⇒  ts-utils --help
     Usage: ts-utils [OPTIONS] COMMAND [ARGS]...
 
-      Console script for testspace_utils.
+      Console script for testspace_colab.
 
     Options:
       --help  Show this message and exit.
@@ -44,18 +44,18 @@ command line .e.g.
 API
 ***
 
-There are three sub-modules under :py:mod:`testspace_utils`:
+There are three sub-modules under :py:mod:`testspace_colab`:
 
-    * :py:mod:`testspace_utils.lib` which provides the
-      :py:class:`API <testspace_utils.lib.API>` class
-    * :py:mod:`testspace_utils.client` providing the
-      :py:class:`Binary <testspace_utils.client.Binary>` to invoke
+    * :py:mod:`testspace_colab.lib` which provides the
+      :py:class:`API <testspace_colab.lib.API>` class
+    * :py:mod:`testspace_colab.client` providing the
+      :py:class:`Binary <testspace_colab.client.Binary>` to invoke
       the native client.
-    * :py:mod:`testspace_utils.cli` providing the aformentioned CLI
+    * :py:mod:`testspace_colab.cli` providing the aformentioned CLI
       implementation
 
 .. todo:: To be documented when we have something meaningful.
 
-To use testspace-utils in a project::
+To use testspace-colab in a project::
 
-    import testspace_utils
+    import testspace_colab

@@ -1,8 +1,8 @@
-"""Console script for testspace_utils."""
+"""Console script for testspace_colab."""
 import sys
 import click
-import testspace_utils.client as client_module
-import testspace_utils.lib as lib_module
+import testspace_colab.client as client_module
+import testspace_colab.lib as lib_module
 
 VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().version}"
 
@@ -10,7 +10,7 @@ VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().versio
 @click.group()
 @click.version_option(version=VERSION)
 def main(version):
-    """Console script for testspace_utils."""
+    """Console script for testspace_colab."""
     pass
 
 
