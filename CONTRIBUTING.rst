@@ -14,81 +14,81 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
 
 1. Clone the repository locally and create a branch::
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ git clone git@github.com:lbrack/testspace-colab.git
-    $ git checkout -b my_feature_branch
+        $ git clone git@github.com:lbrack/testspace-colab.git
+        $ git checkout -b my_feature_branch
 
 2. install the devpi client and configure it (unless already done) -
    The last option configure pip to point to that index. This is required
    to install other dependencies not present on *Pypi*.
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ pip install devpi-client
-    $ devpi use https://m.devpi.net/testspace/dev --always-set-cfg=yes
+        $ pip install devpi-client
+        $ devpi use https://m.devpi.net/testspace/dev --always-set-cfg=yes
 
 3. Install your local copy into a virtualenv.
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ cd testspace_colab/
-    $ make install
+        $ cd testspace_colab/
+        $ make install
 
 4. There is a Makefile that should be self explanatory
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ make
-    clean                remove all build, test, coverage and Python artifacts
-    clean-build          remove build artifacts
-    clean-pyc            remove Python file artifacts
-    clean-test           remove test and coverage artifacts
-    lint                 check style with flake8
-    test                 run tests quickly with the default Python
-    test-all             run tests on every Python version with tox
-    coverage             check code coverage quickly with the default Python
-    docs                 generate Sphinx HTML documentation, including API docs
-    servedocs            compile the docs watching for changes
-    release              package and upload a release
-    dist                 builds source and wheel package
-    install              install the package to the active Python's site-packages
-    pre-commit           Full monty before a commit
-
-
+        $ make
+        clean                remove all build, test, coverage and Python artifacts
+        clean-build          remove build artifacts
+        clean-pyc            remove Python file artifacts
+        clean-test           remove test and coverage artifacts
+        lint                 check style with flake8
+        test                 run tests quickly with the default Python
+        test-all             run tests on every Python version with tox
+        coverage             check code coverage quickly with the default Python
+        docs                 generate Sphinx HTML documentation, including API docs
+        servedocs            compile the docs watching for changes
+        release              package and upload a release
+        dist                 builds source and wheel package
+        install              install the package to the active Python's site-packages
+        pre-commit           Full monty before a commit
 
 5. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ make pre-commit
+        $ make pre-commit
 
 6. Commit your changes and push your branch to GitHub::
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ git add .
-    $ git commit -m "Your detailed description of your changes."
-    $ git push origin name-of-your-bugfix-or-feature
+        $ git add .
+        $ git commit -m "Your detailed description of your changes."
+        $ git push origin name-of-your-bugfix-or-feature
 
 7. Submit a pull request through the GitHub website.
 
 8. You can share any version by uploading it to the devpi index
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ devpi login testspace
-    $ devpi use dev
-    $ devpi upload --with-docs
+        $ devpi login testspace
+        $ devpi use dev
+        $ devpi upload --with-docs
 
 Note about versioning
 ---------------------
 
 Versions are auto-computed with `setuptools-scm <https://pypi.org/project/setuptools-scm/>`_
 
-    $ ts-utils --version
-    ts-utils, version 0.1.dev7+g72ad489.d20210131 client 2.5.4061
+    .. code-block:: console
+
+        $ ts-utils --version
+        ts-utils, version 0.1.dev7+g72ad489.d20210131 client 2.5.4061
 
 where is *0.1.dev7* the base version, *g72ad489* is the most recent commit hash
 and *d20210131* indicates that some files haven't been committed. When the workspace

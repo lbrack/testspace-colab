@@ -54,8 +54,6 @@ There are three sub-modules under :py:mod:`testspace_colab`:
     * :py:mod:`testspace_colab.cli` providing the aformentioned CLI
       implementation
 
-.. todo:: To be documented when we have something meaningful.
-
 To use testspace-colab in a project::
 
     import testspace_colab
