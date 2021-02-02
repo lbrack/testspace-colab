@@ -23,7 +23,7 @@ Features
 --------
 
 * Contains testspace client binaries (2.5.4061)
-* Provides a CLI (ts-utils) as well as an API
+* Provides a CLI (ts-colab) as well as an API
 * See the `user manual`_ to get started
 
 Development

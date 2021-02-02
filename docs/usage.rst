@@ -4,13 +4,13 @@ Usage
 CLI
 ***
 
-The cli (ts-utils) provides a series of sub-commands to interact with
+The cli (ts-colab) provides a series of sub-commands to interact with
 Testspace. Those sub-commands leverage the API described below.
 
 .. code-block:: console
 
-    (testspace)⚡ ⇒  ts-utils --help
-    Usage: ts-utils [OPTIONS] COMMAND [ARGS]...
+    (testspace)⚡ ⇒  ts-colab --help
+    Usage: ts-colab [OPTIONS] COMMAND [ARGS]...
 
       Console script for testspace_colab.
 
@@ -29,7 +29,7 @@ command line .e.g.
 
 .. code-block:: console
 
-    (testspace)⚡ ⇒  ts-utils client --help
+    (testspace)⚡ ⇒  ts-colab client --help
 
     Usage: testspace [--version] [--help] <command> [<args>]
 

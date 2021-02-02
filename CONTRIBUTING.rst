@@ -87,8 +87,8 @@ Versions are auto-computed with `setuptools-scm <https://pypi.org/project/setupt
 
     .. code-block:: console
 
-        $ ts-utils --version
-        ts-utils, version 0.1.dev7+g72ad489.d20210131 client 2.5.4061
+        $ ts-colab --version
+        ts-colab, version 0.1.dev7+g72ad489.d20210131 client 2.5.4061
 
 where is *0.1.dev7* the base version, *g72ad489* is the most recent commit hash
 and *d20210131* indicates that some files haven't been committed. When the workspace

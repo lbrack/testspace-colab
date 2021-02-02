@@ -9,7 +9,7 @@ VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().versio
 
 @click.group()
 @click.version_option(version=VERSION)
-def main(version):
+def main():
     """Console script for testspace_colab."""
     pass
 
@@ -18,7 +18,7 @@ def main(version):
 @click.argument("args", nargs=-1)
 @click.option("-v", "--version", is_flag=True)
 @click.option("-h", "--help", is_flag=True)
-def client(args, help, version):
+def client(args, version, help):
     """Runs the client with the specified parameters"""
     binary = client_module.Binary()
     if version:
