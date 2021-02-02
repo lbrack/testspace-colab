@@ -28,6 +28,14 @@ testspace\_colab.lib module
    :undoc-members:
    :show-inheritance:
 
+testspace\_colab.utils module
+-----------------------------
+
+.. automodule:: testspace_colab.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
