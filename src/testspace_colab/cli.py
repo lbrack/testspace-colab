@@ -1,6 +1,8 @@
 """Console script for testspace_colab."""
 import sys
 import click
+import yaml
+import pprint
 import testspace_colab.client as client_module
 import testspace_colab.lib as lib_module
 import testspace_colab.utils as utils_module
@@ -55,8 +57,11 @@ def client(args, version, help):
 
 @main.command()
 @click.argument("args", nargs=-1)
+@click.option('-f', '--output-format',
+              type=click.Choice(['tabular', 'yaml', 'raw'], case_sensitive=False),
+              help="output formar")
 @click.option("-l", "--long", is_flag=True, help="Do not filter any column")
-def get(args, long):
+def get(args, long, output_format):
     """Performs a get request to the test space server and presents the
     response in a tabular manner.
 
@@ -75,6 +80,8 @@ def get(args, long):
         ts-colab get projects
         ts-colab get spaces project=foo
     """
+    if not output_format:
+        output_format = 'tabular'
     try:
         args[0]
     except IndexError:
@@ -82,24 +89,35 @@ def get(args, long):
             "an endpoint is required e.g. project, projects, space ..."
         )
     kwargs = dict()
+    pargs = list()
     for index in range(1, len(args)):
-        key, value = args[index].split("=")
-        kwargs[key.strip()] = value.strip()
+        if '=' in args[index]:
+            key, value = args[index].split("=")
+            kwargs[key.strip()] = value.strip()
+        else:
+            pargs.append(args[index])
 
     # Build the client
     client = lib_module.API()
 
+
     click.secho(f"URL={client.url}", bold=True)
 
     try:
-        response = client.__getattr__(f"get_{args[0]}")(**kwargs)
+        response = client.__getattr__(f"get_{args[0]}")(*pargs, **kwargs)
     except AttributeError as attribute_error:
         if "'Testspace' object has no attribute" in str(attribute_error):
             raise click.ClickException(f"no method to access resourse '{args[0]}'")
         raise click.ClickException(attribute_error)
-    utils_module.json_to_table(
-        json=response, ignore_columns=None if long else IGNORE_COLUMNS
-    )
+
+    if output_format == 'tabular':
+        utils_module.json_to_table(
+            json_data=response, ignore_columns=None if long else IGNORE_COLUMNS
+        )
+    elif output_format == 'yaml':
+        print(yaml.dump(response))
+    else:
+        pprint.pprint(response)
 
 
 if __name__ == "__main__":
