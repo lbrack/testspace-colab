@@ -19,6 +19,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - uses: testspace-com/setup-testspace@v1
+      with:
+        domain: lbrack
+
+    - name: Add local bin to path
+      run: |
+        echo "/home/runner/.local/bin" >> $GITHUB_PATH
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -34,3 +43,9 @@ jobs:
     - name: Test with pytest
       run: |
         make test
+
+    - name: Push Rust results to Testspace server
+      run: |
+          testspace "[${{ matrix.python-version }}]pytest-results.xml{tests}"
+      working-directory: ${{env.working-directory}}
+      if: always()

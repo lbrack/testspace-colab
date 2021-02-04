@@ -8,13 +8,14 @@ Welcome to testspace-colab's documentation!
    readme
    installation
    usage
-   modules
    contributing
    authors
    history
+   autogen/testspace_colab
 
 Indices and tables
 ==================
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

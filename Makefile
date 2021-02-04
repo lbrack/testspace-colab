@@ -1,5 +1,6 @@
 .PHONY: clean clean-test clean-pyc clean-build docs help
 .DEFAULT_GOAL := help
+PIP_INDEX_URL=https://m.devpi.net/testspace/dev
 SOURCE_DIR=src/testspace_colab
 
 define BROWSER_PYSCRIPT
@@ -52,10 +53,10 @@ black: ## Runs black on the source for PEP8 compliance
 	black $(SOURCE_DIR) tests
 
 lint: ## check style with flake8
-	flake8 $(SOURCE_DIR) tests
+	flake8 --ignore E203,C901,W503 $(SOURCE_DIR)  tests
 
 test: ## run tests quickly with the default Python
-	pytest
+	pytest tests -v --junit-xml=pytest-results.xml
 
 test-all: ## run tests on every Python version with tox
 	tox
@@ -69,10 +70,11 @@ coverage: ## check code coverage quickly with the default Python
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/testspace_colab.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ $(SOURCE_DIR)
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(BROWSER) docs/_build/html/index.html
+	python setup.py build_sphinx -a -E
+	#sphinx-apidoc -o docs/ $(SOURCE_DIR)
+# 	$(MAKE) -C docs clean
+# 	$(MAKE) -C docs html
+	$(BROWSER) build/sphinx/html/index.html
 
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
@@ -86,6 +88,8 @@ dist: clean ## builds source and wheel package
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
+	pip install -U devpi-client
+	devpi use $(PIP_INDEX_URL) --always-set-cfg=yes
 	pip install -r requirements_dev.txt
 
 pre-commit: clean-test test lint coverage docs test-all ## Full monty before a commit
