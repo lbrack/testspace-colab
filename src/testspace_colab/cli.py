@@ -1,6 +1,5 @@
 """Console script for testspace_colab."""
 import sys
-import os
 import click
 import yaml
 import json
