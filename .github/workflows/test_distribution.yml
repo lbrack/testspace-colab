@@ -46,6 +46,6 @@ jobs:
 
     - name: Push Rust results to Testspace server
       run: |
-          testspace [ ${{ matrix.python-version }} ]pytest-results.xml{tests}
+          testspace "[${{ matrix.python-version }}]pytest-results.xml{tests}"
       working-directory: ${{env.working-directory}}
       if: always()
