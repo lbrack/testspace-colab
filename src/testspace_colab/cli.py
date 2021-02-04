@@ -91,7 +91,17 @@ def get(args, long, output_file, format):
 
     The first positional argument is the resource type of a given endpoint.
     The following positional parameters are passed as argument to the request.
+    If the positional argument contains an `=` sign it will be sent as a keyword
+    argument (kwarg) ortherwise each argument are sent as positional arguments
+
     There should be no spaces surrounding the '=' sign when specifying parameters.
+
+    \b
+    Examples:
+    \b
+        ts-colab get result result=test_data project=samples space=main
+        ts-colab get result test_data samples main
+        ts-colab get result test_data space=main # use the default project
 
     By default, certain column are filtered such as creation data, etc. Use the
     --long option to disable filtering
@@ -103,6 +113,17 @@ def get(args, long, output_file, format):
     \b
         ts-colab get projects
         ts-colab get spaces project=foo
+
+    To obtain a complete report for a given result, you can use the built-in method
+
+    \b
+        ts-colab get result_details test_data -o dump.json -f json
+
+    This will not only fetch the result meta-data but also the complete report
+    consisting of suite and test case details and annotation.
+
+
+
     """
 
     if not format:

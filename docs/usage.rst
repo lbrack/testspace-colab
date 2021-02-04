@@ -112,9 +112,45 @@ You would call
 
 Where:
 
-    - ``test_data`` is the name of the result
-    - ``project``
+    - ``test_data`` is the name of the result (positional)
+    - ``project`` is optional (because of the *=None*)
+    - ``space`` is also optional
 
+Note that the following syntax produces the same outcome
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result result=test_data project=samples space=main
+        (testspace)⚡ ⇒  ts-colab get result test_data samples main
+        (testspace)⚡ ⇒  ts-colab get result test_data space=main #use the default project
+
+It is possible to change the output from ``tabular`` to ``yaml`` or ``json`` using the
+``--format`` option. It is also possible to store the JSON output to a file.
+
+To obtain a complete report for a given result, you can use the built-in method
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result_details test_data -o dump.json -f json
+        URL=https://lbrack.testspace.com
+        [suite] tmp.test_suite_1
+            [case] test_case_1
+        [suite] tmp.test_suite_1 [C1] HTTP-200
+          [suite] tmp.test_suite_1.TestSuiteC1
+            [case] test_case_2
+            [case] test_case_3
+        ...
+        [suite] tmp.pyfoldler_1.test_suite_3.TestSuiteC3 [C2] HTTP-200
+        {'annotation_counts': [1, 0, 1],
+         'build_status': None,
+         ...
+         'updated_at': '2021-02-04T01:22:36.000+01:00',
+         'user_id': 44}
+        saving response as json to /home/laurent/github/laurent/testspace-colab/dump.json Done!
+
+
+This will not only fetch the result meta-data but also the complete report
+consisting of suite and test case details and annotation.
 
 
 API
