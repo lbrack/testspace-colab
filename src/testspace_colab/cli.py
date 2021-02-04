@@ -1,11 +1,18 @@
 """Console script for testspace_colab."""
 import sys
+import os
 import click
 import yaml
+import json
 import pprint
+import logging
+import testspace_colab.ts_log as log_module
 import testspace_colab.client as client_module
 import testspace_colab.lib as lib_module
 import testspace_colab.utils as utils_module
+
+
+logger = log_module.get_logger("cli")
 
 VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().version}"
 
@@ -32,9 +39,22 @@ IGNORE_COLUMNS = [
 
 @click.group()
 @click.version_option(version=VERSION)
-def main():
+@click.option("-d", "--debug", is_flag=True, help="debug")
+def main(debug):
     """Console script for testspace_colab."""
-    pass
+    if "TS_COLAB_DEBUG" in os.environ:
+        click.secho(
+            f"using TS_COLAB_DEBUG={os.environ['TS_COLAB_DEBUG']} env var", fg="yellow"
+        )
+        debug = True if os.environ["TS_COLAB_DEBUG"].upper() == "TRUE" else False
+    if debug:
+        log_module.set_log_level(logging.DEBUG)
+
+
+@main.resultcallback()
+def process_result(result, **kwargs):
+    """We use this to erase any log file - this is only called if the command is successful"""
+    log_module.remove_log_file()
 
 
 @main.command()
@@ -57,11 +77,21 @@ def client(args, version, help):
 
 @main.command()
 @click.argument("args", nargs=-1)
-@click.option('-f', '--output-format',
-              type=click.Choice(['tabular', 'yaml', 'raw'], case_sensitive=False),
-              help="output formar")
+@click.option(
+    "-f",
+    "--format",
+    type=click.Choice(["tabular", "yaml", "json"], case_sensitive=False),
+    help="output format",
+)
+@click.option(
+    "-o",
+    "--output-file",
+    default=None,
+    type=click.Path(writable=True, file_okay=True, dir_okay=False, resolve_path=True),
+    help="output file",
+)
 @click.option("-l", "--long", is_flag=True, help="Do not filter any column")
-def get(args, long, output_format):
+def get(args, long, output_file, format):
     """Performs a get request to the test space server and presents the
     response in a tabular manner.
 
@@ -80,8 +110,9 @@ def get(args, long, output_format):
         ts-colab get projects
         ts-colab get spaces project=foo
     """
-    if not output_format:
-        output_format = 'tabular'
+
+    if not format:
+        format = "tabular"
     try:
         args[0]
     except IndexError:
@@ -91,7 +122,7 @@ def get(args, long, output_format):
     kwargs = dict()
     pargs = list()
     for index in range(1, len(args)):
-        if '=' in args[index]:
+        if "=" in args[index]:
             key, value = args[index].split("=")
             kwargs[key.strip()] = value.strip()
         else:
@@ -100,24 +131,36 @@ def get(args, long, output_format):
     # Build the client
     client = lib_module.API()
 
-
     click.secho(f"URL={client.url}", bold=True)
+
+    logger.debug(f"api->get_{args[0]}({pargs}, {kwargs})")
 
     try:
         response = client.__getattr__(f"get_{args[0]}")(*pargs, **kwargs)
     except AttributeError as attribute_error:
+        logger.exception(attribute_error)
         if "'Testspace' object has no attribute" in str(attribute_error):
-            raise click.ClickException(f"no method to access resourse '{args[0]}'")
+            raise click.ClickException(f"no method '{args[0]}' to access resource")
         raise click.ClickException(attribute_error)
 
-    if output_format == 'tabular':
+    if format == "tabular":
         utils_module.json_to_table(
             json_data=response, ignore_columns=None if long else IGNORE_COLUMNS
         )
-    elif output_format == 'yaml':
+    elif format == "yaml":
         print(yaml.dump(response))
     else:
         pprint.pprint(response)
+
+    if output_file:
+        click.secho(f"saving response as json to {output_file}", fg="blue", nl=False)
+        try:
+            with open(output_file, "w") as file_handle:
+                json.dump(response, file_handle, indent=4)
+        except Exception as write_exception:
+            logger.exception(write_exception)
+            raise click.ClickException(f"failed {write_exception}")
+        click.secho(" Done!", fg="green")
 
 
 if __name__ == "__main__":

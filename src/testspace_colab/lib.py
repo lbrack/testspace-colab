@@ -8,7 +8,15 @@ import pkg_resources
 import pathlib
 import configparser
 import urllib.parse
+import xml.etree.ElementTree as ElementTree
+
+import click
+
 import testspace.testspace as testspace
+import testspace_colab.utils as utils_module
+import testspace_colab.ts_log
+
+logger = testspace_colab.ts_log.get_logger("api")
 
 
 class API:
@@ -24,7 +32,14 @@ class API:
         config_path = (
             pathlib.Path(os.path.expanduser("~")) / ".config" / "testspace" / "config"
         )
+        if "TS_COLAB_CONFIG" in os.environ:
+            config_path = pathlib.Path(os.environ["TS_COLAB_CONFIG"])
+            assert config_path.is_file(), f"{config_path} not found"
+            click.secho(f"using TS_COLAB_CONFIG={config_path}")
+
+        logger.debug(f"testspace config file {config_path}")
         if config_path.is_file():
+            logger.debug(f"loading testspace config file {config_path} ")
             with open(config_path) as file_handle:
                 # Config parser expects a section so we trick it by injecting
                 # one and ignoring it
@@ -44,16 +59,24 @@ class API:
             self._space = config["dummy_section"].get("remote.space")
 
         if token:
+            logger.debug("overrideing token with argument")
             self._token = token
         if url:
+            logger.debug(f"overrideing url {self._url} with arg {url}")
             self._url = url
         if project:
+            logger.debug(f"overrideing project {self._project} with arg {project}")
             self._project = project
         if space:
+            logger.debug(f"overrideing space {self._space} with arg {space}")
             self._space = space
 
+        logger.debug(
+            f"token={self._token} url={self._url}, project={self._project}, space={self._space}"
+        )
+
         self.client = testspace.Testspace(
-            token=self._token, url=self._url, project=self._project, space=space
+            token=self._token, url=self._url, project=self._project, space=self._space
         )
 
     @property
@@ -73,7 +96,71 @@ class API:
         return self._space
 
     def __getattr__(self, item):
+        # First check if this class has the method
+        # (This is used by the cli::get command
+        try:
+            return self.__getattribute__(item)
+        except AttributeError:
+            pass
+        # Otherwise we query the client api
         return self.client.__getattribute__(item)
+
+    def get_result_details(self, result, project=None, space=None):
+        logger.debug(
+            f"get_result_details result={result} project={project} space={space}"
+        )
+        response = self.client.get_result(result=result, project=project, space=space)
+        response["details"] = self._load_results(result_id=response["id"])
+        return response
+
+    def _load_results(self, result_id, path=None, depth=0):
+        response = self.client.get_result_contents(result_id, contents_path=path)
+
+        if isinstance(response, dict):  # If we do not receive a list
+            response = [response]
+
+        for container in response:
+            if container["type"].startswith("suite"):
+                # We have a suite. This maybe container test cases
+                # or simply annotation
+                container["suites"] = []
+                container["cases"] = []
+                case_count = sum(container["case_counts"])
+                if case_count and "download_url" in container:
+                    xml_snippet = self.client.get_request(container["download_url"])
+                    if xml_snippet.status_code == 200:
+                        # print(response.content.decode('utf-8'))
+                        xml_tree = ElementTree.fromstring(
+                            xml_snippet.content.decode("utf-8")
+                        )
+                        json_data = utils_module.xml_to_json(xml_tree, depth=depth + 1)
+                        if "suite" in json_data:
+                            container["suites"].append(json_data["suite"])
+                        if "case" in json_data:
+                            container["cases"].append(json_data["case"])
+
+                    click.secho(
+                        "  " * depth
+                        + f"[suite] {container['name']} [C{case_count}] HTTP-{xml_snippet.status_code}",
+                        fg="blue",
+                    )
+                else:
+                    click.secho(
+                        "  " * depth + f"[suite] {container['name']} [C{case_count}]"
+                    )
+            elif container["type"].startswith("folder"):
+                click.secho(
+                    "  " * depth + f"[folder] {container['name']} "
+                    f"[C{sum(container['case_counts'])}/S{sum(container['suite_counts'])}]",
+                    bold=True,
+                )
+                self._load_result(path=container["path"], depth=depth + 1)
+            else:
+                click.secho(
+                    "  " * depth + f"unknown container type {container['type']}",
+                    fg="yellow",
+                )
+        return response
 
     @staticmethod
     def get_version():

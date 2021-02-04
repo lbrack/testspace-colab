@@ -41,6 +41,35 @@ command line .e.g.
 
     For more information about Testspace, visit www.testspace.com.
 
+Examples
+--------
+
+Configuration
+.............
+
+.. code-block:: console
+
+    (testspace)⚡ ⇒  ts-colab client config url "72e7a247e02b9d4d521916fe81a708cfa824dcd3@lbrack.testspace.com/samples/main"
+     domain: https://********@lbrack.testspace.com
+     project: samples
+     space: main
+    (testspace)⚡ ⇒  ts-colab client config
+     domain: https://********@lbrack.testspace.com
+     project: samples
+     space: main
+
+
+Push
+....
+
+.. code-block:: console
+
+    (testspace)⚡ ⇒  ts-colab client push sample.xml
+    Aggregating content...
+    Uploading to Testspace (https://lbrack.testspace.com/projects/samples/spaces/main)...
+      https://lbrack.testspace.com/spaces/133471/result_sets/123753
+
+
 API
 ***
 
