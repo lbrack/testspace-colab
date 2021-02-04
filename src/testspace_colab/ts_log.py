@@ -1,7 +1,8 @@
-# import os
+import os
 import datetime
 import logging
 import logging.config
+import click
 
 LOG_PATH = "testspace_colab"
 now = datetime.datetime.now()
@@ -47,7 +48,6 @@ logger_config = {
 logging.config.dictConfig(logger_config)
 logger = logging.Logger(LOG_PATH)
 logger.setLevel(logging.INFO)
-
 
 def get_logger(name=None):
     """
@@ -96,3 +96,11 @@ def remove_log_file():
     #         os.remove(debug_file_name)
     #     except Exception as os_error:
     #         warnings.warn(f"Failed to erase {debug_file_name} - error {os_error}")
+
+if "TS_COLAB_DEBUG" in os.environ:
+    click.secho(
+        f"using TS_COLAB_DEBUG={os.environ['TS_COLAB_DEBUG']} env var", fg="yellow"
+    )
+    debug = True if os.environ["TS_COLAB_DEBUG"].upper() == "TRUE" else False
+    if debug:
+        set_log_level(logging.DEBUG)

@@ -1,6 +1,21 @@
 Usage
 =====
 
+There are two types of usage this point. The CLI (ts-colab) enables user to
+use the test space API from the command line to visualize data or capture
+it in file as json.
+
+The API, which is used by the CLI, provides a programmatic access to a
+**Testspace** server
+
+Environment Variables
+*********************
+
+You can set the following environment variables
+
+    * *TS_COLAB_DEBUG* Turns debugging ON but setting it to ``true``
+    * *TS_COLAB_CONFIG* path to an alternate config file
+
 CLI
 ***
 
@@ -47,6 +62,11 @@ Examples
 Configuration
 .............
 
+Note that the configuration file is normally location under ``~/,config/testspace/config``.
+This will be file used by default. It is possible to change the file location by point the
+``TS_COLAB_CONFIG`` environment variable to a valid testspace config file (mostly use for
+testing)
+
 .. code-block:: console
 
     (testspace)⚡ ⇒  ts-colab client config url "72e7a247e02b9d4d521916fe81a708cfa824dcd3@lbrack.testspace.com/samples/main"
@@ -68,6 +88,33 @@ Push
     Aggregating content...
     Uploading to Testspace (https://lbrack.testspace.com/projects/samples/spaces/main)...
       https://lbrack.testspace.com/spaces/133471/result_sets/123753
+
+Get
+...
+
+This command performs get request that are delegated to the
+`testspace-python <https://github.com/s2technologies/testspace-python>`_ library.
+
+for instance, to access the following API:
+
+    .. code-block::
+
+        testspace.get_result(result, project=None, space=None)
+
+You would call
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result test_data project=samples space=main
+        URL=https://lbrack.testspace.com
+        ID     | NAME      | COMPLETE | BUILD_STATUS | SUITE_COUNTS | CASE_COUNTS  | ANNOTATION_COUNTS | FAILURE_COUNTS     | DURATION | SESSION_DURATION |
+        123753 | test_data | True     | None         | [6, 1, 0]    | [9, 1, 2, 0] | [1, 0, 1]         | [1, 0, 0, 0, 0, 1] | 0.0      | 0.0              |
+
+Where:
+
+    - ``test_data`` is the name of the result
+    - ``project``
+
 
 
 API

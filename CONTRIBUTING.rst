@@ -19,23 +19,16 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
         $ git clone git@github.com:lbrack/testspace-colab.git
         $ git checkout -b my_feature_branch
 
-2. install the devpi client and configure it (unless already done) -
-   The last option configure pip to point to that index. This is required
-   to install other dependencies not present on *Pypi*.
-
-    .. code-block:: console
-
-        $ pip install devpi-client
-        $ devpi use https://m.devpi.net/testspace/dev --always-set-cfg=yes
-
-3. Install your local copy into a virtualenv.
+2. Install your local copy into a virtualenv. Note that the install
+   automatically installs devpi-client and set the appropriate index
+   to ``https://m.devpi.net/testspace/dev/``
 
     .. code-block:: console
 
         $ cd testspace_colab/
         $ make install
 
-4. There is a Makefile that should be self explanatory
+3. There is a Makefile that should be self explanatory
 
     .. code-block:: console
 
@@ -55,14 +48,14 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
         install              install the package to the active Python's site-packages
         pre-commit           Full monty before a commit
 
-5. When you're done making changes, check that your changes pass flake8 and the
+4. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
     .. code-block:: console
 
         $ make pre-commit
 
-6. Commit your changes and push your branch to GitHub::
+5. Commit your changes and push your branch to GitHub::
 
     .. code-block:: console
 
@@ -70,9 +63,24 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
         $ git commit -m "Your detailed description of your changes."
         $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+6. Submit a pull request through the GitHub website. It is suggested to use the
+   [GitHub CLI](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
 
-8. You can share any version by uploading it to the devpi index
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  gh pr create
+
+        Creating pull request for lbrack:json-data-access into main in lbrack/testspace-colab
+
+        ? Title my awesome work
+        ? Body <Received>
+        ? What's next?  [Use arrows to move, type to filter]
+        > Submit
+          Continue in browser
+          Add metadata
+          Cancel
+
+7. You can share any version by uploading it to the devpi index
 
     .. code-block:: console
 
@@ -105,9 +113,8 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.6, 3.7 and 3.8. Check
-   https://travis-ci.com/lbrack/testspace_colab/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+3. The pull request should work for Python 3.6, 3.7 and 3.8. The GitHub
+   workflow associated to PR will check all that.
 
 Tips
 ----

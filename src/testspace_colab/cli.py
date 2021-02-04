@@ -42,11 +42,6 @@ IGNORE_COLUMNS = [
 @click.option("-d", "--debug", is_flag=True, help="debug")
 def main(debug):
     """Console script for testspace_colab."""
-    if "TS_COLAB_DEBUG" in os.environ:
-        click.secho(
-            f"using TS_COLAB_DEBUG={os.environ['TS_COLAB_DEBUG']} env var", fg="yellow"
-        )
-        debug = True if os.environ["TS_COLAB_DEBUG"].upper() == "TRUE" else False
     if debug:
         log_module.set_log_level(logging.DEBUG)
 
