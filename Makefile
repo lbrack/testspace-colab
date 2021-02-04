@@ -1,5 +1,6 @@
 .PHONY: clean clean-test clean-pyc clean-build docs help
 .DEFAULT_GOAL := help
+PIP_INDEX_URL=https://m.devpi.net/testspace/dev
 SOURCE_DIR=src/testspace_colab
 
 define BROWSER_PYSCRIPT
@@ -23,6 +24,11 @@ endef
 export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
+
+toto:
+	echo $(PIP_INDEX)
+	echo $(PIP_INDEX_URL)
+	pip search testspace-python
 
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
@@ -87,6 +93,8 @@ dist: clean ## builds source and wheel package
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
+	pip install -U devpi-client
+	devpi use $(PIP_INDEX_URL) --always-set-cfg=yes
 	pip install -r requirements_dev.txt
 
 pre-commit: clean-test test lint coverage docs test-all ## Full monty before a commit
