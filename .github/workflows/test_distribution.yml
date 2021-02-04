@@ -34,3 +34,9 @@ jobs:
     - name: Test with pytest
       run: |
         make test
+
+    - name: Push Rust results to Testspace server
+      run: |
+          testspace [ ${{ matrix.os }} ]pytest-results.xml{tests}
+      working-directory: ${{env.working-directory}}
+      if: always()

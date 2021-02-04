@@ -25,11 +25,6 @@ export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
-toto:
-	echo $(PIP_INDEX)
-	echo $(PIP_INDEX_URL)
-	pip search testspace-python
-
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
@@ -61,7 +56,7 @@ lint: ## check style with flake8
 	flake8 --ignore E203,C901,W503 $(SOURCE_DIR)  tests
 
 test: ## run tests quickly with the default Python
-	pytest
+	pytest tests -v --junit-xml=pytest-results.xml
 
 test-all: ## run tests on every Python version with tox
 	tox
