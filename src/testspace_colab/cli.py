@@ -1,5 +1,7 @@
 """Console script for testspace_colab."""
 import sys
+import os
+import webbrowser
 import click
 import yaml
 import json
@@ -122,9 +124,6 @@ def get(args, long, output_file, format):
 
     This will not only fetch the result meta-data but also the complete report
     consisting of suite and test case details and annotation.
-
-
-
     """
 
     if not format:
@@ -181,12 +180,12 @@ def get(args, long, output_file, format):
 
 @main.group()
 def elk():
-    """command group to control the Elastic Search start"""
+    """Command group to control the Elastic Stack docker image"""
 
 
 @elk.command()
 def start():
-    """"""
+    """Starts the EKL docker image"""
     elk_client = elk_module.ELK()
     click.secho("starting ... be patient", fg="blue")
     try:
@@ -198,6 +197,7 @@ def start():
 
 @elk.command()
 def stop():
+    """Stops the EKL docker image"""
     elk_client = elk_module.ELK()
     click.secho("stopping ... be patient", fg="blue")
     try:
@@ -209,33 +209,39 @@ def stop():
 
 @elk.command()
 def health():
+    """show cluster health status"""
     elk_client = elk_module.ELK()
-    if not elk_client.container or elk_client.container.status != "running":
-        click.secho("container not running", fg="yellow")
-    else:
+    if elk_client.available:
         click.secho("getting cluster health", fg="blue")
         health = elk_client.get_health()
-        if health:
-            print(yaml.dump(health))
-            click.secho("Done", fg="green")
-        else:
-            click.secho("elastic search not available", fg="yellow")
+        print(yaml.dump(health))
+        click.secho("Done", fg="green")
+    else:
+        click.secho("ELK not available", fg="yellow")
 
 
 @elk.command()
 def info():
+    """Shows elastic search info"""
     elk_client = elk_module.ELK()
-    if not elk_client.container or elk_client.container.status != "running":
-        click.secho("container not running", fg="yellow")
+    if elk_client.available:
+        click.secho("elastic search info", fg="blue")
+        print(yaml.dump(elk_client.elastic_search.info()))
+        click.secho("Done", fg="green")
     else:
-        click.secho("getting elasticsearch info", fg="blue")
-        if elk_client.elastic_search:
-            click.secho("elastic search info", fg="blue")
-            print(yaml.dump(elk_client.elastic_search.info()))
-            click.secho("Done", fg="green")
-        else:
-            click.secho("elastic search not available", fg="yellow")
+        click.secho("ELK not available", fg="yellow")
 
+@elk.command()
+def kibana():
+    """ starts a browser and connects to Kibana in the docker instance."""
+    elk_client = elk_module.ELK()
+    if elk_client.available:
+        url="http://localhost:5601"
+        click.secho(f"connecting to {url}", fg='blue')
+        webbrowser.open("http://localhost:5601")
+        click.secho("Done", fg="green")
+    else:
+        click.secho("kibana not available", fg="yellow")
 
 if __name__ == "__main__":
     sys.exit(main())  # pragma: no cover

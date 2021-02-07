@@ -222,7 +222,15 @@ manually.
         (testspace)⚡ ⇒  docker rm elk-testspace-colab
         elk-testspace-colab
 
+To connect to the local Kibana instance, you can run
 
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab elk kibana
+        connecting to http://localhost:5601
+        Done
+
+    .. figure:: ./_static/kibana.png
 
 
 

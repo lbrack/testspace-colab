@@ -171,8 +171,8 @@ class TestELK:
 
         result = runner.invoke(cli.elk, ["info"])
         assert result.exit_code == 0
-        assert "container not running" in result.stdout
+        assert "ELK not available" in result.stdout
 
         result = runner.invoke(cli.elk, ["health"])
         assert result.exit_code == 0
-        assert "container not running" in result.stdout
+        assert "ELK not available" in result.stdout
