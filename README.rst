@@ -25,6 +25,9 @@ Features
 * Contains testspace client binaries (2.5.4061)
 * Provides a CLI (ts-colab) as well as an API
 * See the `user manual`_ to get started
+* Provides facility to start an ELK (ElasticSearch/Logstach/Kibana)
+  via the `sebp/elk docker image`_. All that is needed is to have `docker`_ installed
+  on your machine. Refer to the documentation for additional details.
 
 Development
 -----------
@@ -33,14 +36,8 @@ Check the
 `contributing guidelines <https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/contributing.html>`_
 to learn how to clone, install, develop and release this project.
 
-
-Credits
--------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
 .. _`documentation` : https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/index.html
 .. _`readthedocs` : https://testspace-colab.readthedocs.io
 .. _`user manual` : https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/usage.html
+.. _`docker` : https://docker-py.readthedocs.io/en/stable/
+.. _`sebp/elk docker image` : https://hub.docker.com/r/sebp/elk

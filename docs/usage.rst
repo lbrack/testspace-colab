@@ -14,7 +14,7 @@ Environment Variables
 You can set the following environment variables
 
     * *TS_COLAB_DEBUG* Turns debugging ON but setting it to ``true``
-    * *TS_COLAB_CONFIG* path to an alternate config file
+    * *TS_COLAB_CONFIG_DIR* path to an alternate config file
 
 CLI
 ***
@@ -64,7 +64,7 @@ Configuration
 
 Note that the configuration file is normally location under ``~/,config/testspace/config``.
 This will be file used by default. It is possible to change the file location by point the
-``TS_COLAB_CONFIG`` environment variable to a valid testspace config file (mostly use for
+``TS_COLAB_CONFIG_DIR`` environment variable to a valid testspace config file (mostly use for
 testing)
 
 .. code-block:: console
@@ -169,3 +169,11 @@ There are three sub-modules under :py:mod:`testspace_colab`:
 To use testspace-colab in a project::
 
     import testspace_colab
+
+ELK
+***
+
+This project contains a facility to start ELK a.k.a. as ElasticSearch, Logstash, Kibana
+locally for development purposes.
+
+

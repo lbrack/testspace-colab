@@ -147,3 +147,14 @@ class TestGet:
         assert "details" in json_data
         assert isinstance(json_data["details"], list)
         assert len(json_data["details"]) == 8
+
+
+# class TestELK:
+#
+#     @pytest.mark.parametrize("elk_state", ["stopped"])
+#     def test_all(self, elk_api):
+#         runner = CliRunner()
+#         result = runner.invoke(
+#             cli.info, []
+#         )
+#         assert result==0

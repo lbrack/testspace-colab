@@ -29,13 +29,13 @@ class API:
         self._project = None
         self._space = None
 
-        config_path = (
-            pathlib.Path(os.path.expanduser("~")) / ".config" / "testspace" / "config"
-        )
-        if "TS_COLAB_CONFIG" in os.environ:
-            config_path = pathlib.Path(os.environ["TS_COLAB_CONFIG"])
-            assert config_path.is_file(), f"{config_path} not found"
-            click.secho(f"using TS_COLAB_CONFIG={config_path}")
+        config_dir = pathlib.Path(os.path.expanduser("~")) / ".config" / "testspace"
+        if "TS_COLAB_CONFIG_DIR" in os.environ:
+            config_dir = pathlib.Path(os.environ["TS_COLAB_CONFIG_DIR"])
+            assert config_dir.is_dir(), f"{config_dir} dir not found"
+            click.secho(f"using TS_COLAB_CONFIG_DIR={config_dir}")
+
+        config_path = config_dir / "config"
 
         logger.debug(f"testspace config file {config_path}")
         if config_path.is_file():

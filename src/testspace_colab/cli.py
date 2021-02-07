@@ -9,6 +9,7 @@ import testspace_colab.ts_log as log_module
 import testspace_colab.client as client_module
 import testspace_colab.lib as lib_module
 import testspace_colab.utils as utils_module
+import testspace_colab.elk as elk_module
 
 
 logger = log_module.get_logger("cli")
@@ -176,6 +177,61 @@ def get(args, long, output_file, format):
             logger.exception(write_exception)
             raise click.ClickException(f"failed {write_exception}")
         click.secho(" Done!", fg="green")
+
+
+@main.group()
+def elk():
+    """command group to control the Elastic Search start"""
+
+
+@elk.command()
+def start():
+    """"""
+    elk_client = elk_module.ELK()
+    click.secho("starting ... be patient", fg="blue")
+    try:
+        elk_client.start()
+    except IOError as error:
+        raise click.ClickException(f"Failed to start ELK {error}")
+    click.secho(f"ELK Container started ID={elk_client.container.id}", fg="green")
+
+
+@elk.command()
+def stop():
+    elk_client = elk_module.ELK()
+    click.secho("stopping ... be patient", fg="blue")
+    try:
+        elk_client.stop()
+    except IOError as error:
+        raise click.ClickException(f"Failed to stop ELK {error}")
+    click.secho("ELK stopped", fg="green")
+
+
+@elk.command()
+def health():
+    elk_client = elk_module.ELK()
+    click.secho("getting cluster health", fg="blue")
+    health = elk_client.get_health()
+    if health:
+        print(yaml.dump(health))
+        click.secho("ok", fg="green")
+    else:
+        click.secho("unavailable", fg="red")
+
+
+@elk.command()
+def info():
+    elk_client = elk_module.ELK()
+    if not elk_client.container:
+        click.secho("container not running", fg="yellow")
+    else:
+        click.secho(f"container status {elk_client.container.status}")
+        if elk_client.elastic_search:
+            click.secho("elastic search info", fg="blue")
+            print(yaml.dump(elk_client.elastic_search.info()))
+            click.secho("Done", fg="green")
+        else:
+            click.secho("elastic search not available", fg="yellow")
 
 
 if __name__ == "__main__":
