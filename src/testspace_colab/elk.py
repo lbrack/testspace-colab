@@ -1,5 +1,7 @@
 """ ELK Client
 
+Provides a client to interact with a ELK stack running in docker.
+
 """
 import time
 import docker
@@ -9,7 +11,14 @@ import elasticsearch
 logger = testspace_colab.ts_log.get_logger("elk")
 
 CONTAINER_NAME = "elk-testspace-colab"
+""" Default container name"""
+
 ELK_TAG = "7.10.0"
+""" Default Elastic version
+
+    for more details, see the `sebp/elk <https://hub.docker.com/r/sebp/elk/>`_
+    in the docker registry
+"""
 
 
 class ELK:
@@ -47,9 +56,12 @@ class ELK:
 
     @property
     def container(self):
-        """Return None if not running, or the container object
-        if it is running
+        """Returns the a docker container structure if the container exists
+        or none otherwise.
+
+        see :class:`docker:docker.models.containers.Container` more details.
         """
+        container = None
         try:
             container = self._docker.containers.get(self._container_name)
             if container.status == "running" and not self._elastic_search:
@@ -57,19 +69,32 @@ class ELK:
                 self._cluster_client = elasticsearch.client.ClusterClient(
                     self._elastic_search
                 )
-            return container
+
         except (docker.errors.NotFound, docker.errors.APIError):
+            pass
+
+        if container and container.status != "running":
             self._elastic_search = None
             self._cluster_client = None
-        return None
+        return container
 
     @property
     def elastic_search(self):
-        """Returns an instance to the
-        `ElasticSearch <https://elasticsearch-py.readthedocs.io/en/latest/index.html>`_
-        once connected
+        """Returns an instance to the ElasticSearch client if the container
+        is running.
+
+        See :class:`elastic:elasticsearch.Elasticsearch`
         """
         return self._elastic_search
+
+    @property
+    def es_cluster_client(self):
+        """Returns an instance to the ElasticSearch cluster client if the container
+        is running.
+
+        See :class:`elastic:elasticsearch.client.ClusterClient`
+        """
+        return self._cluster_client
 
     @property
     def available(self):
@@ -86,9 +111,8 @@ class ELK:
     def wait_for_available(self, timeout=15):
         """Waits for the stack to be available
 
-        :param timeout:
+        :param timeout:  Time out in seconds before a timeout exception is raised.
         :raise: TimeoutError if timeout expires
-        :return: None
         """
         start_time = time.time()
 
@@ -116,6 +140,8 @@ class ELK:
         """Return the json structure returned by the `health` endpoint
         or None if the container is not running
 
+        See :meth:`elastic:elasticsearch.client.ClusterClient.health`
+
         :raise: IOError if the container is running by the health
                 endpoint times out.
 
@@ -125,11 +151,17 @@ class ELK:
         try:
             return self._cluster_client.health()
         except elasticsearch.exceptions.ConnectionError as error:
-            logger.exception("Failed to connect")
             raise IOError(f"Connection to es server timed out {error}")
 
     def start(self, timeout=15):
-        """Start the ELK container"""
+        """Starts the ELK container
+
+        If the container is already up, returns right away
+
+        :param timeout: Maximum time to wait to establisg a connection with ELK
+        :return: :class:`docker:docker.models.containers.Container` of the running container
+        :raises: TimeoutError if timeout has been reached.
+        """
         if not self.container:
             logger.info(f"Starting ELK Container {self._container_name}")
             self._docker.containers.run(
@@ -149,10 +181,20 @@ class ELK:
         logger.info(f"container id {self.container.id}")
         logger.info("Checking that the stack is up and running")
         self.wait_for_available(timeout)
+        return self.container
 
     def stop(self):
+        """Stops the ELK container if any is running
+
+        The container state should be 'exited' but is not
+        automatically removed.
+
+        :return: :class:`docker:docker.models.containers.Container` of the running container
+        :return: None if not container was running
+        """
         if self.container:
             if self.container.status != "exited":
                 logger.info("Stopping container")
                 self.container.stop()
             logger.debug(f"container status {self.container.status}")
+        return self.container

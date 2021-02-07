@@ -6,8 +6,8 @@ Welcome to testspace-colab's documentation!
    :caption: Contents:
 
    readme
-   installation
    usage
+   installation
    contributing
    authors
    history

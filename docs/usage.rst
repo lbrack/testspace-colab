@@ -95,7 +95,7 @@ Get
 This command performs get request that are delegated to the
 `testspace-python <https://github.com/s2technologies/testspace-python>`_ library.
 
-for instance, to access the following API:
+for instance, to access the following API
 
     .. code-block::
 
@@ -152,28 +152,138 @@ To obtain a complete report for a given result, you can use the built-in method
 This will not only fetch the result meta-data but also the complete report
 consisting of suite and test case details and annotation.
 
+.. _elk_cli:
+
+ELK
+...
+
+For controlling ELK programmatically, check :ref:`ELK API <elk_api>`
+
+The `Elastic Stack <https://elk-docker.readthedocs.io>`_ used for testing can be controlled
+from the command line using the ``ts-colab elk`` sub commands as illustrated below
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab elk start
+        starting ... be patient
+        ELK Container started ID=56b66568e8a092ae794213cfde010031a4d4f5c57bb71a6736941038556bbef7
+
+Once started, you can view the container
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  docker ps
+        CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS              PORTS                                                                                        NAMES
+        56b66568e8a0   sebp/elk:7.10.0   "/usr/local/bin/star…"   50 minutes ago   Up About a minute   0.0.0.0:5044->5044/tcp, 0.0.0.0:5601->5601/tcp, 9300/tcp, 0.0.0.0:9200->9200/tcp, 9600/tcp   elk-testspace-colab
+
+When running you can check the status
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab elk info
+        getting elasticsearch info
+        ...
+        version:
+          build_date: '2020-11-09T21:30:33.964949Z'
+          build_flavor: default
+          build_hash: 51e9d6f22758d0374a0f3f5c6e8f3a7997850f96
+          build_snapshot: false
+          build_type: tar
+          lucene_version: 8.7.0
+          minimum_index_compatibility_version: 6.0.0-beta1
+          minimum_wire_compatibility_version: 6.8.0
+          number: 7.10.0
+        Done
+
+        (testspace)⚡ ⇒  ts-colab elk health
+        getting cluster health
+        active_primary_shards: 6
+        relocating_shards: 0
+        ...
+        status: green
+        task_max_waiting_in_queue_millis: 0
+        timed_out: false
+        unassigned_shards: 0
+
+        Done
+        (testspace)⚡ ⇒  ts-colab elk stop
+        stopping ... be patient
+        ELK stopped
+
+Note that when stopped, the container is not being remove. This has to be done
+manually.
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  docker ps -a 
+        CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS                     PORTS     NAMES
+        56b66568e8a0   sebp/elk:7.10.0   "/usr/local/bin/star…"   53 minutes ago   Exited (0) 4 seconds ago             elk-testspace-colab
+
+        (testspace)⚡ ⇒  docker rm elk-testspace-colab
+        elk-testspace-colab
+
+
+
+
 
 API
 ***
 
-There are three sub-modules under :py:mod:`testspace_colab`:
+There are several sub-modules under :py:mod:`testspace_colab`:
 
     * :py:mod:`testspace_colab.lib` which provides the
-      :py:class:`API <testspace_colab.lib.API>` class
+      :py:class:`API <testspace_colab.lib.API>` class ro interface
+      with testspace
     * :py:mod:`testspace_colab.client` providing the
       :py:class:`Binary <testspace_colab.client.Binary>` to invoke
       the native client.
     * :py:mod:`testspace_colab.cli` providing the aformentioned CLI
       implementation
+    * :py:mod:`testspace_colab.elk` which provides the
+      :py:class:`ELK <testspace_colab.elk.ELK>` class to control
+      and access an ELK stack running on Docker.
 
 To use testspace-colab in a project::
 
     import testspace_colab
 
+.. _elk_api:
+
 ELK
-***
+---
+
+For controlling ELK from the command line, check the :ref:`elk cli <elk_cli>`
 
 This project contains a facility to start ELK a.k.a. as ElasticSearch, Logstash, Kibana
-locally for development purposes.
+locally for development purposes via the :class:`testspace_colab.elk.ELK` class.
 
+The usage is pretty simple and is illustrated below
+
+.. code-block:: console
+
+    from testspace_colab.elk import ELK
+    elk = ELK()
+    elk.available
+    Out[4]: False
+    elk.start()
+    Out[5]: <Container: 41061dd5a2>
+    elk.available
+    Out[6]: True
+    elk.elastic_search.info()
+    Out[7]:
+    {'name': 'elk',
+     'cluster_name': 'elasticsearch',
+     'cluster_uuid': 'ckRg9onsSqyU13AdGPkOAg',
+     'version': {'number': '7.10.0',
+      'build_flavor': 'default',
+      'build_type': 'tar',
+      'build_hash': '51e9d6f22758d0374a0f3f5c6e8f3a7997850f96',
+      'build_date': '2020-11-09T21:30:33.964949Z',
+      'build_snapshot': False,
+      'lucene_version': '8.7.0',
+      'minimum_wire_compatibility_version': '6.8.0',
+      'minimum_index_compatibility_version': '6.0.0-beta1'},
+     'tagline': 'You Know, for Search'}
+    elk.stop()
+    Out[8]: <Container: 41061dd5a2>
 

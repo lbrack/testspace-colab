@@ -210,22 +210,25 @@ def stop():
 @elk.command()
 def health():
     elk_client = elk_module.ELK()
-    click.secho("getting cluster health", fg="blue")
-    health = elk_client.get_health()
-    if health:
-        print(yaml.dump(health))
-        click.secho("ok", fg="green")
+    if not elk_client.container or elk_client.container.status != "running":
+        click.secho("container not running", fg="yellow")
     else:
-        click.secho("unavailable", fg="red")
+        click.secho("getting cluster health", fg="blue")
+        health = elk_client.get_health()
+        if health:
+            print(yaml.dump(health))
+            click.secho("Done", fg="green")
+        else:
+            click.secho("elastic search not available", fg="yellow")
 
 
 @elk.command()
 def info():
     elk_client = elk_module.ELK()
-    if not elk_client.container:
+    if not elk_client.container or elk_client.container.status != "running":
         click.secho("container not running", fg="yellow")
     else:
-        click.secho(f"container status {elk_client.container.status}")
+        click.secho("getting elasticsearch info", fg="blue")
         if elk_client.elastic_search:
             click.secho("elastic search info", fg="blue")
             print(yaml.dump(elk_client.elastic_search.info()))
