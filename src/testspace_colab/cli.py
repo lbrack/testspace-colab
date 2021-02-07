@@ -1,6 +1,5 @@
 """Console script for testspace_colab."""
 import sys
-import os
 import webbrowser
 import click
 import yaml
@@ -231,17 +230,19 @@ def info():
     else:
         click.secho("ELK not available", fg="yellow")
 
+
 @elk.command()
 def kibana():
     """ starts a browser and connects to Kibana in the docker instance."""
     elk_client = elk_module.ELK()
     if elk_client.available:
-        url="http://localhost:5601"
-        click.secho(f"connecting to {url}", fg='blue')
+        url = "http://localhost:5601"
+        click.secho(f"connecting to {url}", fg="blue")
         webbrowser.open("http://localhost:5601")
         click.secho("Done", fg="green")
     else:
         click.secho("kibana not available", fg="yellow")
+
 
 if __name__ == "__main__":
     sys.exit(main())  # pragma: no cover
