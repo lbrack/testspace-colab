@@ -44,7 +44,10 @@ extensions = [
 # sphinx.ext.intersphinx
 # -----------------------------------------------------------------------------
 intersphinx_mapping = {
-    "https://doc.python.org/3/": None,
+    "python" : (" https://doc.python.org/3/", None),
+    'docker' : ("https://docker-py.readthedocs.io/en/stable/", None),
+    'elastic' : ("https://elasticsearch-py.readthedocs.io/en/latest/", None),
+
 }
 
 # -----------------------------------------------------------------------------

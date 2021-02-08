@@ -147,3 +147,32 @@ class TestGet:
         assert "details" in json_data
         assert isinstance(json_data["details"], list)
         assert len(json_data["details"]) == 8
+
+
+class TestELK:
+    @pytest.mark.parametrize("elk_state", ["stopped"])
+    def test_all(self, elk_api):
+        runner = CliRunner()
+        result = runner.invoke(cli.elk, ["start"])
+        assert result.exit_code == 0
+        assert "ELK Container started" in result.stdout
+
+        result = runner.invoke(cli.elk, ["info"])
+        assert result.exit_code == 0
+        assert "lucene_version:" in result.stdout
+
+        result = runner.invoke(cli.elk, ["health"])
+        assert result.exit_code == 0
+        assert "active_shards:" in result.stdout
+
+        result = runner.invoke(cli.elk, ["stop"])
+        assert result.exit_code == 0
+        assert "ELK stopped" in result.stdout
+
+        result = runner.invoke(cli.elk, ["info"])
+        assert result.exit_code == 0
+        assert "ELK not available" in result.stdout
+
+        result = runner.invoke(cli.elk, ["health"])
+        assert result.exit_code == 0
+        assert "ELK not available" in result.stdout
