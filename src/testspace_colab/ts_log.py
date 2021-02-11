@@ -41,7 +41,7 @@ logger_config = {
     "loggers": {},
     "root": {
         "handlers": ["console", "file"],
-        "level": "ERROR",
+        "level": "DEBUG",
     },
 }
 

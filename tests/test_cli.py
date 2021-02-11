@@ -3,14 +3,21 @@
 """Tests for `testspace_colab` package."""
 import os
 import json
+import urllib.parse
+import pathlib
 from unittest import mock
 import pkg_resources
 import logging
 import pytest
-
-
+import testspace_colab.lib as lib_module
 from click.testing import CliRunner
 from testspace_colab import cli
+
+
+@pytest.fixture()
+def netloc():
+    """Returns the net location of the organization"""
+    return urllib.parse.urlparse(lib_module.API().url).netloc
 
 
 def test_click_version():
@@ -149,6 +156,59 @@ class TestGet:
         assert len(json_data["details"]) == 8
 
 
+class TestCrawl:
+    def test_crawl_all(self, tmpdir, netloc):
+        runner = CliRunner()
+        result = runner.invoke(cli.crawl, ["-o", str(tmpdir)])
+        assert result.exit_code == 0
+        org_dir = pathlib.Path(str(tmpdir)) / netloc
+        assert org_dir.is_dir()
+        api = lib_module.API()
+        for project in [s["name"] for s in api.get_projects()]:
+            project_dir = org_dir / project
+            assert project_dir.is_dir()
+            for space in [s["name"] for s in api.get_spaces(project=project)]:
+                space_dir = project_dir / space
+                for result_info in api.get_results(project=project, space=space):
+                    result_file = space_dir / f"{result_info['name']}.json"
+                    with open(result_file, "r") as file_handle:
+                        result_json = json.load(file_handle)
+                    print(result_json, result_info)
+                    assert result_json["id"] == result_info["id"]
+                    assert result_json["space_id"] == result_info["space_id"]
+
+    def test_crawl_specific(self, tmpdir, netloc):
+        runner = CliRunner()
+        result = runner.invoke(
+            cli.crawl,
+            ["-p", "samples", "-s", "main", "-r", "test_data", "-o", str(tmpdir)],
+        )
+        assert result.exit_code == 0
+        org_dir = pathlib.Path(str(tmpdir)) / netloc
+        assert org_dir.is_dir()
+        result_file = org_dir / "samples" / "main" / "test_data.json"
+        with open(result_file, "r") as file_handle:
+            json.load(file_handle)
+
+        runner = CliRunner()
+        result = runner.invoke(
+            cli.crawl,
+            ["-p", "samples", "-s", "main", "-r", "test_data", "-o", str(tmpdir)],
+        )
+        assert result.exit_code == 0
+        assert "test_data.json already exists - skipping" in result.output
+
+    def test_crawl_no_output(self):
+        runner = CliRunner()
+        result = runner.invoke(
+            cli.crawl, ["-p", "samples", "-s", "main", "-r", "test_data"]
+        )
+        assert result.exit_code == 0
+
+
+@pytest.mark.skipif(
+    "CODESPACES" in os.environ, reason="docker not supported in codespace yet"
+)
 class TestELK:
     @pytest.mark.parametrize("elk_state", ["stopped"])
     def test_all(self, elk_api):

@@ -42,7 +42,6 @@ def json_to_table(json_data, ignore_columns=None):
 
 def xml_to_json(xml_data, depth=0):
     """converts an object of type element
-
     :param xml_data:
     :param depth:
     :return:
@@ -68,7 +67,7 @@ def xml_to_json(xml_data, depth=0):
     json_data[element_type][children_type] = []
 
     for children in xml_data:
-        json_data[element_type][children_type].append(
-            xml_to_json(xml_data=children, depth=depth + 1)
-        )
+        children_data = xml_to_json(xml_data=children, depth=depth + 1)
+        for children_datum in children_data.values():
+            json_data[element_type][children_type].append(children_datum)
     return json_data

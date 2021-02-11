@@ -5,7 +5,9 @@ import click
 import yaml
 import json
 import pprint
+import pathlib
 import logging
+import urllib.parse
 import testspace_colab.ts_log as log_module
 import testspace_colab.client as client_module
 import testspace_colab.lib as lib_module
@@ -175,6 +177,140 @@ def get(args, long, output_file, format):
             logger.exception(write_exception)
             raise click.ClickException(f"failed {write_exception}")
         click.secho(" Done!", fg="green")
+
+
+@main.command()
+@click.option(
+    "-o",
+    "--output-dir",
+    default=None,
+    type=click.Path(writable=True, dir_okay=True, resolve_path=True),
+    help="output directory",
+)
+@click.option("-p", "--project", required=False, help="Project to scan (name or ID)")
+@click.option("-s", "--space", required=False, help="Space to scan (name or ID)")
+@click.option("-r", "--result", required=False, help="result name or ID")
+def crawl(project, space, output_dir, result):
+    """Crawls an organization for specific project and spaces.
+
+    If an output-dir is specified, dumps results into files (with result id)
+    using a directory structure composed of <netloc>/<project>/<space>/...
+
+    Example:
+
+    \b
+        /home/laurent/testspace-colab
+        └── lbrack.testspace.com
+            ├── lbrack:testspace-colab
+            │   ├── elk
+            │   │   ├── build.10@PR-3.json
+            │   │   ├── build.11@PR-3.json
+            │   │   └── build.12@PR-3.json
+            │   ├── json-data-access
+            │   │   ├── build.7@PR-2.json
+            │   └── main
+            │       ├── build.13.json
+            │       └── build.9.json
+            ├── lbrack:testspace.getting-started
+            │   └── main
+            │       ├── Sequence_4.json
+            │       ├── Sequence_5.json
+            └── samples
+                └── main
+                    └── test_data.json
+
+    """
+    parse_error_spec = []
+    parse_ok_count = 0
+
+    client = lib_module.API()
+
+    if output_dir:
+        output_dir = pathlib.Path(output_dir)
+        if not output_dir.is_dir():
+            output_dir.mkdir(exist_ok=True)
+        org_dir = output_dir / urllib.parse.urlparse(client.url).netloc
+
+        if not org_dir.is_dir():
+            click.secho(f"creating org dir {org_dir}", fg="blue")
+            org_dir.mkdir()
+
+    projects = [project] if project else [s["name"] for s in client.get_projects()]
+
+    for current_project in projects:
+        if output_dir:
+            project_dir = org_dir / current_project
+            if not project_dir.is_dir():
+                click.secho(f"creating project dir {project_dir}", fg="blue")
+                project_dir.mkdir()
+        spaces = (
+            [space]
+            if space
+            else [s["name"] for s in client.get_spaces(project=current_project)]
+        )
+        for current_space in spaces:
+            if output_dir:
+                space_dir = project_dir / current_space
+                if not space_dir.is_dir():
+                    click.secho(f"creating space dir {space_dir}", fg="blue")
+                    space_dir.mkdir()
+
+            results = (
+                [result]
+                if result
+                else [
+                    s["name"]
+                    for s in client.get_results(
+                        project=current_project, space=current_space
+                    )
+                ]
+            )
+
+            for current_result in results:
+                result_file = None
+                if output_dir:
+                    result_file = space_dir / f"{current_result}.json"  # By result ID
+                    if result_file.is_file():
+                        click.secho(
+                            f"result file {result_file} already exists - skipping",
+                            fg="yellow",
+                            bold=True,
+                        )
+                        continue
+                load_spec = f"crawl=>org={client.url}, project={current_project}, space={current_space}, " \
+                            f"result={current_result}"
+                click.secho(load_spec, fg="blue")
+                logger.debug(load_spec)
+                try:
+                    response = client.get_result_details(
+                        current_result, project=current_project, space=current_space
+                    )
+                    parse_ok_count += 1
+                except Exception:
+                    parse_error_spec.append(load_spec)
+                    logger.exception(f"failed to parse {load_spec}")
+                else:
+                    if result_file:
+                        click.secho(
+                            f"saving response as json to {result_file}",
+                            fg="blue",
+                            nl=False,
+                        )
+                        try:
+                            with open(result_file, "w") as file_handle:
+                                json.dump(response, file_handle, indent=4)
+                        except Exception as write_exception:
+                            logger.exception(write_exception)
+                            raise click.ClickException(f"failed {write_exception}")
+                        click.secho(" Done!", fg="green")
+
+    num_failures = len(parse_error_spec)
+
+    click.secho(f"Parsed {parse_ok_count} resuls with {num_failures} errors")
+    if num_failures:
+        raise click.ClickException(
+            f"Failed to parse {num_failures} results - see log for details"
+        )
 
 
 @main.group()

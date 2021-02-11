@@ -1,8 +1,12 @@
+import os
 import pytest
 import elasticsearch
 import testspace_colab.elk as elk_module
 
 
+@pytest.mark.skipif(
+    "CODESPACES" in os.environ, reason="docker not supported in codespace yet"
+)
 class TestELKDocker:
     @pytest.mark.parametrize("elk_state", [None])
     def test_not_instanciated(self, elk_api):

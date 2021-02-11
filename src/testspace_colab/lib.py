@@ -4,12 +4,12 @@
 
 """
 import os
+import json
 import pkg_resources
 import pathlib
 import configparser
 import urllib.parse
 import xml.etree.ElementTree as ElementTree
-
 import click
 
 import testspace.testspace as testspace
@@ -105,16 +105,63 @@ class API:
         # Otherwise we query the client api
         return self.client.__getattribute__(item)
 
-    def get_result_details(self, result, project=None, space=None):
+    def get_result_details(self, result, project=None, space=None, flat=False):
+        """This method recursively walk the results structure and extracts information
+        from the "xml snipped" associated to suites (containing testcases).
+
+        It basically calls the testspace::get_result() method and then recurlively
+        loads the information.
+
+        :param result: the result ID or name
+        :param project: The project ID or name (optional - to override ctor argument)
+        :param space: The project ID or name (optional - to override ctor argument)
+        :param flat: If set to True, returns the test cases in a flat (array) instead of structure.
+        :return: a JSON structure (from testspace)
+        """
         logger.debug(
             f"get_result_details result={result} project={project} space={space}"
         )
         response = self.client.get_result(result=result, project=project, space=space)
-        response["details"] = self._load_results(result_id=response["id"])
+
+        # Flat can be passed from the command line a string
+        flat = True if str(flat).lower() == "true" else False
+
+        if flat:
+            response["cases"] = self._flatten_test_case_list(
+                self._load_results(
+                    result_id=response["id"], project=project, space=space
+                )
+            )
+        else:
+            response["details"] = self._load_results(
+                result_id=response["id"], project=project, space=space
+            )
         return response
 
-    def _load_results(self, result_id, path=None, depth=0):
-        response = self.client.get_result_contents(result_id, contents_path=path)
+    def _flatten_test_case_list(self, json_struct):
+        test_cases = []
+        for struct in json_struct:
+            if isinstance(struct, dict):
+                if "cases" in struct and len(struct["cases"]):
+                    test_cases.extend(struct["cases"])
+                if "suites" in struct and len(struct["suites"]):
+                    for test_case in self._flatten_test_case_list(
+                        json_struct=struct["suites"]
+                    ):
+                        test_case["suite"] = struct["path"]
+                        test_cases.append(test_case)
+        return test_cases
+
+    def _load_results(self, result_id, project, space, path=None, depth=0):
+        logger.debug(f"getting result content {path}")
+        try:
+            response = self.client.get_result_contents(
+                result_id, project=project, space=space, contents_path=path
+            )
+        except Exception as load_error:
+            msg = f"failed to load {path}"
+            logger.exception(msg)
+            return [dict(load_error=str(load_error))]
 
         if isinstance(response, dict):  # If we do not receive a list
             response = [response]
@@ -130,10 +177,15 @@ class API:
                     xml_snippet = self.client.get_request(container["download_url"])
                     if xml_snippet.status_code == 200:
                         # print(response.content.decode('utf-8'))
-                        xml_tree = ElementTree.fromstring(
-                            xml_snippet.content.decode("utf-8")
-                        )
-                        json_data = utils_module.xml_to_json(xml_tree, depth=depth + 1)
+                        content = xml_snippet.content.decode("utf-8")
+                        try:
+                            xml_tree = ElementTree.fromstring(content)
+                            json_data = utils_module.xml_to_json(
+                                xml_tree, depth=depth + 1
+                            )
+                        except ElementTree.ParseError:
+                            # For manual testing the content is in JSON format
+                            json_data = json.loads(content)
                         if "suite" in json_data:
                             container["suites"].append(json_data["suite"])
                         if "case" in json_data:
@@ -154,7 +206,14 @@ class API:
                     f"[C{sum(container['case_counts'])}/S{sum(container['suite_counts'])}]",
                     bold=True,
                 )
-                self._load_result(path=container["path"], depth=depth + 1)
+                # FIXME: this is wrong - we should handle the return value
+                container["folders"] = self._load_results(
+                    result_id=result_id,
+                    path=container["path"],
+                    project=project,
+                    space=space,
+                    depth=depth + 1,
+                )
             else:
                 click.secho(
                     "  " * depth + f"unknown container type {container['type']}",
