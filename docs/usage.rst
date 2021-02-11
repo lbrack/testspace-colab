@@ -152,6 +152,57 @@ To obtain a complete report for a given result, you can use the built-in method
 This will not only fetch the result meta-data but also the complete report
 consisting of suite and test case details and annotation.
 
+Crawl
+.....
+
+The crawl command allow you to crawl an entire organization, all the spaces in a given project,
+all the results in a given space, or a single result.
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒ ts-colab crawl --help
+        Usage: ts-colab crawl [OPTIONS]
+
+          Crawls an organization for specific project and spaces.
+
+          If an output-dir is specified, dumps results into files (with result id)
+          using a directory structure composed of <netloc>/<project>/<space>/...
+
+          Example:
+
+              /home/laurent/testspace-colab
+              └── lbrack.testspace.com
+                  ├── lbrack:testspace-colab
+                  │   ├── elk
+                  │   │   ├── build.10@PR-3.json
+                  │   │   ├── build.11@PR-3.json
+                  │   │   └── build.12@PR-3.json
+                  │   ├── json-data-access
+                  │   │   ├── build.7@PR-2.json
+                  │   └── main
+                  │       ├── build.13.json
+                  │       └── build.9.json
+                  ├── lbrack:testspace.getting-started
+                  │   └── main
+                  │       ├── Sequence_4.json
+                  │       ├── Sequence_5.json
+                  └── samples
+                      └── main
+                          └── test_data.json
+
+        Options:
+          -o, --output-dir PATH  output directory
+          -p, --project TEXT     Project to scan (name or ID)
+          -s, --space TEXT       Space to scan (name or ID)
+          -r, --result TEXT      result name or ID
+          --help                 Show this message and exit.
+
+Unless you specify an output directory, ``--output-dir``, the downloaded results are discarded.
+When the output directory is specified, each result is serialized as json to the file system
+following the structure illustrated above.
+
+Subsequent runs of the command will not re-download the details if they are already present on disk
+
 .. _elk_cli:
 
 ELK
