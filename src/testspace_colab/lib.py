@@ -105,7 +105,7 @@ class API:
         # Otherwise we query the client api
         return self.client.__getattribute__(item)
 
-    def get_result_details(self, result, project=None, space=None, flat=False):
+    def get_result_details(self, result, project=None, space=None):
         """This method recursively walk the results structure and extracts information
         from the "xml snipped" associated to suites (containing testcases).
 
@@ -115,7 +115,6 @@ class API:
         :param result: the result ID or name
         :param project: The project ID or name (optional - to override ctor argument)
         :param space: The project ID or name (optional - to override ctor argument)
-        :param flat: If set to True, returns the test cases in a flat (array) instead of structure.
         :return: a JSON structure (from testspace)
         """
         logger.debug(
@@ -123,34 +122,10 @@ class API:
         )
         response = self.client.get_result(result=result, project=project, space=space)
 
-        # Flat can be passed from the command line a string
-        flat = True if str(flat).lower() == "true" else False
-
-        if flat:
-            response["cases"] = self._flatten_test_case_list(
-                self._load_results(
-                    result_id=response["id"], project=project, space=space
-                )
-            )
-        else:
-            response["details"] = self._load_results(
-                result_id=response["id"], project=project, space=space
-            )
+        response["details"] = self._load_results(
+            result_id=response["id"], project=project, space=space
+        )
         return response
-
-    def _flatten_test_case_list(self, json_struct):
-        test_cases = []
-        for struct in json_struct:
-            if isinstance(struct, dict):
-                if "cases" in struct and len(struct["cases"]):
-                    test_cases.extend(struct["cases"])
-                if "suites" in struct and len(struct["suites"]):
-                    for test_case in self._flatten_test_case_list(
-                        json_struct=struct["suites"]
-                    ):
-                        test_case["suite"] = struct["path"]
-                        test_cases.append(test_case)
-        return test_cases
 
     def _load_results(self, result_id, project, space, path=None, depth=0):
         logger.debug(f"getting result content {path}")

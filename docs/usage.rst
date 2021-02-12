@@ -152,6 +152,72 @@ To obtain a complete report for a given result, you can use the built-in method
 This will not only fetch the result meta-data but also the complete report
 consisting of suite and test case details and annotation.
 
+json path
+^^^^^^^^^
+
+By default the output's structure come from the testspace server. However it is often useful to reformat
+the information or extract element of interest. This can be done from the command line using
+`jsonpath <https://goessner.net/articles/JsonPath/>`_ syntax. For example, to get all the test cases
+
+.. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result_details test_data -f json -j '$..[cases][:]'
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/testspace
+        URL=https://lbrack.testspace.com
+        [{'annotations': [],
+          'duration': '0.000000',
+          'name': 'test_case_1',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'status': 'passed'},
+         ...
+         {'annotations': [{'children': [],
+                           'description': 'Assertion: AssertionError: Failure!\n'
+                                          'assert 0',
+                           'level': 'error',
+                           'mime_type': 'text/plain',
+                           'name': '01. failure'}],
+          'duration': '0.000000',
+          'name': 'test_fail',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'status': 'failed'},
+          ...
+          {'annotations': [],
+          'duration': '0.000000',
+          'name': 'test_case_9',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'status': 'passed'}]
+
+for all the **suites**
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result_details test_data -f json -j '$..[suites][:]'
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/testspace
+        URL=https://lbrack.testspace.com
+        [{'cached': '',
+          'cases': [{'annotations': [],
+                     'duration': '0.000000',
+                     'name': 'test_case_1',
+                     'start_time': '2021-02-03T09:51:22.005395',
+                     'status': 'passed'}],
+          'duration': '0.000000',
+          'errored': '0',
+          'failed': '0',
+          'in_progress': '0',
+          'name': 'tmp.test_suite_1',
+          'not_applicable': '0',
+          'passed': '1',
+          'runner': 'periscopai',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'type': 'auto',
+          'unknown': '0'},
+          ...
+        ]
+
+
+
+
+
 Crawl
 .....
 
@@ -302,9 +368,43 @@ There are several sub-modules under :py:mod:`testspace_colab`:
       :py:class:`ELK <testspace_colab.elk.ELK>` class to control
       and access an ELK stack running on Docker.
 
-To use testspace-colab in a project::
+The following example shows how to use the API in a project. If you know the json structure,
+you can use the `jsonpath-ng <https://pypi.org/project/jsonpath-ng/>`_ module to extract
+any information you are interested in usig the jsonpath notation. For those of us familiar
+with XPATH, check the `JSONPath - XPath for JSON <https://goessner.net/articles/JsonPath/>`_
 
-    import testspace_colab
+.. code-block:: console
+
+    >>> import testspace_colab.lib as lib_module
+    >>> import jsonpath_ng
+    >>> api = lib_module.API()
+    >>> [match.value for match in jsonpath_ng.parse('$..name').find(api.get_projects())]
+    ['lbrack:testspace-colab', 'lbrack:testspace.getting-started', 'samples']
+    >>> [match.value for match in jsonpath_ng.parse('$..name').find(api.get_results('samples', 'main'))]
+    ['test_data', 'test']
+    >>> [match.value for match in jsonpath_ng.parse('$..cases[:]').find(api.get_result_details(result='test_data', project='samples', space='main'))]
+    [{'duration': '0.000000',
+      'name': 'test_case_1',
+      'start_time': '2021-02-03T09:51:22.005395',
+      'status': 'passed',
+      'annotations': []},
+     {'duration': '0.000000',
+      'name': 'test_fail',
+      'start_time': '2021-02-03T09:51:22.005395',
+      'status': 'failed',
+      'annotations': [{'description': 'Assertion: AssertionError: Failure!\nassert 0',
+        'level': 'error',
+        'mime_type': 'text/plain',
+        'name': '01. failure',
+        'children': []}]},
+     {'description': 'xfailed: reason for xfailing',
+      'duration': '0.000000',
+      'name': 'test_xfail',
+      'start_time': '2021-02-03T09:51:22.005395',
+      'status': 'not_applicable',
+      'annotations': []}]
+
+
 
 .. _elk_api:
 

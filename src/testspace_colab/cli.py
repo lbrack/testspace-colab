@@ -8,6 +8,7 @@ import pprint
 import pathlib
 import logging
 import urllib.parse
+import jsonpath_ng
 import testspace_colab.ts_log as log_module
 import testspace_colab.client as client_module
 import testspace_colab.lib as lib_module
@@ -88,8 +89,15 @@ def client(args, version, help):
     type=click.Path(writable=True, file_okay=True, dir_okay=False, resolve_path=True),
     help="output file",
 )
+@click.option(
+    "-j",
+    "--json-path",
+    default=None,
+    required=False,
+    help="json path expression",
+)
 @click.option("-l", "--long", is_flag=True, help="Do not filter any column")
-def get(args, long, output_file, format):
+def get(args, long, output_file, format, json_path):
     """Performs a get request to the test space server and presents the
     response in a tabular manner.
 
@@ -125,6 +133,13 @@ def get(args, long, output_file, format):
 
     This will not only fetch the result meta-data but also the complete report
     consisting of suite and test case details and annotation.
+
+    Extract all test cases or suites from the response
+    \b
+        ts-colab get result_details test_data -f json -j '$..[cases][:]'
+        ts-colab get result_details test_data -f json -j '$..[suites][:]'
+
+
     """
 
     if not format:
@@ -158,6 +173,16 @@ def get(args, long, output_file, format):
         if "'Testspace' object has no attribute" in str(attribute_error):
             raise click.ClickException(f"no method '{args[0]}' to access resource")
         raise click.ClickException(attribute_error)
+
+    if json_path:
+        try:
+            response = [
+                match.value for match in jsonpath_ng.parse(json_path).find(response)
+            ]
+        except Exception as exception:
+            raise click.ClickException(
+                f"Failed to parse {json_path} expression {exception}"
+            )
 
     if format == "tabular":
         utils_module.json_to_table(
@@ -277,8 +302,10 @@ def crawl(project, space, output_dir, result):
                             bold=True,
                         )
                         continue
-                load_spec = f"crawl=>org={client.url}, project={current_project}, space={current_space}, " \
-                            f"result={current_result}"
+                load_spec = (
+                    f"crawl=>org={client.url}, project={current_project}, space={current_space}, "
+                    f"result={current_result}"
+                )
                 click.secho(load_spec, fg="blue")
                 logger.debug(load_spec)
                 try:

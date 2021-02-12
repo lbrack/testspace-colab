@@ -8,6 +8,7 @@ import pathlib
 from unittest import mock
 import pkg_resources
 import logging
+import jsonpath_ng
 import pytest
 import testspace_colab.lib as lib_module
 from click.testing import CliRunner
@@ -154,6 +155,34 @@ class TestGet:
         assert "details" in json_data
         assert isinstance(json_data["details"], list)
         assert len(json_data["details"]) == 8
+
+    def test_json_path(self, tmpdir):
+        runner = CliRunner()
+        tmpfile = tmpdir.join("output.json")
+        assert tmpfile.check() is False
+        result = runner.invoke(
+            cli.get,
+            [
+                "result_details",
+                "test_data",
+                "-j",
+                "$..[cases][:]",
+                "-f",
+                "json",
+                "-o",
+                str(tmpfile),
+            ],
+        )
+        assert result.exit_code == 0
+        assert tmpfile.check() is True
+        with open(str(tmpfile)) as file_handle:
+            json_data = json.load(file_handle)
+        testcase_names = [
+            match.value for match in jsonpath_ng.parse("$.name").find(json_data)
+        ]
+        assert testcase_names, "there shall be at least one test"
+        # for name in testcase_names:
+        #     assert name.startswith('test_')
 
 
 class TestCrawl:
