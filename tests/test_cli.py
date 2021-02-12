@@ -178,7 +178,7 @@ class TestGet:
         with open(str(tmpfile)) as file_handle:
             json_data = json.load(file_handle)
         testcase_names = [
-            match.value for match in jsonpath_ng.parse("$.name").find(json_data)
+            match.value for match in jsonpath_ng.parse("$..name").find(json_data)
         ]
         assert testcase_names, "there shall be at least one test"
         # for name in testcase_names:
