@@ -4,14 +4,14 @@
 
 """
 import os
+import json
 import pkg_resources
 import pathlib
 import configparser
 import urllib.parse
 import xml.etree.ElementTree as ElementTree
-
 import click
-
+import rich.progress
 import testspace.testspace as testspace
 import testspace_colab.utils as utils_module
 import testspace_colab.ts_log
@@ -106,15 +106,67 @@ class API:
         return self.client.__getattribute__(item)
 
     def get_result_details(self, result, project=None, space=None):
+        """This method recursively walk the results structure and extracts information
+        from the "xml snipped" associated to suites (containing testcases).
+
+        It basically calls the testspace::get_result() method and then recurlively
+        loads the information.
+
+        :param result: the result ID or name
+        :param project: The project ID or name (optional - to override ctor argument)
+        :param space: The project ID or name (optional - to override ctor argument)
+        :return: a JSON structure (from testspace)
+        """
         logger.debug(
             f"get_result_details result={result} project={project} space={space}"
         )
         response = self.client.get_result(result=result, project=project, space=space)
-        response["details"] = self._load_results(result_id=response["id"])
+
+        with rich.progress.Progress(transient=True) as progress:
+
+            tasks = {
+                "suites": {
+                    "increment": 1000 / (sum(response["session_suite_counts"]) or 1),
+                    "task": progress.add_task("[red] Suites", total=1000, start=False),
+                },
+                "cases": {
+                    "increment": 1000 / (sum(response["session_case_counts"]) or 1),
+                    "task": progress.add_task("[green] Cases", total=1000, start=False),
+                },
+                "annotations": {
+                    "increment": 1000 / (sum(response["annotation_counts"]) or 1),
+                    "task": progress.add_task(
+                        "[blue] Annotations", total=1000, start=False
+                    ),
+                },
+            }
+
+            def download_progress(object_type, object_count):
+                progress.update(
+                    tasks[object_type]["task"],
+                    advance=tasks[object_type]["increment"] * object_count,
+                )
+
+            response["details"] = self._load_results(
+                result_id=response["id"],
+                project=project,
+                space=space,
+                progress_callback=download_progress,
+            )
         return response
 
-    def _load_results(self, result_id, path=None, depth=0):
-        response = self.client.get_result_contents(result_id, contents_path=path)
+    def _load_results(
+        self, result_id, project, space, path=None, progress_callback=None
+    ):
+        logger.debug(f"getting result content {path}")
+        try:
+            response = self.client.get_result_contents(
+                result_id, project=project, space=space, contents_path=path
+            )
+        except Exception as load_error:
+            msg = f"failed to load {path}"
+            logger.exception(msg)
+            return [dict(load_error=str(load_error))]
 
         if isinstance(response, dict):  # If we do not receive a list
             response = [response]
@@ -130,36 +182,33 @@ class API:
                     xml_snippet = self.client.get_request(container["download_url"])
                     if xml_snippet.status_code == 200:
                         # print(response.content.decode('utf-8'))
-                        xml_tree = ElementTree.fromstring(
-                            xml_snippet.content.decode("utf-8")
-                        )
-                        json_data = utils_module.xml_to_json(xml_tree, depth=depth + 1)
+                        content = xml_snippet.content.decode("utf-8")
+                        try:
+                            xml_tree = ElementTree.fromstring(content)
+                            json_data = utils_module.xml_to_json(
+                                xml_tree, progress_callback=progress_callback
+                            )
+                        except ElementTree.ParseError:
+                            # For manual testing the content is in JSON format
+                            json_data = json.loads(content)
                         if "suite" in json_data:
                             container["suites"].append(json_data["suite"])
                         if "case" in json_data:
                             container["cases"].append(json_data["case"])
-
-                    click.secho(
-                        "  " * depth
-                        + f"[suite] {container['name']} [C{case_count}] HTTP-{xml_snippet.status_code}",
-                        fg="blue",
-                    )
                 else:
-                    click.secho(
-                        "  " * depth + f"[suite] {container['name']} [C{case_count}]"
-                    )
+                    if progress_callback:
+                        progress_callback(object_type="suites", object_count=1)
             elif container["type"].startswith("folder"):
-                click.secho(
-                    "  " * depth + f"[folder] {container['name']} "
-                    f"[C{sum(container['case_counts'])}/S{sum(container['suite_counts'])}]",
-                    bold=True,
+                # FIXME: this is wrong - we should handle the return value
+                container["folders"] = self._load_results(
+                    result_id=result_id,
+                    path=container["path"],
+                    project=project,
+                    space=space,
+                    progress_callback=progress_callback,
                 )
-                self._load_result(path=container["path"], depth=depth + 1)
             else:
-                click.secho(
-                    "  " * depth + f"unknown container type {container['type']}",
-                    fg="yellow",
-                )
+                logger.debug(f"unknown container type {container['type']}")
         return response
 
     @staticmethod

@@ -40,11 +40,10 @@ def json_to_table(json_data, ignore_columns=None):
         click.secho(nl=True)
 
 
-def xml_to_json(xml_data, depth=0):
+def xml_to_json(xml_data, progress_callback=None):
     """converts an object of type element
-
     :param xml_data:
-    :param depth:
+    :param progress_callback: a progress callback function
     :return:
     """
     json_data = dict()
@@ -55,20 +54,25 @@ def xml_to_json(xml_data, depth=0):
 
     if xml_data.tag == "test_suite":
         children_type = "cases"
-        click.secho("  " * depth + f"[suite] {xml_data.attrib['name']}", fg="blue")
+        if progress_callback:
+            progress_callback(object_type="suites", object_count=1)
     elif xml_data.tag == "test_case":
         children_type = "annotations"
-        click.secho("  " * depth + f"[case] {xml_data.attrib['name']}", fg="green")
+        if progress_callback:
+            progress_callback(object_type="cases", object_count=1)
     elif xml_data.tag == "annotation":
         children_type = "children"
-        click.secho("  " * depth + f"[{xml_data.tag}] ", fg="yellow")
+        if progress_callback:
+            progress_callback(object_type="annotations", object_count=1)
     else:
-        click.secho("  " * depth + f"[{xml_data.tag}] ", fg="yellow")
-
+        if progress_callback:
+            progress_callback(object_type=xml_data.tag, object_count=1)
     json_data[element_type][children_type] = []
 
     for children in xml_data:
-        json_data[element_type][children_type].append(
-            xml_to_json(xml_data=children, depth=depth + 1)
+        children_data = xml_to_json(
+            xml_data=children, progress_callback=progress_callback
         )
+        for children_datum in children_data.values():
+            json_data[element_type][children_type].append(children_datum)
     return json_data

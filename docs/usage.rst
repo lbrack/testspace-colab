@@ -133,14 +133,6 @@ To obtain a complete report for a given result, you can use the built-in method
 
         (testspace)⚡ ⇒  ts-colab get result_details test_data -o dump.json -f json
         URL=https://lbrack.testspace.com
-        [suite] tmp.test_suite_1
-            [case] test_case_1
-        [suite] tmp.test_suite_1 [C1] HTTP-200
-          [suite] tmp.test_suite_1.TestSuiteC1
-            [case] test_case_2
-            [case] test_case_3
-        ...
-        [suite] tmp.pyfoldler_1.test_suite_3.TestSuiteC3 [C2] HTTP-200
         {'annotation_counts': [1, 0, 1],
          'build_status': None,
          ...
@@ -152,10 +144,137 @@ To obtain a complete report for a given result, you can use the built-in method
 This will not only fetch the result meta-data but also the complete report
 consisting of suite and test case details and annotation.
 
+json path
+^^^^^^^^^
+
+By default the output's structure come from the testspace server. However it is often useful to reformat
+the information or extract element of interest. This can be done from the command line using
+`jsonpath <https://goessner.net/articles/JsonPath/>`_ syntax. For example, to get all the test cases
+
+.. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result_details test_data -f json -j '$..[cases][:]'
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/testspace
+        URL=https://lbrack.testspace.com
+        [{'annotations': [],
+          'duration': '0.000000',
+          'name': 'test_case_1',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'status': 'passed'},
+         ...
+         {'annotations': [{'children': [],
+                           'description': 'Assertion: AssertionError: Failure!\n'
+                                          'assert 0',
+                           'level': 'error',
+                           'mime_type': 'text/plain',
+                           'name': '01. failure'}],
+          'duration': '0.000000',
+          'name': 'test_fail',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'status': 'failed'},
+          ...
+          {'annotations': [],
+          'duration': '0.000000',
+          'name': 'test_case_9',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'status': 'passed'}]
+
+for all the **suites**
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab get result_details test_data -f json -j '$..[suites][:]'
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/testspace
+        URL=https://lbrack.testspace.com
+        [{'cached': '',
+          'cases': [{'annotations': [],
+                     'duration': '0.000000',
+                     'name': 'test_case_1',
+                     'start_time': '2021-02-03T09:51:22.005395',
+                     'status': 'passed'}],
+          'duration': '0.000000',
+          'errored': '0',
+          'failed': '0',
+          'in_progress': '0',
+          'name': 'tmp.test_suite_1',
+          'not_applicable': '0',
+          'passed': '1',
+          'runner': 'periscopai',
+          'start_time': '2021-02-03T09:51:22.005395',
+          'type': 'auto',
+          'unknown': '0'},
+          ...
+        ]
+
+
+
+
+
+Crawl
+.....
+
+The crawl command allow you to crawl an entire organization, all the spaces in a given project,
+all the results in a given space, or a single result.
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒ ts-colab crawl --help
+        Usage: ts-colab crawl [OPTIONS]
+
+          Crawls an organization for specific project and spaces.
+
+          If an output-dir is specified, dumps results into files (with result id)
+          using a directory structure composed of <netloc>/<project>/<space>/...
+
+          Example:
+
+              /home/laurent/testspace-colab
+              └── lbrack.testspace.com
+                  ├── lbrack:testspace-colab
+                  │   ├── elk
+                  │   │   ├── build.10@PR-3.json
+                  │   │   ├── build.11@PR-3.json
+                  │   │   └── build.12@PR-3.json
+                  │   ├── json-data-access
+                  │   │   ├── build.7@PR-2.json
+                  │   └── main
+                  │       ├── build.13.json
+                  │       └── build.9.json
+                  ├── lbrack:testspace.getting-started
+                  │   └── main
+                  │       ├── Sequence_4.json
+                  │       ├── Sequence_5.json
+                  └── samples
+                      └── main
+                          └── test_data.json
+
+        Options:
+          -o, --output-dir PATH  output directory
+          -p, --project TEXT     Project to scan (name or ID)
+          -s, --space TEXT       Space to scan (name or ID)
+          -r, --result TEXT      result name or ID
+          --help                 Show this message and exit.
+
+Unless you specify an output directory, ``--output-dir``, the downloaded results are discarded.
+When the output directory is specified, each result is serialized as json to the file system
+following the structure illustrated above.
+
+Subsequent runs of the command will not re-download the details if they are already present on disk
+
 .. _elk_cli:
 
 ELK
 ...
+
+.. note:: CodeSpaces Users
+
+    run the following command when running Codespaces for the first time. This will ensure
+    enough virtual memory for the ELK stack to start
+
+    .. code-block:: console
+
+        $ sudo sysctl -w vm.max_map_count=262144
+
 
 For controlling ELK programmatically, check :ref:`ELK API <elk_api>`
 
@@ -232,6 +351,10 @@ To connect to the local Kibana instance, you can run
 
     .. figure:: ./_static/kibana.png
 
+.. note:: CodeSpaces User
+
+    You can click on the link and follow the link to access the Kibana Console.
+
 
 
 API
@@ -251,9 +374,43 @@ There are several sub-modules under :py:mod:`testspace_colab`:
       :py:class:`ELK <testspace_colab.elk.ELK>` class to control
       and access an ELK stack running on Docker.
 
-To use testspace-colab in a project::
+The following example shows how to use the API in a project. If you know the json structure,
+you can use the `jsonpath-ng <https://pypi.org/project/jsonpath-ng/>`_ module to extract
+any information you are interested in usig the jsonpath notation. For those of us familiar
+with XPATH, check the `JSONPath - XPath for JSON <https://goessner.net/articles/JsonPath/>`_
 
-    import testspace_colab
+.. code-block:: console
+
+    >>> import testspace_colab.lib as lib_module
+    >>> import jsonpath_ng
+    >>> api = lib_module.API()
+    >>> [match.value for match in jsonpath_ng.parse('$..name').find(api.get_projects())]
+    ['lbrack:testspace-colab', 'lbrack:testspace.getting-started', 'samples']
+    >>> [match.value for match in jsonpath_ng.parse('$..name').find(api.get_results('samples', 'main'))]
+    ['test_data', 'test']
+    >>> [match.value for match in jsonpath_ng.parse('$..cases[:]').find(api.get_result_details(result='test_data', project='samples', space='main'))]
+    [{'duration': '0.000000',
+      'name': 'test_case_1',
+      'start_time': '2021-02-03T09:51:22.005395',
+      'status': 'passed',
+      'annotations': []},
+     {'duration': '0.000000',
+      'name': 'test_fail',
+      'start_time': '2021-02-03T09:51:22.005395',
+      'status': 'failed',
+      'annotations': [{'description': 'Assertion: AssertionError: Failure!\nassert 0',
+        'level': 'error',
+        'mime_type': 'text/plain',
+        'name': '01. failure',
+        'children': []}]},
+     {'description': 'xfailed: reason for xfailing',
+      'duration': '0.000000',
+      'name': 'test_xfail',
+      'start_time': '2021-02-03T09:51:22.005395',
+      'status': 'not_applicable',
+      'annotations': []}]
+
+
 
 .. _elk_api:
 

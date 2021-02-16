@@ -103,6 +103,38 @@ and *d20210131* indicates that some files haven't been committed. When the works
 is clean (no modified) files, the *d2021...* is removed. This is an indicator as to
 whether the version can be reproduced from a commit or not.
 
+Using CodeSpaces
+----------------
+
+Herein are the instruction to use the code in `GitHub Codespaces <https://github.com/features/codespaces>`_
+
+Select the branch you want to work with
+
+.. image:: _static/contributions/branch-selection.png
+
+Start code spaces (make sure the branch in codespaces matches the branch you selected)
+
+.. code-block:: console
+
+    # active the virtual environment
+    codespace ➜ ~/workspace/testspace-colab (flat-structure) $ source .venv/bin/activate
+    (.venv) codespace ➜ ~/workspace/testspace-colab (flat-structure) $
+
+    # install in dev mode
+    codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make install
+
+    # run the tests
+    codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make tests
+
+.. image:: _static/contributions/codespaces-test.png
+
+.. code-block:: console
+
+    # run the tests
+    codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make docs
+
+.. image:: _static/contributions/codespaces-docs.png
+
 
 Pull Request Guidelines
 -----------------------
