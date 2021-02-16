@@ -133,14 +133,6 @@ To obtain a complete report for a given result, you can use the built-in method
 
         (testspace)⚡ ⇒  ts-colab get result_details test_data -o dump.json -f json
         URL=https://lbrack.testspace.com
-        [suite] tmp.test_suite_1
-            [case] test_case_1
-        [suite] tmp.test_suite_1 [C1] HTTP-200
-          [suite] tmp.test_suite_1.TestSuiteC1
-            [case] test_case_2
-            [case] test_case_3
-        ...
-        [suite] tmp.pyfoldler_1.test_suite_3.TestSuiteC3 [C2] HTTP-200
         {'annotation_counts': [1, 0, 1],
          'build_status': None,
          ...

@@ -11,7 +11,7 @@ import configparser
 import urllib.parse
 import xml.etree.ElementTree as ElementTree
 import click
-
+import rich.progress
 import testspace.testspace as testspace
 import testspace_colab.utils as utils_module
 import testspace_colab.ts_log
@@ -122,12 +122,42 @@ class API:
         )
         response = self.client.get_result(result=result, project=project, space=space)
 
-        response["details"] = self._load_results(
-            result_id=response["id"], project=project, space=space
-        )
+        with rich.progress.Progress(transient=True) as progress:
+
+            tasks = {
+                "suites": {
+                    "increment": 1000 / sum(response["session_suite_counts"]),
+                    "task": progress.add_task("[red] Suites", total=1000, start=False),
+                },
+                "cases": {
+                    "increment": 1000 / sum(response["session_case_counts"]),
+                    "task": progress.add_task("[green] Cases", total=1000, start=False),
+                },
+                "annotations": {
+                    "increment": 1000 / sum(response["annotation_counts"]),
+                    "task": progress.add_task(
+                        "[blue] Annotations", total=1000, start=False
+                    ),
+                },
+            }
+
+            def download_progress(object_type, object_count):
+                progress.update(
+                    tasks[object_type]["task"],
+                    advance=tasks[object_type]["increment"] * object_count,
+                )
+
+            response["details"] = self._load_results(
+                result_id=response["id"],
+                project=project,
+                space=space,
+                progress_callback=download_progress,
+            )
         return response
 
-    def _load_results(self, result_id, project, space, path=None, depth=0):
+    def _load_results(
+        self, result_id, project, space, path=None, progress_callback=None
+    ):
         logger.debug(f"getting result content {path}")
         try:
             response = self.client.get_result_contents(
@@ -156,7 +186,7 @@ class API:
                         try:
                             xml_tree = ElementTree.fromstring(content)
                             json_data = utils_module.xml_to_json(
-                                xml_tree, depth=depth + 1
+                                xml_tree, progress_callback=progress_callback
                             )
                         except ElementTree.ParseError:
                             # For manual testing the content is in JSON format
@@ -165,35 +195,20 @@ class API:
                             container["suites"].append(json_data["suite"])
                         if "case" in json_data:
                             container["cases"].append(json_data["case"])
-
-                    click.secho(
-                        "  " * depth
-                        + f"[suite] {container['name']} [C{case_count}] HTTP-{xml_snippet.status_code}",
-                        fg="blue",
-                    )
                 else:
-                    click.secho(
-                        "  " * depth + f"[suite] {container['name']} [C{case_count}]"
-                    )
+                    if progress_callback:
+                        progress_callback(object_type="suites", object_count=1)
             elif container["type"].startswith("folder"):
-                click.secho(
-                    "  " * depth + f"[folder] {container['name']} "
-                    f"[C{sum(container['case_counts'])}/S{sum(container['suite_counts'])}]",
-                    bold=True,
-                )
                 # FIXME: this is wrong - we should handle the return value
                 container["folders"] = self._load_results(
                     result_id=result_id,
                     path=container["path"],
                     project=project,
                     space=space,
-                    depth=depth + 1,
+                    progress_callback=progress_callback,
                 )
             else:
-                click.secho(
-                    "  " * depth + f"unknown container type {container['type']}",
-                    fg="yellow",
-                )
+                logger.debug(f"unknown container type {container['type']}")
         return response
 
     @staticmethod
