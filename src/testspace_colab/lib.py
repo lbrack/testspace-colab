@@ -126,15 +126,15 @@ class API:
 
             tasks = {
                 "suites": {
-                    "increment": 1000 / sum(response["session_suite_counts"]),
+                    "increment": 1000 / (sum(response["session_suite_counts"]) or 1),
                     "task": progress.add_task("[red] Suites", total=1000, start=False),
                 },
                 "cases": {
-                    "increment": 1000 / sum(response["session_case_counts"]),
+                    "increment": 1000 / (sum(response["session_case_counts"]) or 1),
                     "task": progress.add_task("[green] Cases", total=1000, start=False),
                 },
                 "annotations": {
-                    "increment": 1000 / sum(response["annotation_counts"]),
+                    "increment": 1000 / (sum(response["annotation_counts"]) or 1),
                     "task": progress.add_task(
                         "[blue] Annotations", total=1000, start=False
                     ),

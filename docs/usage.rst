@@ -266,6 +266,16 @@ Subsequent runs of the command will not re-download the details if they are alre
 ELK
 ...
 
+.. note:: CodeSpaces Users
+
+    run the following command when running Codespaces for the first time. This will ensure
+    enough virtual memory for the ELK stack to start
+
+    .. code-block:: console
+
+        $ sudo sysctl -w vm.max_map_count=262144
+
+
 For controlling ELK programmatically, check :ref:`ELK API <elk_api>`
 
 The `Elastic Stack <https://elk-docker.readthedocs.io>`_ used for testing can be controlled
@@ -340,6 +350,10 @@ To connect to the local Kibana instance, you can run
         Done
 
     .. figure:: ./_static/kibana.png
+
+.. note:: CodeSpaces User
+
+    You can click on the link and follow the link to access the Kibana Console.
 
 
 
