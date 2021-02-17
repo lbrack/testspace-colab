@@ -135,6 +135,10 @@ Start code spaces (make sure the branch in codespaces matches the branch you sel
 
 .. image:: _static/contributions/codespaces-docs.png
 
+.. code-block: console
+
+    jupyter lab --no-browser --notebook-dir=./notebooks/
+
 
 Pull Request Guidelines
 -----------------------
