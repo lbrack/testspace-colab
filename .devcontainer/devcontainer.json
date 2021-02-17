@@ -2,7 +2,6 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.159.0/containers/codespaces-linux
 {
 	"name": "GitHub Codespaces (Default)",
-	"postCreateCommand": "source .venv/bin/activate && sudo sysctl -w vm.max_map_count=262144"
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -49,5 +48,6 @@
 	 "forwardPorts": [8888, 5601, 9200, 5044],
 
 	// "oryx build" will automatically install your dependencies and attempt to build your project
-	"postCreateCommand": "oryx build -p virtualenv_name=.venv || echo 'Could not auto-build. Skipping.'"
+	//"postCreateCommand": "oryx build -p virtualenv_name=.venv || echo 'Could not auto-build. Skipping.'"
+	"postCreateCommand": "source .venv/bin/activate && sudo sysctl -w vm.max_map_count=262144"
 }
