@@ -50,5 +50,5 @@
 	// "oryx build" will automatically install your dependencies and attempt to build your project
 	//"postCreateCommand": "oryx build -p virtualenv_name=.venv || echo 'Could not auto-build. Skipping.'"
 	// Create a simple virtual environment and setup 
-	"postCreateCommand": "apt-get install -y python3-venv && python3 -m venv .venv && sudo sysctl -w vm.max_map_count=262144"
+	"postCreateCommand": "sudo apt-get install -y python3-venv && python3 -m venv .venv && sudo sysctl -w vm.max_map_count=262144"
 }
