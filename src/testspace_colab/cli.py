@@ -1,5 +1,6 @@
 """Console script for testspace_colab."""
 import sys
+import os
 import webbrowser
 import click
 import yaml
@@ -338,6 +339,34 @@ def crawl(project, space, output_dir, result):
         raise click.ClickException(
             f"Failed to parse {num_failures} results - see log for details"
         )
+
+
+@main.command()
+@click.option("--no-elk", is_flag=True, help="Do not start the ELK stack")
+def jupyter(no_elk):
+    """Starts the Jupyter lab
+
+    When running in CodeSpaces, the browser is not automatically
+    started.
+
+
+
+    """
+    notebook_dir = utils_module.get_notebook_dir()
+    no_browser = "--no-browser" if "CODESPACES" in os.environ else ""
+
+    elk = elk_module.ELK() if not no_elk else None
+    if elk:
+        click.secho("starting ELK", fg="green")
+        elk.start()
+
+    exit_code = os.system(f"jupyter lab --notebook-dir={notebook_dir} {no_browser}")
+
+    if elk:
+        elk.stop()
+
+    if exit_code and exit_code != 2:
+        raise click.ClickException(f"Jupyter lab existed with an error {exit_code}")
 
 
 @main.group()

@@ -1,10 +1,24 @@
 """
 
 """
+import os
+import pathlib
 import click
 import testspace_colab.ts_log
 
 logger = testspace_colab.ts_log.get_logger("utils")
+
+PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent.absolute()
+
+
+def use_test_config():
+    os.environ["TS_COLAB_CONFIG_DIR"] = str(
+        PROJECT_ROOT / "tests" / ".config" / "testspace"
+    )
+
+
+def get_notebook_dir():
+    return PROJECT_ROOT / "notebooks"
 
 
 def json_to_table(json_data, ignore_columns=None):
