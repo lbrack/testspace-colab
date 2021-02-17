@@ -108,6 +108,10 @@ Using CodeSpaces
 
 Herein are the instruction to use the code in `GitHub Codespaces <https://github.com/features/codespaces>`_
 
+Note the the container is pre-initialized according to the definition found in
+[.devcontainer/devcontainer.json](.devcontainer/devcontainer.json). This container definition
+automatically sets the port mapping for ELK and Jupyter.
+
 Select the branch you want to work with
 
 .. image:: _static/contributions/branch-selection.png
@@ -134,6 +138,11 @@ Start code spaces (make sure the branch in codespaces matches the branch you sel
     codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make docs
 
 .. image:: _static/contributions/codespaces-docs.png
+
+It is possible to start the Jupyter Lab as illustrated below
+
+.. image:: _static/contributions/code-space-jupyter.png
+
 
 
 Pull Request Guidelines
