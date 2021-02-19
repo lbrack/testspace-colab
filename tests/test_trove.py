@@ -34,11 +34,11 @@ def test_basic(tmpdir):
     assert trove_module.Trove(tmpdir).path == pathlib.Path(tmpdir)
 
     trove = trove_module.Trove()
-    assert trove.org
+    assert trove.org is None
     trove.org = "foo"
     assert trove.org == "foo"
     trove.org = None
-    assert trove.org
+    assert trove.org is None
 
 
 def test_organizations(tmpdir):
