@@ -1,5 +1,7 @@
 .. highlight:: shell
 
+.. _nb_examples:
+
 Examples
 ========
 

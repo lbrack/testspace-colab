@@ -423,12 +423,12 @@ There are several sub-modules under :py:mod:`testspace_colab`:
     * :py:mod:`testspace_colab.lib` which provides the
       :py:class:`API <testspace_colab.lib.API>` class to interface
       with testspace
-      see the :ref:`API Notebook for examples<nb_api>`
+      see the :ref:`API Usage Notebook for examples <nb_examples>`
 
     * :py:mod:`testspace_colab.trove` which provides the
       :py:class:`Trove <testspace_colab.trove.Trove>` class to interface
       with testspace
-      see the :ref:`API Notebook for examples<nb_api>`
+      see the :ref:`Trove Example <nb_examples>`
 
 
     * :py:mod:`testspace_colab.client` providing the
