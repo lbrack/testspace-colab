@@ -56,7 +56,7 @@ lint: ## check style with flake8
 	flake8 --ignore E203,C901,W503 $(SOURCE_DIR)  tests
 
 test: ## run tests quickly with the default Python
-	pytest tests -v --junit-xml=pytest-results.xml
+	pytest tests notebooks -v --junit-xml=pytest-results.xml
 
 test-all: ## run tests on every Python version with tox
 	tox
@@ -84,8 +84,9 @@ dist: clean ## builds source and wheel package
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
-	pip install -U devpi-client
+	pip install -U devpi-client ipykernel
 	devpi use $(PIP_INDEX_URL) --always-set-cfg=yes
 	pip install -r requirements_dev.txt
+	python3 -m ipykernel install --user --name=testspace-colab
 
 pre-commit: clean-test test lint coverage docs test-all ## Full monty before a commit

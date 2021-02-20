@@ -1,0 +1,3 @@
+remote.domain=https://deadbeef:@samples.testspace.com
+remote.project=testspace-samples:cpp.cpputest
+remote.space=master

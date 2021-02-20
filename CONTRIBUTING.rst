@@ -48,14 +48,28 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
         install              install the package to the active Python's site-packages
         pre-commit           Full monty before a commit
 
-4. When you're done making changes, check that your changes pass flake8 and the
+4. Documenting Examples
+
+    Rather than documenting code examples in .rst files, write Jupyter notebook.
+    Those should be located under the **notebooks** directory.
+
+    When building the documentation (and if `pandoc <https://pandoc.org/installing.html>`_
+    is installed), the Jupyter Notebooks will be included in the documentaton.
+    Furthermore, those notebooks will also be executed as tests.
+
+    **NOTE**: pandoc can not be installed as a python package. The easiest is to use
+    HomeBrew on `Linux <https://docs.brew.sh/Homebrew-on-Linux>`_ or
+    `Mac <https://docs.brew.sh/Installation>`_
+
+
+5. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
     .. code-block:: console
 
         $ make pre-commit
 
-5. Commit your changes and push your branch to GitHub::
+6. Commit your changes and push your branch to GitHub::
 
     .. code-block:: console
 
@@ -63,8 +77,8 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
         $ git commit -m "Your detailed description of your changes."
         $ git push origin name-of-your-bugfix-or-feature
 
-6. Submit a pull request through the GitHub website. It is suggested to use the
-   [GitHub CLI](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
+7. Submit a pull request through the GitHub website. It is suggested to use the
+   `GitHub CLI <https://github.com/cli/cli/blob/trunk/docs/install_linux.md>`_
 
     .. code-block:: console
 
@@ -80,7 +94,7 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
           Add metadata
           Cancel
 
-7. You can share any version by uploading it to the devpi index
+8. You can share any version by uploading it to the devpi index
 
     .. code-block:: console
 

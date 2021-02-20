@@ -7,6 +7,7 @@ Welcome to testspace-colab's documentation!
 
    readme
    usage
+   jupyter/index
    installation
    contributing
    authors

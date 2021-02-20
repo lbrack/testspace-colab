@@ -8,7 +8,7 @@ logger = testspace_colab.ts_log.get_logger("pytest.conftest")
 
 # We use the configuration in the test directory - and avoid using the
 # one from the user
-config = pathlib.Path(__file__).parent / ".config" / "testspace"
+config = pathlib.Path(__file__).parent / ".config" / "test"
 os.environ["TS_COLAB_CONFIG_DIR"] = str(config)
 print(f"setting test config dir {os.environ['TS_COLAB_CONFIG_DIR']}")
 
