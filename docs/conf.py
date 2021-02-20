@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
 import os
+import warnings
+import shutil
+import pathlib
 import sphinx_rtd_theme
+
+PROJECT_ROOT=pathlib.Path(__file__).parent.parent
+
+pandoc_installed = False if os.system("pandoc --help > /dev/null 2>&1") else True
+
+if not pandoc_installed:
+    warnings.warn("pandoc not installed - install brew then brew install pandoc")
+
 
 
 def setup(app):
     """Forces the auto generation of the documentation at build time."""
     os.system("sphinx-apidoc -f -T -o docs/autogen src/testspace_colab")
+    shutil.copytree(src=PROJECT_ROOT / 'notebooks', dst='docs/autogen/notebook', dirs_exist_ok=True)
 
 
 # ------------------------------------------------------------------------------
@@ -39,6 +51,9 @@ extensions = [
     "sphinx.ext.inheritance_diagram",
     "sphinx.ext.graphviz",
 ]
+
+if pandoc_installed:
+    extensions.append("nbsphinx")
 
 # -----------------------------------------------------------------------------
 # sphinx.ext.intersphinx

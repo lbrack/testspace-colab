@@ -45,10 +45,20 @@ IGNORE_COLUMNS = [
 @click.group()
 @click.version_option(version=VERSION)
 @click.option("-d", "--debug", is_flag=True, help="debug")
-def main(debug):
+@click.option(
+    "-p",
+    "--preset",
+    type=click.Choice(["none", "samples", "test"], case_sensitive=False),
+    help="uses preset configuration for playing around",
+)
+def main(debug, preset):
     """Console script for testspace_colab."""
     if debug:
         log_module.set_log_level(logging.DEBUG)
+    if preset == "test":
+        utils_module.use_test_config()
+    elif preset == "samples":
+        utils_module.use_samples_config()
 
 
 @main.resultcallback()

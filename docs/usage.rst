@@ -30,10 +30,20 @@ Testspace. Those sub-commands leverage the API described below.
       Console script for testspace_colab.
 
     Options:
-      --help  Show this message and exit.
+      --version                       Show the version and exit.
+      -d, --debug                     debug
+      -p, --preset [none|samples|test]
+                                      uses preset configuration for playing around
+      --help                          Show this message and exit.
 
     Commands:
-      client  Runs the client with the specified parameters
+      client   Runs the client with the specified parameters
+      crawl    Crawls an organization for specific project and spaces.
+      elk      Command group to control the Elastic Stack docker image
+      get      Performs a get request to the test space server and presents the...
+      jupyter  Starts the Jupyter lab When running in CodeSpaces, the browser
+               is...
+
 
 The client sub-command provide direct access to the Testspace client executables
 which are embedded in the distribution (OSX, Linux and Windows). The proper binary
@@ -55,6 +65,41 @@ command line .e.g.
     See 'testspace help <command>' to read about a specific command.
 
     For more information about Testspace, visit www.testspace.com.
+
+**Tip**
+
+    To get you started without having to configure anything you can use some
+    presets with the ``--preset`` option which are
+    `test <https://lbrack.testspace.com/>`_ and `samples <https://samples.testspace.com/>`_.
+    If ``--preset`` is set to ``none``, then the configuration is used.
+
+    .. code-block:: console
+
+        (testspace)⚡ ⇒  ts-colab -p test get projects
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/test
+        URL=https://lbrack.testspace.com
+        ID    | NAME                             | IS_PRIVATE | ARCHIVED | SOURCE_REPO_URL                                     |
+        66226 | lbrack:testspace-colab           | False      | False    | https://github.com/lbrack/testspace-colab           |
+        66175 | lbrack:testspace.getting-started | False      | False    | https://github.com/lbrack/testspace.getting-started |
+        66227 | samples                          | False      | False    | None                                                |
+        (testspace)⚡ ⇒  ts-colab -p samples get projects
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/samples
+        URL=https://samples.testspace.com
+        ID    | NAME                                        | IS_PRIVATE | ARCHIVED | SOURCE_REPO_URL                                                   |
+        170   | testspace-samples:cpp.cpputest              | False      | False    | https://github.com/testspace-samples/cpp.cpputest                 |
+        169   | testspace-samples:cpp.googletest            | False      | False    | https://github.com/testspace-samples/cpp.googletest               |
+        168   | testspace-samples:csharp.nunit              | False      | False    | https://github.com/testspace-samples/csharp.nunit                 |
+        38484 | testspace-samples:getting.started-bitbucket | False      | False    | https://bitbucket.org/testspace-samples/getting.started-bitbucket |
+        38483 | testspace-samples:getting.started-gitlab    | False      | False    | https://gitlab.com/testspace-samples/getting.started-gitlab       |
+        167   | testspace-samples:java.junit                | False      | False    | https://github.com/testspace-samples/java.junit                   |
+        166   | testspace-samples:java.testng               | False      | False    | https://github.com/testspace-samples/java.testng                  |
+        165   | testspace-samples:javascript.jasmine        | False      | False    | https://github.com/testspace-samples/javascript.jasmine           |
+        164   | testspace-samples:javascript.mocha          | False      | False    | https://github.com/testspace-samples/javascript.mocha             |
+        163   | testspace-samples:php.phpunit               | False      | False    | https://github.com/testspace-samples/php.phpunit                  |
+        161   | testspace-samples:python.unittest           | False      | False    | https://github.com/testspace-samples/python.unittest              |
+        157   | testspace-samples:ruby.minitest             | False      | False    | https://github.com/testspace-samples/ruby.minitest                |
+        158   | testspace-samples:ruby.rspec                | False      | False    | https://github.com/testspace-samples/ruby.rspec                   |
+
 
 Examples
 --------
@@ -154,7 +199,7 @@ the information or extract element of interest. This can be done from the comman
 .. code-block:: console
 
         (testspace)⚡ ⇒  ts-colab get result_details test_data -f json -j '$..[cases][:]'
-        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/testspace
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/test
         URL=https://lbrack.testspace.com
         [{'annotations': [],
           'duration': '0.000000',
@@ -184,7 +229,7 @@ for all the **suites**
     .. code-block:: console
 
         (testspace)⚡ ⇒  ts-colab get result_details test_data -f json -j '$..[suites][:]'
-        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/testspace
+        using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/test
         URL=https://lbrack.testspace.com
         [{'cached': '',
           'cases': [{'annotations': [],
@@ -360,11 +405,32 @@ To connect to the local Kibana instance, you can run
 API
 ***
 
+**Tip**
+
+    Similar to the command line application, you can use preset configuration in the code
+    (`test <https://lbrack.testspace.com/>`_ or `sample <https://samples.testspace.com/>`_).
+    The following must be called **before** instanciating the
+    :py:class:`API <testspace_colab.lib.API>` class
+
+    .. code-block:: python
+
+        import testspace_colab.utils as colab_utils
+        colab_utils.use_test_config() # For test configuration
+        colab_utils.use_samples_config() # for test space sample configuration
+
 There are several sub-modules under :py:mod:`testspace_colab`:
 
     * :py:mod:`testspace_colab.lib` which provides the
-      :py:class:`API <testspace_colab.lib.API>` class ro interface
+      :py:class:`API <testspace_colab.lib.API>` class to interface
       with testspace
+      see the :ref:`API Notebook for examples<nb_api>`
+
+    * :py:mod:`testspace_colab.trove` which provides the
+      :py:class:`Trove <testspace_colab.trove.Trove>` class to interface
+      with testspace
+      see the :ref:`API Notebook for examples<nb_api>`
+
+
     * :py:mod:`testspace_colab.client` providing the
       :py:class:`Binary <testspace_colab.client.Binary>` to invoke
       the native client.
@@ -373,44 +439,6 @@ There are several sub-modules under :py:mod:`testspace_colab`:
     * :py:mod:`testspace_colab.elk` which provides the
       :py:class:`ELK <testspace_colab.elk.ELK>` class to control
       and access an ELK stack running on Docker.
-
-The following example shows how to use the API in a project. If you know the json structure,
-you can use the `jsonpath-ng <https://pypi.org/project/jsonpath-ng/>`_ module to extract
-any information you are interested in usig the jsonpath notation. For those of us familiar
-with XPATH, check the `JSONPath - XPath for JSON <https://goessner.net/articles/JsonPath/>`_
-
-.. code-block:: console
-
-    >>> import testspace_colab.lib as lib_module
-    >>> import jsonpath_ng
-    >>> api = lib_module.API()
-    >>> [match.value for match in jsonpath_ng.parse('$..name').find(api.get_projects())]
-    ['lbrack:testspace-colab', 'lbrack:testspace.getting-started', 'samples']
-    >>> [match.value for match in jsonpath_ng.parse('$..name').find(api.get_results('samples', 'main'))]
-    ['test_data', 'test']
-    >>> [match.value for match in jsonpath_ng.parse('$..cases[:]').find(api.get_result_details(result='test_data', project='samples', space='main'))]
-    [{'duration': '0.000000',
-      'name': 'test_case_1',
-      'start_time': '2021-02-03T09:51:22.005395',
-      'status': 'passed',
-      'annotations': []},
-     {'duration': '0.000000',
-      'name': 'test_fail',
-      'start_time': '2021-02-03T09:51:22.005395',
-      'status': 'failed',
-      'annotations': [{'description': 'Assertion: AssertionError: Failure!\nassert 0',
-        'level': 'error',
-        'mime_type': 'text/plain',
-        'name': '01. failure',
-        'children': []}]},
-     {'description': 'xfailed: reason for xfailing',
-      'duration': '0.000000',
-      'name': 'test_xfail',
-      'start_time': '2021-02-03T09:51:22.005395',
-      'status': 'not_applicable',
-      'annotations': []}]
-
-
 
 .. _elk_api:
 

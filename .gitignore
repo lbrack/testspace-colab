@@ -125,3 +125,6 @@ gti-bootstrap.py
 docs/autogen
 key.txt
 snippet.py
+.ipynb_checkpoints/
+.vscode/
+notebooks/dev/

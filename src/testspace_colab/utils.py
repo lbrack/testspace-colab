@@ -12,8 +12,26 @@ PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent.absolute()
 
 
 def use_test_config():
+    """Sets the TS_COLAB_CONFIG_DIR env variable to
+    ./tests/.config/test
+
+    See `test <https://lbrack.testspace.com/>` for details
+
+    :return: None
+    """
+    os.environ["TS_COLAB_CONFIG_DIR"] = str(PROJECT_ROOT / "tests" / ".config" / "test")
+
+
+def use_samples_config():
+    """Sets the TS_COLAB_CONFIG_DIR env variable to
+    ./tests/.config/samples
+
+    See `samples <https://samples.testspace.com/>`_ for details
+
+    :return: None
+    """
     os.environ["TS_COLAB_CONFIG_DIR"] = str(
-        PROJECT_ROOT / "tests" / ".config" / "testspace"
+        PROJECT_ROOT / "tests" / ".config" / "samples"
     )
 
 
