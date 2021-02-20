@@ -1,6 +1,7 @@
 """Console script for testspace_colab."""
 import sys
 import os
+import platform
 import webbrowser
 import click
 import yaml
@@ -19,11 +20,13 @@ import testspace_colab.elk as elk_module
 
 logger = log_module.get_logger("cli")
 
-VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().version}"
+VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().version} " \
+          f"Python {sys.version_info.major}.{sys.version_info.minor} {platform.platform()}"
 
 IGNORE_COLUMNS = [
     "created_at",
     "updated_at",
+    "result_set_aggregation",
     "result_set_aggregation",
     "sandbox",
     "min_run_period",
@@ -289,7 +292,7 @@ def crawl(project, space, output_dir, result):
                 space_dir = project_dir / current_space
                 if not space_dir.is_dir():
                     click.secho(f"creating space dir {space_dir}", fg="blue")
-                    space_dir.mkdir()
+                    space_dir.mkdir(parents=True)
 
             results = (
                 [result]

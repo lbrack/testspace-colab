@@ -121,7 +121,6 @@ class API:
             f"get_result_details result={result} project={project} space={space}"
         )
         response = self.client.get_result(result=result, project=project, space=space)
-
         with rich.progress.Progress(transient=True) as progress:
 
             tasks = {
@@ -142,10 +141,11 @@ class API:
             }
 
             def download_progress(object_type, object_count):
-                progress.update(
-                    tasks[object_type]["task"],
-                    advance=tasks[object_type]["increment"] * object_count,
-                )
+                if object_type in tasks:
+                    progress.update(
+                        tasks[object_type]["task"],
+                        advance=tasks[object_type]["increment"] * object_count,
+                    )
 
             response["details"] = self._load_results(
                 result_id=response["id"],
