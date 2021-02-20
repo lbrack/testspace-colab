@@ -37,7 +37,8 @@ IMPORTANT
 
     .. image:: kernel-spec.png
 
-    To generate such spec, run the following in **your virtualenv**
+    To generate such spec, run the following in **your virtualenv**. Note that this
+    is done automatically by make install
 
     .. code-block:: console
 
