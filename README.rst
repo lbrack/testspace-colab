@@ -16,7 +16,7 @@ persist it, and analyze it. The intent is to provide a prototyping environment
 for Testspace's Insight 2.0.
 
 * Free software: MIT license
-* Documentation: `documentation`_
+* GitHub: https://github.com/lbrack/testspace-colab
 
 
 Features
@@ -36,7 +36,6 @@ Check the
 `contributing guidelines <https://lbrack.github.io/testspace-colab/contributing.html>`_
 to learn how to clone, install, develop and release this project.
 
-.. _`documentation` : https://lbrack.github.io/testspace-colab/
 .. _`readthedocs` : https://testspace-colab.readthedocs.io
 .. _`user manual` : https://lbrack.github.io/testspace-colab/usage.html
 .. _`docker` : https://docker-py.readthedocs.io/en/stable/
