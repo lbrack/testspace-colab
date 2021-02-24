@@ -182,15 +182,26 @@ $ pytest tests.test_testspace_colab
 Deploying
 ---------
 
-A reminder for the maintainers on how to deploy.
-Make sure all your changes are committed (including an entry in CHANGELOG.rst).
-Then run::
+.. todo:: Deployment should eventually be documented.
 
-$ bump2version patch # possible: major / minor / patch
-$ git push
-$ git push --tags
+Publishing Documentation To GitHub Pages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Travis will then deploy to PyPI if tests pass.
+The GitHub Action Workflow to Publish the documentation is under
+`.github/workflows/publish_docs.yml <https://github.com/lbrack/testspace-colab/blob/main/.github/workflows/publish_docs.yml>`_
+
+Once the documentation has been pushed to the `gh-pages <https://github.com/lbrack/testspace-colab/tree/gh-pages>`_
+branch, all you need to do is to enable github pages under
+`Settings <https://github.com/lbrack/testspace-colab/settings>`_ -> **GitHub Pages**
+
+
+.. note::
+
+    Just recently, GitHub has added the ability to limit access to the
+    documentation published on
+    `GitHub Pahes <https://github.blog/changelog/2021-01-21-access-control-for-github-pages/>`_
+
+
 
 Types of Contributions
 ----------------------
@@ -236,3 +247,4 @@ If you are proposing a feature:
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
+

@@ -52,6 +52,14 @@ extensions = [
     "sphinx.ext.graphviz",
 ]
 
+
+# ----------------------------------------------------------------------------
+# To do extension configuration
+# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
+# ----------------------------------------------------------------------------
+todo_include_todos=True
+todo_link_only=True
+
 if pandoc_installed:
     extensions.append("nbsphinx")
 
