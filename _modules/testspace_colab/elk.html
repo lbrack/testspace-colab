@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>testspace_colab.elk &mdash; testspace-colab</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/icon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">testspace-colab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jupyter/index.html">Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autogen/testspace_colab.html">testspace_colab package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">testspace-colab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>testspace_colab.elk</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for testspace_colab.elk</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; ELK Client</span>
+
+<span class="sd">Provides a client to interact with a ELK stack running in docker.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">docker</span>
+<span class="kn">import</span> <span class="nn">testspace_colab.ts_log</span>
+<span class="kn">import</span> <span class="nn">elasticsearch</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">testspace_colab</span><span class="o">.</span><span class="n">ts_log</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;elk&quot;</span><span class="p">)</span>
+
+<span class="n">CONTAINER_NAME</span> <span class="o">=</span> <span class="s2">&quot;elk-testspace-colab&quot;</span>
+<span class="sd">&quot;&quot;&quot; Default container name&quot;&quot;&quot;</span>
+
+<span class="n">ELK_TAG</span> <span class="o">=</span> <span class="s2">&quot;7.10.0&quot;</span>
+<span class="sd">&quot;&quot;&quot; Default Elastic version</span>
+
+<span class="sd">    for more details, see the `sebp/elk &lt;https://hub.docker.com/r/sebp/elk/&gt;`_</span>
+<span class="sd">    in the docker registry</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="ELK"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.elk.ELK">[docs]</a><span class="k">class</span> <span class="nc">ELK</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class control the ELK stack which runs as a docker container.</span>
+<span class="sd">    The container is based</span>
+
+<span class="sd">    :param container_name: To override default container name - for testing</span>
+<span class="sd">                           only</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container_name</span><span class="o">=</span><span class="n">CONTAINER_NAME</span><span class="p">,</span> <span class="n">elk_tag</span><span class="o">=</span><span class="n">ELK_TAG</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_name</span> <span class="o">=</span> <span class="n">container_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_docker</span> <span class="o">=</span> <span class="n">docker</span><span class="o">.</span><span class="n">from_env</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elastic_search</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_client</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elk_tag</span> <span class="o">=</span> <span class="n">elk_tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">container</span>  <span class="c1"># To get the status</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">container_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the name of the container running ELK&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">elk_docker_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the tag use to pull the image&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elk_tag</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">docker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an instance to the</span>
+<span class="sd">        `docker client &lt;https://docker-py.readthedocs.io/en/stable/&gt;`_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_docker</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the a docker container structure if the container exists</span>
+<span class="sd">        or none otherwise.</span>
+
+<span class="sd">        see :class:`docker:docker.models.containers.Container` more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">container</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_docker</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elastic_search</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_elastic_search</span> <span class="o">=</span> <span class="n">elasticsearch</span><span class="o">.</span><span class="n">Elasticsearch</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_client</span> <span class="o">=</span> <span class="n">elasticsearch</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">ClusterClient</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_elastic_search</span>
+                <span class="p">)</span>
+
+        <span class="k">except</span> <span class="p">(</span><span class="n">docker</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">NotFound</span><span class="p">,</span> <span class="n">docker</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">APIError</span><span class="p">):</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">container</span> <span class="ow">and</span> <span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_elastic_search</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_client</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">container</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">elastic_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an instance to the ElasticSearch client if the container</span>
+<span class="sd">        is running.</span>
+
+<span class="sd">        See :class:`elastic:elasticsearch.Elasticsearch`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elastic_search</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">es_cluster_client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an instance to the ElasticSearch cluster client if the container</span>
+<span class="sd">        is running.</span>
+
+<span class="sd">        See :class:`elastic:elasticsearch.client.ClusterClient`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_client</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if the stack is available False otherwise&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_health</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ELK.wait_for_available"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.elk.ELK.wait_for_available">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_available</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Waits for the stack to be available</span>
+
+<span class="sd">        :param timeout:  Time out in seconds before a timeout exception is raised.</span>
+<span class="sd">        :raise: TimeoutError if timeout expires</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ELK stack not started&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s2">&quot;ELK stack not started&quot;</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span> <span class="o">/</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s2">&quot;Failed to get the ELK container started&quot;</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">available</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to establish connection with elastic search&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="s2">&quot;Failed to access elastic search&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ELK available&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ELK.get_health"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.elk.ELK.get_health">[docs]</a>    <span class="k">def</span> <span class="nf">get_health</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the json structure returned by the `health` endpoint</span>
+<span class="sd">        or None if the container is not running</span>
+
+<span class="sd">        See :meth:`elastic:elasticsearch.client.ClusterClient.health`</span>
+
+<span class="sd">        :raise: IOError if the container is running by the health</span>
+<span class="sd">                endpoint times out.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_client</span><span class="o">.</span><span class="n">health</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">elasticsearch</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Connection to es server timed out </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ELK.start"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.elk.ELK.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Starts the ELK container</span>
+
+<span class="sd">        If the container is already up, returns right away</span>
+
+<span class="sd">        :param timeout: Maximum time to wait to establisg a connection with ELK</span>
+<span class="sd">        :return: :class:`docker:docker.models.containers.Container` of the running container</span>
+<span class="sd">        :raises: TimeoutError if timeout has been reached.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting ELK Container </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_docker</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="n">image</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;sebp/elk:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_elk_tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_name</span><span class="p">,</span>
+                <span class="n">ports</span><span class="o">=</span><span class="p">{</span><span class="mi">5601</span><span class="p">:</span> <span class="mi">5601</span><span class="p">,</span> <span class="mi">9200</span><span class="p">:</span> <span class="mi">9200</span><span class="p">,</span> <span class="mi">5044</span><span class="p">:</span> <span class="mi">5044</span><span class="p">},</span>
+                <span class="n">tty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">detach</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Starting existing container - current state </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;container id </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking that the stack is up and running&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_available</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span></div>
+
+<div class="viewcode-block" id="ELK.stop"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.elk.ELK.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stops the ELK container if any is running</span>
+
+<span class="sd">        The container state should be &#39;exited&#39; but is not</span>
+<span class="sd">        automatically removed.</span>
+
+<span class="sd">        :return: :class:`docker:docker.models.containers.Container` of the running container</span>
+<span class="sd">        :return: None if not container was running</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;exited&quot;</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping container&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;container status </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Laurent Brack.
+      <span class="lastupdated">
+        Last updated on 2021-02-24T02:02 UTC.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

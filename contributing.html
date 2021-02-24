@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Contributing &mdash; testspace-colab</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Credits" href="authors.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">testspace-colab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter/index.html">Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#note-about-versioning">Note about versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-codespaces">Using CodeSpaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying">Deploying</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#types-of-contributions">Types of Contributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#report-bugs">Report Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implement-features">Implement Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#write-documentation">Write Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#submit-feedback">Submit Feedback</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autogen/testspace_colab.html">testspace_colab package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">testspace-colab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Contributing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/contributing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>Contributions are welcome, and they are greatly appreciated! Every little bit
+helps, and credit will always be given.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started!<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Ready to contribute? Here’s how to set up <cite>testspace_colab</cite> for local development.</p>
+<ol class="arabic">
+<li><p>Clone the repository locally and create a branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>.. code-block:: console
+
+    $ git clone git@github.com:lbrack/testspace-colab.git
+    $ git checkout -b my_feature_branch
+</pre></div>
+</div>
+</li>
+<li><p>Install your local copy into a virtualenv. Note that the install
+automatically installs devpi-client and set the appropriate index
+to <code class="docutils literal notranslate"><span class="pre">https://m.devpi.net/testspace/dev/</span></code></p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span> testspace_colab/
+<span class="gp">$ </span>make install
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>There is a Makefile that should be self explanatory</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
+<span class="go">clean                remove all build, test, coverage and Python artifacts</span>
+<span class="go">clean-build          remove build artifacts</span>
+<span class="go">clean-pyc            remove Python file artifacts</span>
+<span class="go">clean-test           remove test and coverage artifacts</span>
+<span class="go">lint                 check style with flake8</span>
+<span class="go">test                 run tests quickly with the default Python</span>
+<span class="go">test-all             run tests on every Python version with tox</span>
+<span class="go">coverage             check code coverage quickly with the default Python</span>
+<span class="go">docs                 generate Sphinx HTML documentation, including API docs</span>
+<span class="go">servedocs            compile the docs watching for changes</span>
+<span class="go">release              package and upload a release</span>
+<span class="go">dist                 builds source and wheel package</span>
+<span class="go">install              install the package to the active Python&#39;s site-packages</span>
+<span class="go">pre-commit           Full monty before a commit</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Documenting Examples</p>
+<blockquote>
+<div><p>Rather than documenting code examples in .rst files, write Jupyter notebook.
+Those should be located under the <strong>notebooks</strong> directory.</p>
+<p>When building the documentation (and if <a class="reference external" href="https://pandoc.org/installing.html">pandoc</a>
+is installed), the Jupyter Notebooks will be included in the documentaton.
+Furthermore, those notebooks will also be executed as tests.</p>
+<p><strong>NOTE</strong>: pandoc can not be installed as a python package. The easiest is to use
+HomeBrew on <a class="reference external" href="https://docs.brew.sh/Homebrew-on-Linux">Linux</a> or
+<a class="reference external" href="https://docs.brew.sh/Installation">Mac</a></p>
+</div></blockquote>
+</li>
+<li><p>When you’re done making changes, check that your changes pass flake8 and the
+tests, including testing other Python versions with tox:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>.. code-block:: console
+
+    $ make pre-commit
+</pre></div>
+</div>
+</li>
+<li><p>Commit your changes and push your branch to GitHub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>.. code-block:: console
+
+    $ git add .
+    $ git commit -m <span class="s2">&quot;Your detailed description of your changes.&quot;</span>
+    $ git push origin name-of-your-bugfix-or-feature
+</pre></div>
+</div>
+</li>
+<li><p>Submit a pull request through the GitHub website. It is suggested to use the
+<a class="reference external" href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md">GitHub CLI</a></p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  gh pr create</span>
+
+<span class="go">Creating pull request for lbrack:json-data-access into main in lbrack/testspace-colab</span>
+
+<span class="go">? Title my awesome work</span>
+<span class="go">? Body &lt;Received&gt;</span>
+<span class="go">? What&#39;s next?  [Use arrows to move, type to filter]</span>
+<span class="go">&gt; Submit</span>
+<span class="go">  Continue in browser</span>
+<span class="go">  Add metadata</span>
+<span class="go">  Cancel</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>You can share any version by uploading it to the devpi index</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>devpi login testspace
+<span class="gp">$ </span>devpi use dev
+<span class="gp">$ </span>devpi upload --with-docs
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="note-about-versioning">
+<h2>Note about versioning<a class="headerlink" href="#note-about-versioning" title="Permalink to this headline">¶</a></h2>
+<p>Versions are auto-computed with <a class="reference external" href="https://pypi.org/project/setuptools-scm/">setuptools-scm</a></p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ts-colab --version
+<span class="go">ts-colab, version 0.1.dev7+g72ad489.d20210131 client 2.5.4061</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>where is <em>0.1.dev7</em> the base version, <em>g72ad489</em> is the most recent commit hash
+and <em>d20210131</em> indicates that some files haven’t been committed. When the workspace
+is clean (no modified) files, the <em>d2021…</em> is removed. This is an indicator as to
+whether the version can be reproduced from a commit or not.</p>
+</div>
+<div class="section" id="using-codespaces">
+<h2>Using CodeSpaces<a class="headerlink" href="#using-codespaces" title="Permalink to this headline">¶</a></h2>
+<p>Herein are the instruction to use the code in <a class="reference external" href="https://github.com/features/codespaces">GitHub Codespaces</a></p>
+<p>Note the the container is pre-initialized according to the definition found in
+[.devcontainer/devcontainer.json](.devcontainer/devcontainer.json). This container definition
+automatically sets the port mapping for ELK and Jupyter.</p>
+<p>Select the branch you want to work with</p>
+<img alt="_images/branch-selection.png" src="_images/branch-selection.png" />
+<p>Start code spaces (make sure the branch in codespaces matches the branch you selected)</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>active the virtual environment
+<span class="go">codespace ➜ ~/workspace/testspace-colab (flat-structure) $ source .venv/bin/activate</span>
+<span class="gp gp-VirtualEnv">(.venv)</span> <span class="go">codespace ➜ ~/workspace/testspace-colab (flat-structure) $</span>
+
+<span class="gp"># </span>install <span class="k">in</span> dev mode
+<span class="go">codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make install</span>
+
+<span class="gp"># </span>run the tests
+<span class="go">codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make tests</span>
+</pre></div>
+</div>
+<img alt="_images/codespaces-test.png" src="_images/codespaces-test.png" />
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>run the tests
+<span class="go">codespace ➜ ~/workspace/testspace-colab (flat-structure) $ make docs</span>
+</pre></div>
+</div>
+<img alt="_images/codespaces-docs.png" src="_images/codespaces-docs.png" />
+<p>It is possible to start the Jupyter Lab as illustrated below</p>
+<img alt="_images/code-space-jupyter.png" src="_images/code-space-jupyter.png" />
+</div>
+<div class="section" id="pull-request-guidelines">
+<h2>Pull Request Guidelines<a class="headerlink" href="#pull-request-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>Before you submit a pull request, check that it meets these guidelines:</p>
+<ol class="arabic simple">
+<li><p>The pull request should include tests.</p></li>
+<li><p>If the pull request adds functionality, the docs should be updated. Put
+your new functionality into a function with a docstring, and add the
+feature to the list in README.rst.</p></li>
+<li><p>The pull request should work for Python 3.6, 3.7 and 3.8. The GitHub
+workflow associated to PR will check all that.</p></li>
+</ol>
+</div>
+<div class="section" id="tips">
+<h2>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
+<p>To run a subset of tests:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ pytest tests.test_testspace_colab
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploying">
+<h2>Deploying<a class="headerlink" href="#deploying" title="Permalink to this headline">¶</a></h2>
+<p>A reminder for the maintainers on how to deploy.
+Make sure all your changes are committed (including an entry in CHANGELOG.rst).
+Then run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ bump2version patch <span class="c1"># possible: major / minor / patch</span>
+$ git push
+$ git push --tags
+</pre></div>
+</div>
+<p>Travis will then deploy to PyPI if tests pass.</p>
+</div>
+<div class="section" id="types-of-contributions">
+<h2>Types of Contributions<a class="headerlink" href="#types-of-contributions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="report-bugs">
+<h3>Report Bugs<a class="headerlink" href="#report-bugs" title="Permalink to this headline">¶</a></h3>
+<p>Report bugs at <a class="reference external" href="https://github.com/lbrack/testspace_colab/issues">https://github.com/lbrack/testspace_colab/issues</a>.</p>
+<p>If you are reporting a bug, please include:</p>
+<ul class="simple">
+<li><p>Your operating system name and version.</p></li>
+<li><p>Any details about your local setup that might be helpful in troubleshooting.</p></li>
+<li><p>Detailed steps to reproduce the bug.</p></li>
+</ul>
+</div>
+<div class="section" id="fix-bugs">
+<h3>Fix Bugs<a class="headerlink" href="#fix-bugs" title="Permalink to this headline">¶</a></h3>
+<p>Look through the GitHub issues for bugs. Anything tagged with “bug” and “help
+wanted” is open to whoever wants to implement it.</p>
+</div>
+<div class="section" id="implement-features">
+<h3>Implement Features<a class="headerlink" href="#implement-features" title="Permalink to this headline">¶</a></h3>
+<p>Look through the GitHub issues for features. Anything tagged with “enhancement”
+and “help wanted” is open to whoever wants to implement it.</p>
+</div>
+<div class="section" id="write-documentation">
+<h3>Write Documentation<a class="headerlink" href="#write-documentation" title="Permalink to this headline">¶</a></h3>
+<p>testspace-colab could always use more documentation, whether as part of the
+official testspace-colab docs, in docstrings, or even on the web in blog posts,
+articles, and such.</p>
+</div>
+<div class="section" id="submit-feedback">
+<h3>Submit Feedback<a class="headerlink" href="#submit-feedback" title="Permalink to this headline">¶</a></h3>
+<p>The best way to send feedback is to file an issue at <a class="reference external" href="https://github.com/lbrack/testspace_colab/issues">https://github.com/lbrack/testspace_colab/issues</a>.</p>
+<p>If you are proposing a feature:</p>
+<ul class="simple">
+<li><p>Explain in detail how it would work.</p></li>
+<li><p>Keep the scope as narrow as possible, to make it easier to implement.</p></li>
+<li><p>Remember that this is a volunteer-driven project, and that contributions
+are welcome :)</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="authors.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Laurent Brack.
+      <span class="lastupdated">
+        Last updated on 2021-02-24T02:02 UTC.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

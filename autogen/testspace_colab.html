@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>testspace_colab package &mdash; testspace-colab</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="testspace_colab.client package" href="testspace_colab.client.html" />
+    <link rel="prev" title="History" href="../history.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">testspace-colab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jupyter/index.html">Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">testspace_colab package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testspace_colab.client.html">testspace_colab.client package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab.cli">testspace_colab.cli module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab.elk">testspace_colab.elk module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab.lib">testspace_colab.lib module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab.trove">testspace_colab.trove module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab.ts_log">testspace_colab.ts_log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab.utils">testspace_colab.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-testspace_colab">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">testspace-colab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>testspace_colab package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/autogen/testspace_colab.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testspace-colab-package">
+<h1>testspace_colab package<a class="headerlink" href="#testspace-colab-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="testspace_colab.client.html">testspace_colab.client package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testspace_colab.client.html#module-testspace_colab.client">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-testspace_colab.cli">
+<span id="testspace-colab-cli-module"></span><h2>testspace_colab.cli module<a class="headerlink" href="#module-testspace_colab.cli" title="Permalink to this headline">¶</a></h2>
+<p>Console script for testspace_colab.</p>
+<dl class="py function">
+<dt id="testspace_colab.cli.process_result">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.cli.</span></code><code class="sig-name descname"><span class="pre">process_result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/cli.html#process_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.cli.process_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>We use this to erase any log file - this is only called if the command is successful</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-testspace_colab.elk">
+<span id="testspace-colab-elk-module"></span><h2>testspace_colab.elk module<a class="headerlink" href="#module-testspace_colab.elk" title="Permalink to this headline">¶</a></h2>
+<p>ELK Client</p>
+<p>Provides a client to interact with a ELK stack running in docker.</p>
+<dl class="py data">
+<dt id="testspace_colab.elk.CONTAINER_NAME">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.elk.</span></code><code class="sig-name descname"><span class="pre">CONTAINER_NAME</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'elk-testspace-colab'</span></em><a class="headerlink" href="#testspace_colab.elk.CONTAINER_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default container name</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="testspace_colab.elk.ELK">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">testspace_colab.elk.</span></code><code class="sig-name descname"><span class="pre">ELK</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'elk-testspace-colab'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elk_tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'7.10.0'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/elk.html#ELK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.elk.ELK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class control the ELK stack which runs as a docker container.
+The container is based</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>container_name</strong> – To override default container name - for testing
+only</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.available">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">available</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the stack is available False otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.container">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">container</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.container" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the a docker container structure if the container exists
+or none otherwise.</p>
+<p>see <a class="reference external" href="https://docker-py.readthedocs.io/en/stable/containers.html#docker.models.containers.Container" title="(in Docker SDK for Python v4.4)"><code class="docutils literal notranslate"><span class="pre">docker.models.containers.Container</span></code></a> more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.container_name">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">container_name</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.container_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the container running ELK</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.docker">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">docker</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.docker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an instance to the
+<a class="reference external" href="https://docker-py.readthedocs.io/en/stable/">docker client</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.elastic_search">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">elastic_search</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.elastic_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an instance to the ElasticSearch client if the container
+is running.</p>
+<p>See <a class="reference external" href="https://elasticsearch-py.readthedocs.io/en/latest/api.html#elasticsearch.Elasticsearch" title="(in Elasticsearch v8.0.0)"><code class="docutils literal notranslate"><span class="pre">elasticsearch.Elasticsearch</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.elk_docker_tag">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">elk_docker_tag</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.elk_docker_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the tag use to pull the image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.es_cluster_client">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">es_cluster_client</span></code><a class="headerlink" href="#testspace_colab.elk.ELK.es_cluster_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an instance to the ElasticSearch cluster client if the container
+is running.</p>
+<p>See <a class="reference external" href="https://elasticsearch-py.readthedocs.io/en/latest/api.html#elasticsearch.client.ClusterClient" title="(in Elasticsearch v8.0.0)"><code class="docutils literal notranslate"><span class="pre">elasticsearch.client.ClusterClient</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.get_health">
+<code class="sig-name descname"><span class="pre">get_health</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/elk.html#ELK.get_health"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.elk.ELK.get_health" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the json structure returned by the <cite>health</cite> endpoint
+or None if the container is not running</p>
+<p>See <a class="reference external" href="https://elasticsearch-py.readthedocs.io/en/latest/api.html#elasticsearch.client.ClusterClient.health" title="(in Elasticsearch v8.0.0)"><code class="docutils literal notranslate"><span class="pre">elasticsearch.client.ClusterClient.health()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise</dt>
+<dd class="field-odd"><p>IOError if the container is running by the health
+endpoint times out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.start">
+<code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/elk.html#ELK.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.elk.ELK.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the ELK container</p>
+<p>If the container is already up, returns right away</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timeout</strong> – Maximum time to wait to establisg a connection with ELK</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docker-py.readthedocs.io/en/stable/containers.html#docker.models.containers.Container" title="(in Docker SDK for Python v4.4)"><code class="docutils literal notranslate"><span class="pre">docker.models.containers.Container</span></code></a> of the running container</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>TimeoutError if timeout has been reached.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.stop">
+<code class="sig-name descname"><span class="pre">stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/elk.html#ELK.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.elk.ELK.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops the ELK container if any is running</p>
+<p>The container state should be ‘exited’ but is not
+automatically removed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docker-py.readthedocs.io/en/stable/containers.html#docker.models.containers.Container" title="(in Docker SDK for Python v4.4)"><code class="docutils literal notranslate"><span class="pre">docker.models.containers.Container</span></code></a> of the running container</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None if not container was running</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.elk.ELK.wait_for_available">
+<code class="sig-name descname"><span class="pre">wait_for_available</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/elk.html#ELK.wait_for_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.elk.ELK.wait_for_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for the stack to be available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timeout</strong> – Time out in seconds before a timeout exception is raised.</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>TimeoutError if timeout expires</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt id="testspace_colab.elk.ELK_TAG">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.elk.</span></code><code class="sig-name descname"><span class="pre">ELK_TAG</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'7.10.0'</span></em><a class="headerlink" href="#testspace_colab.elk.ELK_TAG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default Elastic version</p>
+<p>for more details, see the <a class="reference external" href="https://hub.docker.com/r/sebp/elk/">sebp/elk</a>
+in the docker registry</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-testspace_colab.lib">
+<span id="testspace-colab-lib-module"></span><h2>testspace_colab.lib module<a class="headerlink" href="#module-testspace_colab.lib" title="Permalink to this headline">¶</a></h2>
+<p>API Library</p>
+<p>All the API we are going to come up with=</p>
+<dl class="py class">
+<dt id="testspace_colab.lib.API">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">testspace_colab.lib.</span></code><code class="sig-name descname"><span class="pre">API</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/lib.html#API"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.lib.API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Programming Interface for this package.</p>
+<dl class="py method">
+<dt id="testspace_colab.lib.API.get_result_details">
+<code class="sig-name descname"><span class="pre">get_result_details</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/lib.html#API.get_result_details"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.lib.API.get_result_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method recursively walk the results structure and extracts information
+from the “xml snipped” associated to suites (containing testcases).</p>
+<p>It basically calls the testspace::get_result() method and then recurlively
+loads the information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> – the result ID or name</p></li>
+<li><p><strong>project</strong> – The project ID or name (optional - to override ctor argument)</p></li>
+<li><p><strong>space</strong> – The project ID or name (optional - to override ctor argument)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a JSON structure (from testspace)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.lib.API.get_version">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_version</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/lib.html#API.get_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.lib.API.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the distribution version</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.lib.API.project">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">project</span></code><a class="headerlink" href="#testspace_colab.lib.API.project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.lib.API.space">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">space</span></code><a class="headerlink" href="#testspace_colab.lib.API.space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.lib.API.token">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">token</span></code><a class="headerlink" href="#testspace_colab.lib.API.token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.lib.API.url">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">url</span></code><a class="headerlink" href="#testspace_colab.lib.API.url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-testspace_colab.trove">
+<span id="testspace-colab-trove-module"></span><h2>testspace_colab.trove module<a class="headerlink" href="#module-testspace_colab.trove" title="Permalink to this headline">¶</a></h2>
+<p>Test Result Trove</p>
+<p>This module helps storing test results into a trove, whether
+it is the file system or ELK (maybe?)</p>
+<dl class="py class">
+<dt id="testspace_colab.trove.Trove">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">testspace_colab.trove.</span></code><code class="sig-name descname"><span class="pre">Trove</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trove_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PosixPath('/home/runner/testspace-colab')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/trove.html#Trove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.trove.Trove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A utility to iterate over the results found
+in the trove</p>
+<dl class="py method">
+<dt id="testspace_colab.trove.Trove.load">
+<code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">org</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/trove.html#Trove.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.trove.Trove.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.trove.Trove.org">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">org</span></code><a class="headerlink" href="#testspace_colab.trove.Trove.org" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets or get the default organization (string)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="testspace_colab.trove.Trove.organizations">
+<code class="sig-name descname"><span class="pre">organizations</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/trove.html#Trove.organizations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.trove.Trove.organizations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a generator for iterating over the organizations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>directory name as a string or None if no dir is found</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-testspace_colab.ts_log">
+<span id="testspace-colab-ts-log-module"></span><h2>testspace_colab.ts_log module<a class="headerlink" href="#module-testspace_colab.ts_log" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="testspace_colab.ts_log.get_logger">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.ts_log.</span></code><code class="sig-name descname"><span class="pre">get_logger</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/ts_log.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.ts_log.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="testspace_colab.ts_log.remove_log_file">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.ts_log.</span></code><code class="sig-name descname"><span class="pre">remove_log_file</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/ts_log.html#remove_log_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.ts_log.remove_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the logfile from the system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="testspace_colab.ts_log.set_log_level">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.ts_log.</span></code><code class="sig-name descname"><span class="pre">set_log_level</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/ts_log.html#set_log_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.ts_log.set_log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the logging level for the given logger</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> – the new log level</p></li>
+<li><p><strong>logger_ref</strong> – If set, only that logger is set, otherwise
+the testspace-colab logger is used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-testspace_colab.utils">
+<span id="testspace-colab-utils-module"></span><h2>testspace_colab.utils module<a class="headerlink" href="#module-testspace_colab.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="testspace_colab.utils.get_notebook_dir">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">get_notebook_dir</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#get_notebook_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.get_notebook_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="testspace_colab.utils.json_to_table">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">json_to_table</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#json_to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.json_to_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="testspace_colab.utils.use_samples_config">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">use_samples_config</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#use_samples_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.use_samples_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the TS_COLAB_CONFIG_DIR env variable to
+./tests/.config/samples</p>
+<p>See <a class="reference external" href="https://samples.testspace.com/">samples</a> for details</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="testspace_colab.utils.use_test_config">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">use_test_config</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#use_test_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.use_test_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the TS_COLAB_CONFIG_DIR env variable to
+./tests/.config/test</p>
+<p>See <cite>test &lt;https://lbrack.testspace.com/&gt;</cite> for details</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="testspace_colab.utils.xml_to_json">
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">xml_to_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#xml_to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.xml_to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts an object of type element
+:param xml_data:
+:param progress_callback: a progress callback function
+:return:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-testspace_colab">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-testspace_colab" title="Permalink to this headline">¶</a></h2>
+<p>Top-level package for testspace-colab.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="testspace_colab.client.html" class="btn btn-neutral float-right" title="testspace_colab.client package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../history.html" class="btn btn-neutral float-left" title="History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Laurent Brack.
+      <span class="lastupdated">
+        Last updated on 2021-02-24T02:02 UTC.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

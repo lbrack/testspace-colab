@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Usage &mdash; testspace-colab</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Jupyter Notebooks" href="jupyter/index.html" />
+    <link rel="prev" title="testspace-colab" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">testspace-colab</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cli">CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#push">Push</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get">Get</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crawl">Crawl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#elk">ELK</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#elk-api">ELK</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter/index.html">Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autogen/testspace_colab.html">testspace_colab package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">testspace-colab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>There are two types of usage this point. The CLI (ts-colab) enables user to
+use the test space API from the command line to visualize data or capture
+it in file as json.</p>
+<p>The API, which is used by the CLI, provides a programmatic access to a
+<strong>Testspace</strong> server</p>
+<div class="section" id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>You can set the following environment variables</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>TS_COLAB_DEBUG</em> Turns debugging ON but setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p><em>TS_COLAB_CONFIG_DIR</em> path to an alternate config file</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="cli">
+<h2>CLI<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h2>
+<p>The cli (ts-colab) provides a series of sub-commands to interact with
+Testspace. Those sub-commands leverage the API described below.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab --help</span>
+<span class="go">Usage: ts-colab [OPTIONS] COMMAND [ARGS]...</span>
+
+<span class="go">  Console script for testspace_colab.</span>
+
+<span class="go">Options:</span>
+<span class="go">  --version                       Show the version and exit.</span>
+<span class="go">  -d, --debug                     debug</span>
+<span class="go">  -p, --preset [none|samples|test]</span>
+<span class="go">                                  uses preset configuration for playing around</span>
+<span class="go">  --help                          Show this message and exit.</span>
+
+<span class="go">Commands:</span>
+<span class="go">  client   Runs the client with the specified parameters</span>
+<span class="go">  crawl    Crawls an organization for specific project and spaces.</span>
+<span class="go">  elk      Command group to control the Elastic Stack docker image</span>
+<span class="go">  get      Performs a get request to the test space server and presents the...</span>
+<span class="go">  jupyter  Starts the Jupyter lab When running in CodeSpaces, the browser</span>
+<span class="go">           is...</span>
+</pre></div>
+</div>
+<p>The client sub-command provide direct access to the Testspace client executables
+which are embedded in the distribution (OSX, Linux and Windows). The proper binary
+is resolved at runtime based on the operating system.</p>
+<p>This sub-command may be called with the same command line argument as the native
+command line .e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab client --help</span>
+
+<span class="go">Usage: testspace [--version] [--help] &lt;command&gt; [&lt;args&gt;]</span>
+
+<span class="go">Commands:</span>
+<span class="go">  config        Get and set default global options.</span>
+<span class="go">  push          Push existing result file(s) to a Space. (default)</span>
+
+<span class="go">See &#39;testspace help &lt;command&gt;&#39; to read about a specific command.</span>
+
+<span class="go">For more information about Testspace, visit www.testspace.com.</span>
+</pre></div>
+</div>
+<p><strong>Tip</strong></p>
+<blockquote>
+<div><p>To get you started without having to configure anything you can use some
+presets with the <code class="docutils literal notranslate"><span class="pre">--preset</span></code> option which are
+<a class="reference external" href="https://lbrack.testspace.com/">test</a> and <a class="reference external" href="https://samples.testspace.com/">samples</a>.
+If <code class="docutils literal notranslate"><span class="pre">--preset</span></code> is set to <code class="docutils literal notranslate"><span class="pre">none</span></code>, then the configuration is used.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab -p test get projects</span>
+<span class="go">using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/test</span>
+<span class="go">URL=https://lbrack.testspace.com</span>
+<span class="go">ID    | NAME                             | IS_PRIVATE | ARCHIVED | SOURCE_REPO_URL                                     |</span>
+<span class="go">66226 | lbrack:testspace-colab           | False      | False    | https://github.com/lbrack/testspace-colab           |</span>
+<span class="go">66175 | lbrack:testspace.getting-started | False      | False    | https://github.com/lbrack/testspace.getting-started |</span>
+<span class="go">66227 | samples                          | False      | False    | None                                                |</span>
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab -p samples get projects</span>
+<span class="go">using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/samples</span>
+<span class="go">URL=https://samples.testspace.com</span>
+<span class="go">ID    | NAME                                        | IS_PRIVATE | ARCHIVED | SOURCE_REPO_URL                                                   |</span>
+<span class="go">170   | testspace-samples:cpp.cpputest              | False      | False    | https://github.com/testspace-samples/cpp.cpputest                 |</span>
+<span class="go">169   | testspace-samples:cpp.googletest            | False      | False    | https://github.com/testspace-samples/cpp.googletest               |</span>
+<span class="go">168   | testspace-samples:csharp.nunit              | False      | False    | https://github.com/testspace-samples/csharp.nunit                 |</span>
+<span class="go">38484 | testspace-samples:getting.started-bitbucket | False      | False    | https://bitbucket.org/testspace-samples/getting.started-bitbucket |</span>
+<span class="go">38483 | testspace-samples:getting.started-gitlab    | False      | False    | https://gitlab.com/testspace-samples/getting.started-gitlab       |</span>
+<span class="go">167   | testspace-samples:java.junit                | False      | False    | https://github.com/testspace-samples/java.junit                   |</span>
+<span class="go">166   | testspace-samples:java.testng               | False      | False    | https://github.com/testspace-samples/java.testng                  |</span>
+<span class="go">165   | testspace-samples:javascript.jasmine        | False      | False    | https://github.com/testspace-samples/javascript.jasmine           |</span>
+<span class="go">164   | testspace-samples:javascript.mocha          | False      | False    | https://github.com/testspace-samples/javascript.mocha             |</span>
+<span class="go">163   | testspace-samples:php.phpunit               | False      | False    | https://github.com/testspace-samples/php.phpunit                  |</span>
+<span class="go">161   | testspace-samples:python.unittest           | False      | False    | https://github.com/testspace-samples/python.unittest              |</span>
+<span class="go">157   | testspace-samples:ruby.minitest             | False      | False    | https://github.com/testspace-samples/ruby.minitest                |</span>
+<span class="go">158   | testspace-samples:ruby.rspec                | False      | False    | https://github.com/testspace-samples/ruby.rspec                   |</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="configuration">
+<h4>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h4>
+<p>Note that the configuration file is normally location under <code class="docutils literal notranslate"><span class="pre">~/,config/testspace/config</span></code>.
+This will be file used by default. It is possible to change the file location by point the
+<code class="docutils literal notranslate"><span class="pre">TS_COLAB_CONFIG_DIR</span></code> environment variable to a valid testspace config file (mostly use for
+testing)</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab client config url &quot;72e7a247e02b9d4d521916fe81a708cfa824dcd3@lbrack.testspace.com/samples/main&quot;</span>
+<span class="go"> domain: https://********@lbrack.testspace.com</span>
+<span class="go"> project: samples</span>
+<span class="go"> space: main</span>
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab client config</span>
+<span class="go"> domain: https://********@lbrack.testspace.com</span>
+<span class="go"> project: samples</span>
+<span class="go"> space: main</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="push">
+<h4>Push<a class="headerlink" href="#push" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab client push sample.xml</span>
+<span class="go">Aggregating content...</span>
+<span class="go">Uploading to Testspace (https://lbrack.testspace.com/projects/samples/spaces/main)...</span>
+<span class="go">  https://lbrack.testspace.com/spaces/133471/result_sets/123753</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get">
+<h4>Get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h4>
+<p>This command performs get request that are delegated to the
+<a class="reference external" href="https://github.com/s2technologies/testspace-python">testspace-python</a> library.</p>
+<p>for instance, to access the following API</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">testspace</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You would call</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result test_data project=samples space=main</span>
+<span class="go">URL=https://lbrack.testspace.com</span>
+<span class="go">ID     | NAME      | COMPLETE | BUILD_STATUS | SUITE_COUNTS | CASE_COUNTS  | ANNOTATION_COUNTS | FAILURE_COUNTS     | DURATION | SESSION_DURATION |</span>
+<span class="go">123753 | test_data | True     | None         | [6, 1, 0]    | [9, 1, 2, 0] | [1, 0, 1]         | [1, 0, 0, 0, 0, 1] | 0.0      | 0.0              |</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Where:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">test_data</span></code> is the name of the result (positional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">project</span></code> is optional (because of the <em>=None</em>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">space</span></code> is also optional</p></li>
+</ul>
+</div></blockquote>
+<p>Note that the following syntax produces the same outcome</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result result=test_data project=samples space=main</span>
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result test_data samples main</span>
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result test_data space=main #use the default project</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>It is possible to change the output from <code class="docutils literal notranslate"><span class="pre">tabular</span></code> to <code class="docutils literal notranslate"><span class="pre">yaml</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code> using the
+<code class="docutils literal notranslate"><span class="pre">--format</span></code> option. It is also possible to store the JSON output to a file.</p>
+<p>To obtain a complete report for a given result, you can use the built-in method</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result_details test_data -o dump.json -f json</span>
+<span class="go">URL=https://lbrack.testspace.com</span>
+<span class="go">{&#39;annotation_counts&#39;: [1, 0, 1],</span>
+<span class="go"> &#39;build_status&#39;: None,</span>
+<span class="go"> ...</span>
+<span class="go"> &#39;updated_at&#39;: &#39;2021-02-04T01:22:36.000+01:00&#39;,</span>
+<span class="go"> &#39;user_id&#39;: 44}</span>
+<span class="go">saving response as json to /home/laurent/github/laurent/testspace-colab/dump.json Done!</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This will not only fetch the result meta-data but also the complete report
+consisting of suite and test case details and annotation.</p>
+<div class="section" id="json-path">
+<h5>json path<a class="headerlink" href="#json-path" title="Permalink to this headline">¶</a></h5>
+<p>By default the output’s structure come from the testspace server. However it is often useful to reformat
+the information or extract element of interest. This can be done from the command line using
+<a class="reference external" href="https://goessner.net/articles/JsonPath/">jsonpath</a> syntax. For example, to get all the test cases</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result_details test_data -f json -j &#39;$..[cases][:]&#39;</span>
+<span class="go">using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/test</span>
+<span class="go">URL=https://lbrack.testspace.com</span>
+<span class="go">[{&#39;annotations&#39;: [],</span>
+<span class="go">  &#39;duration&#39;: &#39;0.000000&#39;,</span>
+<span class="go">  &#39;name&#39;: &#39;test_case_1&#39;,</span>
+<span class="go">  &#39;start_time&#39;: &#39;2021-02-03T09:51:22.005395&#39;,</span>
+<span class="go">  &#39;status&#39;: &#39;passed&#39;},</span>
+<span class="go"> ...</span>
+<span class="go"> {&#39;annotations&#39;: [{&#39;children&#39;: [],</span>
+<span class="go">                   &#39;description&#39;: &#39;Assertion: AssertionError: Failure!\n&#39;</span>
+<span class="go">                                  &#39;assert 0&#39;,</span>
+<span class="go">                   &#39;level&#39;: &#39;error&#39;,</span>
+<span class="go">                   &#39;mime_type&#39;: &#39;text/plain&#39;,</span>
+<span class="go">                   &#39;name&#39;: &#39;01. failure&#39;}],</span>
+<span class="go">  &#39;duration&#39;: &#39;0.000000&#39;,</span>
+<span class="go">  &#39;name&#39;: &#39;test_fail&#39;,</span>
+<span class="go">  &#39;start_time&#39;: &#39;2021-02-03T09:51:22.005395&#39;,</span>
+<span class="go">  &#39;status&#39;: &#39;failed&#39;},</span>
+<span class="go">  ...</span>
+<span class="go">  {&#39;annotations&#39;: [],</span>
+<span class="go">  &#39;duration&#39;: &#39;0.000000&#39;,</span>
+<span class="go">  &#39;name&#39;: &#39;test_case_9&#39;,</span>
+<span class="go">  &#39;start_time&#39;: &#39;2021-02-03T09:51:22.005395&#39;,</span>
+<span class="go">  &#39;status&#39;: &#39;passed&#39;}]</span>
+</pre></div>
+</div>
+<p>for all the <strong>suites</strong></p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab get result_details test_data -f json -j &#39;$..[suites][:]&#39;</span>
+<span class="go">using TS_COLAB_CONFIG_DIR=/home/laurent/github/laurent/testspace-colab/tests/.config/test</span>
+<span class="go">URL=https://lbrack.testspace.com</span>
+<span class="go">[{&#39;cached&#39;: &#39;&#39;,</span>
+<span class="go">  &#39;cases&#39;: [{&#39;annotations&#39;: [],</span>
+<span class="go">             &#39;duration&#39;: &#39;0.000000&#39;,</span>
+<span class="go">             &#39;name&#39;: &#39;test_case_1&#39;,</span>
+<span class="go">             &#39;start_time&#39;: &#39;2021-02-03T09:51:22.005395&#39;,</span>
+<span class="go">             &#39;status&#39;: &#39;passed&#39;}],</span>
+<span class="go">  &#39;duration&#39;: &#39;0.000000&#39;,</span>
+<span class="go">  &#39;errored&#39;: &#39;0&#39;,</span>
+<span class="go">  &#39;failed&#39;: &#39;0&#39;,</span>
+<span class="go">  &#39;in_progress&#39;: &#39;0&#39;,</span>
+<span class="go">  &#39;name&#39;: &#39;tmp.test_suite_1&#39;,</span>
+<span class="go">  &#39;not_applicable&#39;: &#39;0&#39;,</span>
+<span class="go">  &#39;passed&#39;: &#39;1&#39;,</span>
+<span class="go">  &#39;runner&#39;: &#39;periscopai&#39;,</span>
+<span class="go">  &#39;start_time&#39;: &#39;2021-02-03T09:51:22.005395&#39;,</span>
+<span class="go">  &#39;type&#39;: &#39;auto&#39;,</span>
+<span class="go">  &#39;unknown&#39;: &#39;0&#39;},</span>
+<span class="go">  ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="crawl">
+<h4>Crawl<a class="headerlink" href="#crawl" title="Permalink to this headline">¶</a></h4>
+<p>The crawl command allow you to crawl an entire organization, all the spaces in a given project,
+all the results in a given space, or a single result.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒ ts-colab crawl --help</span>
+<span class="go">Usage: ts-colab crawl [OPTIONS]</span>
+
+<span class="go">  Crawls an organization for specific project and spaces.</span>
+
+<span class="go">  If an output-dir is specified, dumps results into files (with result id)</span>
+<span class="go">  using a directory structure composed of &lt;netloc&gt;/&lt;project&gt;/&lt;space&gt;/...</span>
+
+<span class="go">  Example:</span>
+
+<span class="go">      /home/laurent/testspace-colab</span>
+<span class="go">      └── lbrack.testspace.com</span>
+<span class="go">          ├── lbrack:testspace-colab</span>
+<span class="go">          │   ├── elk</span>
+<span class="go">          │   │   ├── build.10@PR-3.json</span>
+<span class="go">          │   │   ├── build.11@PR-3.json</span>
+<span class="go">          │   │   └── build.12@PR-3.json</span>
+<span class="go">          │   ├── json-data-access</span>
+<span class="go">          │   │   ├── build.7@PR-2.json</span>
+<span class="go">          │   └── main</span>
+<span class="go">          │       ├── build.13.json</span>
+<span class="go">          │       └── build.9.json</span>
+<span class="go">          ├── lbrack:testspace.getting-started</span>
+<span class="go">          │   └── main</span>
+<span class="go">          │       ├── Sequence_4.json</span>
+<span class="go">          │       ├── Sequence_5.json</span>
+<span class="go">          └── samples</span>
+<span class="go">              └── main</span>
+<span class="go">                  └── test_data.json</span>
+
+<span class="go">Options:</span>
+<span class="go">  -o, --output-dir PATH  output directory</span>
+<span class="go">  -p, --project TEXT     Project to scan (name or ID)</span>
+<span class="go">  -s, --space TEXT       Space to scan (name or ID)</span>
+<span class="go">  -r, --result TEXT      result name or ID</span>
+<span class="go">  --help                 Show this message and exit.</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Unless you specify an output directory, <code class="docutils literal notranslate"><span class="pre">--output-dir</span></code>, the downloaded results are discarded.
+When the output directory is specified, each result is serialized as json to the file system
+following the structure illustrated above.</p>
+<p>Subsequent runs of the command will not re-download the details if they are already present on disk</p>
+</div>
+<div class="section" id="elk">
+<span id="elk-cli"></span><h4>ELK<a class="headerlink" href="#elk" title="Permalink to this headline">¶</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CodeSpaces Users</p>
+<p>run the following command when running Codespaces for the first time. This will ensure
+enough virtual memory for the ELK stack to start</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo sysctl -w vm.max_map_count<span class="o">=</span><span class="m">262144</span>
+</pre></div>
+</div>
+</div>
+<p>For controlling ELK programmatically, check <a class="reference internal" href="#elk-api"><span class="std std-ref">ELK API</span></a></p>
+<p>The <a class="reference external" href="https://elk-docker.readthedocs.io">Elastic Stack</a> used for testing can be controlled
+from the command line using the <code class="docutils literal notranslate"><span class="pre">ts-colab</span> <span class="pre">elk</span></code> sub commands as illustrated below</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab elk start</span>
+<span class="go">starting ... be patient</span>
+<span class="go">ELK Container started ID=56b66568e8a092ae794213cfde010031a4d4f5c57bb71a6736941038556bbef7</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Once started, you can view the container</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  docker ps</span>
+<span class="go">CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS              PORTS                                                                                        NAMES</span>
+<span class="go">56b66568e8a0   sebp/elk:7.10.0   &quot;/usr/local/bin/star…&quot;   50 minutes ago   Up About a minute   0.0.0.0:5044-&gt;5044/tcp, 0.0.0.0:5601-&gt;5601/tcp, 9300/tcp, 0.0.0.0:9200-&gt;9200/tcp, 9600/tcp   elk-testspace-colab</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>When running you can check the status</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab elk info</span>
+<span class="go">getting elasticsearch info</span>
+<span class="go">...</span>
+<span class="go">version:</span>
+<span class="go">  build_date: &#39;2020-11-09T21:30:33.964949Z&#39;</span>
+<span class="go">  build_flavor: default</span>
+<span class="go">  build_hash: 51e9d6f22758d0374a0f3f5c6e8f3a7997850f96</span>
+<span class="go">  build_snapshot: false</span>
+<span class="go">  build_type: tar</span>
+<span class="go">  lucene_version: 8.7.0</span>
+<span class="go">  minimum_index_compatibility_version: 6.0.0-beta1</span>
+<span class="go">  minimum_wire_compatibility_version: 6.8.0</span>
+<span class="go">  number: 7.10.0</span>
+<span class="go">Done</span>
+
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab elk health</span>
+<span class="go">getting cluster health</span>
+<span class="go">active_primary_shards: 6</span>
+<span class="go">relocating_shards: 0</span>
+<span class="go">...</span>
+<span class="go">status: green</span>
+<span class="go">task_max_waiting_in_queue_millis: 0</span>
+<span class="go">timed_out: false</span>
+<span class="go">unassigned_shards: 0</span>
+
+<span class="go">Done</span>
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab elk stop</span>
+<span class="go">stopping ... be patient</span>
+<span class="go">ELK stopped</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Note that when stopped, the container is not being remove. This has to be done
+manually.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  docker ps -a</span>
+<span class="go">CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS                     PORTS     NAMES</span>
+<span class="go">56b66568e8a0   sebp/elk:7.10.0   &quot;/usr/local/bin/star…&quot;   53 minutes ago   Exited (0) 4 seconds ago             elk-testspace-colab</span>
+
+<span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  docker rm elk-testspace-colab</span>
+<span class="go">elk-testspace-colab</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>To connect to the local Kibana instance, you can run</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(testspace)</span><span class="go">⚡ ⇒  ts-colab elk kibana</span>
+<span class="go">connecting to http://localhost:5601</span>
+<span class="go">Done</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="_images/kibana.png" src="_images/kibana.png" />
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CodeSpaces User</p>
+<p>You can click on the link and follow the link to access the Kibana Console.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<p><strong>Tip</strong></p>
+<blockquote>
+<div><p>Similar to the command line application, you can use preset configuration in the code
+(<a class="reference external" href="https://lbrack.testspace.com/">test</a> or <a class="reference external" href="https://samples.testspace.com/">sample</a>).
+The following must be called <strong>before</strong> instanciating the
+<a class="reference internal" href="autogen/testspace_colab.html#testspace_colab.lib.API" title="testspace_colab.lib.API"><code class="xref py py-class docutils literal notranslate"><span class="pre">API</span></code></a> class</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">testspace_colab.utils</span> <span class="k">as</span> <span class="nn">colab_utils</span>
+<span class="n">colab_utils</span><span class="o">.</span><span class="n">use_test_config</span><span class="p">()</span> <span class="c1"># For test configuration</span>
+<span class="n">colab_utils</span><span class="o">.</span><span class="n">use_samples_config</span><span class="p">()</span> <span class="c1"># for test space sample configuration</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>There are several sub-modules under <a class="reference internal" href="autogen/testspace_colab.html#module-testspace_colab" title="testspace_colab"><code class="xref py py-mod docutils literal notranslate"><span class="pre">testspace_colab</span></code></a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="autogen/testspace_colab.html#module-testspace_colab.lib" title="testspace_colab.lib"><code class="xref py py-mod docutils literal notranslate"><span class="pre">testspace_colab.lib</span></code></a> which provides the
+<a class="reference internal" href="autogen/testspace_colab.html#testspace_colab.lib.API" title="testspace_colab.lib.API"><code class="xref py py-class docutils literal notranslate"><span class="pre">API</span></code></a> class to interface
+with testspace
+see the <a class="reference internal" href="jupyter/examples/index.html#nb-examples"><span class="std std-ref">API Usage Notebook for examples</span></a></p></li>
+<li><p><a class="reference internal" href="autogen/testspace_colab.html#module-testspace_colab.trove" title="testspace_colab.trove"><code class="xref py py-mod docutils literal notranslate"><span class="pre">testspace_colab.trove</span></code></a> which provides the
+<a class="reference internal" href="autogen/testspace_colab.html#testspace_colab.trove.Trove" title="testspace_colab.trove.Trove"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trove</span></code></a> class to interface
+with testspace
+see the <a class="reference internal" href="jupyter/examples/index.html#nb-examples"><span class="std std-ref">Trove Example</span></a></p></li>
+<li><p><a class="reference internal" href="autogen/testspace_colab.client.html#module-testspace_colab.client" title="testspace_colab.client"><code class="xref py py-mod docutils literal notranslate"><span class="pre">testspace_colab.client</span></code></a> providing the
+<a class="reference internal" href="autogen/testspace_colab.client.html#testspace_colab.client.Binary" title="testspace_colab.client.Binary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Binary</span></code></a> to invoke
+the native client.</p></li>
+<li><p><a class="reference internal" href="autogen/testspace_colab.html#module-testspace_colab.cli" title="testspace_colab.cli"><code class="xref py py-mod docutils literal notranslate"><span class="pre">testspace_colab.cli</span></code></a> providing the aformentioned CLI
+implementation</p></li>
+<li><p><a class="reference internal" href="autogen/testspace_colab.html#module-testspace_colab.elk" title="testspace_colab.elk"><code class="xref py py-mod docutils literal notranslate"><span class="pre">testspace_colab.elk</span></code></a> which provides the
+<a class="reference internal" href="autogen/testspace_colab.html#testspace_colab.elk.ELK" title="testspace_colab.elk.ELK"><code class="xref py py-class docutils literal notranslate"><span class="pre">ELK</span></code></a> class to control
+and access an ELK stack running on Docker.</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="elk-api">
+<span id="id2"></span><h3>ELK<a class="headerlink" href="#elk-api" title="Permalink to this headline">¶</a></h3>
+<p>For controlling ELK from the command line, check the <a class="reference internal" href="#elk-cli"><span class="std std-ref">elk cli</span></a></p>
+<p>This project contains a facility to start ELK a.k.a. as ElasticSearch, Logstash, Kibana
+locally for development purposes via the <a class="reference internal" href="autogen/testspace_colab.html#testspace_colab.elk.ELK" title="testspace_colab.elk.ELK"><code class="xref py py-class docutils literal notranslate"><span class="pre">testspace_colab.elk.ELK</span></code></a> class.</p>
+<p>The usage is pretty simple and is illustrated below</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">from testspace_colab.elk import ELK</span>
+<span class="go">elk = ELK()</span>
+<span class="go">elk.available</span>
+<span class="go">Out[4]: False</span>
+<span class="go">elk.start()</span>
+<span class="go">Out[5]: &lt;Container: 41061dd5a2&gt;</span>
+<span class="go">elk.available</span>
+<span class="go">Out[6]: True</span>
+<span class="go">elk.elastic_search.info()</span>
+<span class="go">Out[7]:</span>
+<span class="go">{&#39;name&#39;: &#39;elk&#39;,</span>
+<span class="go"> &#39;cluster_name&#39;: &#39;elasticsearch&#39;,</span>
+<span class="go"> &#39;cluster_uuid&#39;: &#39;ckRg9onsSqyU13AdGPkOAg&#39;,</span>
+<span class="go"> &#39;version&#39;: {&#39;number&#39;: &#39;7.10.0&#39;,</span>
+<span class="go">  &#39;build_flavor&#39;: &#39;default&#39;,</span>
+<span class="go">  &#39;build_type&#39;: &#39;tar&#39;,</span>
+<span class="go">  &#39;build_hash&#39;: &#39;51e9d6f22758d0374a0f3f5c6e8f3a7997850f96&#39;,</span>
+<span class="go">  &#39;build_date&#39;: &#39;2020-11-09T21:30:33.964949Z&#39;,</span>
+<span class="go">  &#39;build_snapshot&#39;: False,</span>
+<span class="go">  &#39;lucene_version&#39;: &#39;8.7.0&#39;,</span>
+<span class="go">  &#39;minimum_wire_compatibility_version&#39;: &#39;6.8.0&#39;,</span>
+<span class="go">  &#39;minimum_index_compatibility_version&#39;: &#39;6.0.0-beta1&#39;},</span>
+<span class="go"> &#39;tagline&#39;: &#39;You Know, for Search&#39;}</span>
+<span class="go">elk.stop()</span>
+<span class="go">Out[8]: &lt;Container: 41061dd5a2&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="jupyter/index.html" class="btn btn-neutral float-right" title="Jupyter Notebooks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="readme.html" class="btn btn-neutral float-left" title="testspace-colab" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Laurent Brack.
+      <span class="lastupdated">
+        Last updated on 2021-02-24T02:02 UTC.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

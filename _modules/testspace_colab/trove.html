@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>testspace_colab.trove &mdash; testspace-colab</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/icon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">testspace-colab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jupyter/index.html">Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autogen/testspace_colab.html">testspace_colab package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">testspace-colab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>testspace_colab.trove</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for testspace_colab.trove</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Test Result Trove</span>
+
+<span class="sd">    This module helps storing test results into a trove, whether</span>
+<span class="sd">    it is the file system or ELK (maybe?)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">testspace_colab.ts_log</span>
+
+<span class="n">DEFAULT_LOCATION</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;testspace-colab&quot;</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">testspace_colab</span><span class="o">.</span><span class="n">ts_log</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;trove&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Trove"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.trove.Trove">[docs]</a><span class="k">class</span> <span class="nc">Trove</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A utility to iterate over the results found</span>
+<span class="sd">    in the trove</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trove_path</span><span class="o">=</span><span class="n">DEFAULT_LOCATION</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">trove_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_org</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">org</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets or get the default organization (string)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_org</span>
+
+    <span class="nd">@org</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">org</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;setting organization to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_org</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_org</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="Trove.organizations"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.trove.Trove.organizations">[docs]</a>    <span class="k">def</span> <span class="nf">organizations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a generator for iterating over the organizations</span>
+
+<span class="sd">        :return: directory name as a string or None if no dir is found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trove dir </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="nb">dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="nb">dir</span><span class="o">.</span><span class="n">name</span></div>
+
+<div class="viewcode-block" id="Trove.load"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.trove.Trove.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">org</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;trove dir </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">orgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">org</span><span class="p">]</span> <span class="k">if</span> <span class="n">org</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">organizations</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">org_name</span> <span class="ow">in</span> <span class="n">orgs</span><span class="p">:</span>
+            <span class="n">load_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">/</span> <span class="n">org_name</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">load_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">load_path</span><span class="si">}</span><span class="s2"> is not a directory&quot;</span><span class="p">)</span>
+            <span class="n">projects</span> <span class="o">=</span> <span class="p">[</span><span class="n">project</span><span class="p">]</span> <span class="k">if</span> <span class="n">project</span> <span class="k">else</span> <span class="n">load_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">project_name</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+                <span class="n">load_path</span> <span class="o">=</span> <span class="n">load_path</span> <span class="o">/</span> <span class="n">project_name</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">load_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">load_path</span><span class="si">}</span><span class="s2"> is not a directory&quot;</span><span class="p">)</span>
+                <span class="n">spaces</span> <span class="o">=</span> <span class="p">[</span><span class="n">space</span><span class="p">]</span> <span class="k">if</span> <span class="n">space</span> <span class="k">else</span> <span class="n">load_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">space_name</span> <span class="ow">in</span> <span class="n">spaces</span><span class="p">:</span>
+                    <span class="n">load_path</span> <span class="o">=</span> <span class="n">load_path</span> <span class="o">/</span> <span class="n">space_name</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">load_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">load_path</span><span class="si">}</span><span class="s2"> is not a directory&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">load_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2"> result is not a file&quot;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_hanfle</span><span class="p">:</span>
+                                    <span class="k">yield</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_hanfle</span><span class="p">)</span>
+                            <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">json_error</span><span class="p">:</span>
+                                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                                    <span class="sa">f</span><span class="s2">&quot;Failed to load </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2"> - error </span><span class="si">{</span><span class="n">json_error</span><span class="si">}</span><span class="s2">&quot;</span>
+                                <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Laurent Brack.
+      <span class="lastupdated">
+        Last updated on 2021-02-24T02:02 UTC.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
