@@ -6,8 +6,8 @@ testspace-colab
 .. image:: https://img.shields.io/pypi/v/testspace_colab.svg
         :target: https://pypi.python.org/pypi/testspace_colab
 
-.. image:: https://readthedocs.org/projects/testspace-colab/badge/?version=latest
-        :target: https://testspace-colab.readthedocs.io/en/latest/?badge=latest
+.. image:: https://img.shields.io/badge/Documentation-On GHPages-<COLOR>.svg
+        :target: https://lbrack.github.io/testspace-colab
         :alt: Documentation Status
 
 A collaborative environment to experiment with data extracted from testspace.
