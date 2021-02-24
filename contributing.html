@@ -43,7 +43,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Credits" href="authors.html" />
+    <link rel="next" title="Honeydo!" href="todos.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
@@ -97,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">testspace-colab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter/index.html">Jupyter Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autogen/testspace_colab.html">testspace_colab package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started!</a></li>
@@ -104,7 +105,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#using-codespaces">Using CodeSpaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pull-request-guidelines">Pull Request Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tips">Tips</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#deploying">Deploying</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying">Deploying</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#publishing-documentation-to-github-pages">Publishing Documentation To GitHub Pages</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#types-of-contributions">Types of Contributions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#report-bugs">Report Bugs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fix-bugs">Fix Bugs</a></li>
@@ -115,9 +119,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">Honeydo!</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autogen/testspace_colab.html">testspace_colab package</a></li>
 </ul>
 
             
@@ -378,15 +382,24 @@ workflow associated to PR will check all that.</p></li>
 </div>
 <div class="section" id="deploying">
 <h2>Deploying<a class="headerlink" href="#deploying" title="Permalink to this headline">¶</a></h2>
-<p>A reminder for the maintainers on how to deploy.
-Make sure all your changes are committed (including an entry in CHANGELOG.rst).
-Then run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ bump2version patch <span class="c1"># possible: major / minor / patch</span>
-$ git push
-$ git push --tags
-</pre></div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Deployment should eventually be documented.</p>
 </div>
-<p>Travis will then deploy to PyPI if tests pass.</p>
+<div class="section" id="publishing-documentation-to-github-pages">
+<h3>Publishing Documentation To GitHub Pages<a class="headerlink" href="#publishing-documentation-to-github-pages" title="Permalink to this headline">¶</a></h3>
+<p>The GitHub Action Workflow to Publish the documentation is under
+<a class="reference external" href="https://github.com/lbrack/testspace-colab/blob/main/.github/workflows/publish_docs.yml">.github/workflows/publish_docs.yml</a></p>
+<p>Once the documentation has been pushed to the <a class="reference external" href="https://github.com/lbrack/testspace-colab/tree/gh-pages">gh-pages</a>
+branch, all you need to do is to enable github pages under
+<a class="reference external" href="https://github.com/lbrack/testspace-colab/settings">Settings</a> -&gt; <strong>GitHub Pages</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Just recently, GitHub has added the ability to limit access to the
+documentation published on
+<a class="reference external" href="https://github.blog/changelog/2021-01-21-access-control-for-github-pages/">GitHub Pahes</a></p>
+</div>
+</div>
 </div>
 <div class="section" id="types-of-contributions">
 <h2>Types of Contributions<a class="headerlink" href="#types-of-contributions" title="Permalink to this headline">¶</a></h2>
@@ -436,7 +449,7 @@ are welcome :)</p></li>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="authors.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="todos.html" class="btn btn-neutral float-right" title="Honeydo!" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
@@ -446,7 +459,7 @@ are welcome :)</p></li>
     <p>
         &#169; Copyright 2021, Laurent Brack.
       <span class="lastupdated">
-        Last updated on 2021-02-24T02:29 UTC.
+        Last updated on 2021-02-24T02:59 UTC.
       </span>
 
     </p>

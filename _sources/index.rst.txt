@@ -8,11 +8,13 @@ Welcome to testspace-colab's documentation!
    readme
    usage
    jupyter/index
+   autogen/testspace_colab
    installation
    contributing
+   todos
    authors
    history
-   autogen/testspace_colab
+
 
 Indices and tables
 ==================
