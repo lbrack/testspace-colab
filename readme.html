@@ -35,6 +35,8 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -171,7 +173,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="testspace-colab">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="testspace-colab">
 <h1>testspace-colab<a class="headerlink" href="#testspace-colab" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/testspace_colab"><img alt="https://img.shields.io/pypi/v/testspace_colab.svg" src="https://img.shields.io/pypi/v/testspace_colab.svg" /></a>
 <a class="reference external image-reference" href="https://testspace-colab.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/testspace-colab/badge/?version=latest" /></a>
@@ -181,14 +207,14 @@ persist it, and analyze it. The intent is to provide a prototyping environment
 for Testspace’s Insight 2.0.</p>
 <ul class="simple">
 <li><p>Free software: MIT license</p></li>
-<li><p>Documentation: <a class="reference external" href="https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/index.html">documentation</a></p></li>
+<li><p>Documentation: <a class="reference external" href="https://lbrack.github.io/testspace-colab/">documentation</a></p></li>
 </ul>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Contains testspace client binaries (2.5.4061)</p></li>
 <li><p>Provides a CLI (ts-colab) as well as an API</p></li>
-<li><p>See the <a class="reference external" href="https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/usage.html">user manual</a> to get started</p></li>
+<li><p>See the <a class="reference external" href="https://lbrack.github.io/testspace-colab/usage.html">user manual</a> to get started</p></li>
 <li><p>Provides facility to start an ELK (ElasticSearch/Logstach/Kibana)
 via the <a class="reference external" href="https://hub.docker.com/r/sebp/elk">sebp/elk docker image</a>. All that is needed is to have <a class="reference external" href="https://docker-py.readthedocs.io/en/stable/">docker</a> installed
 on your machine. Refer to the documentation for additional details.</p></li>
@@ -197,7 +223,7 @@ on your machine. Refer to the documentation for additional details.</p></li>
 <div class="section" id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
 <p>Check the
-<a class="reference external" href="https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/contributing.html">contributing guidelines</a>
+<a class="reference external" href="https://lbrack.github.io/testspace-colab/contributing.html">contributing guidelines</a>
 to learn how to clone, install, develop and release this project.</p>
 </div>
 </div>
@@ -218,7 +244,7 @@ to learn how to clone, install, develop and release this project.</p>
     <p>
         &#169; Copyright 2021, Laurent Brack.
       <span class="lastupdated">
-        Last updated on 2021-02-24T02:02 UTC.
+        Last updated on 2021-02-24T02:29 UTC.
       </span>
 
     </p>

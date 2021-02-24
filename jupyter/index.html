@@ -35,6 +35,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -171,7 +173,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="jupyter-notebooks">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="jupyter-notebooks">
 <h1>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h1>
 <p>Below, you will find the documentation for any available notebooks.
 To run Jupyter Lab, you have several options:</p>
@@ -195,7 +221,10 @@ of the notebook), and select the “testspace-colab” kernel</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../autogen/notebook/examples/API.html">API Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autogen/notebook/examples/xarray.html">XArray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autogen/notebook/examples/trove-example.html">Trove Example</a></li>
 </ul>
 </li>
 </ul>
@@ -234,7 +263,7 @@ is done automatically by make install</p>
     <p>
         &#169; Copyright 2021, Laurent Brack.
       <span class="lastupdated">
-        Last updated on 2021-02-24T02:02 UTC.
+        Last updated on 2021-02-24T02:29 UTC.
       </span>
 
     </p>
