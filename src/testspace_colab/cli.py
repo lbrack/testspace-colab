@@ -20,8 +20,10 @@ import testspace_colab.elk as elk_module
 
 logger = log_module.get_logger("cli")
 
-VERSION = f"{lib_module.API.get_version()} client {client_module.Binary().version} " \
-          f"Python {sys.version_info.major}.{sys.version_info.minor} {platform.platform()}"
+VERSION = (
+    f"{lib_module.API.get_version()} client {client_module.Binary().version} "
+    f"Python {sys.version_info.major}.{sys.version_info.minor} {platform.platform()}"
+)
 
 IGNORE_COLUMNS = [
     "created_at",

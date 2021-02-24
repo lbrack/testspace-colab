@@ -33,11 +33,11 @@ Development
 -----------
 
 Check the
-`contributing guidelines <https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/contributing.html>`_
+`contributing guidelines <https://lbrack.github.io/testspace-colab/contributing.html>`_
 to learn how to clone, install, develop and release this project.
 
-.. _`documentation` : https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/index.html
+.. _`documentation` : https://lbrack.github.io/testspace-colab/
 .. _`readthedocs` : https://testspace-colab.readthedocs.io
-.. _`user manual` : https://m.devpi.net/testspace/dev/testspace-colab/latest/+d/usage.html
+.. _`user manual` : https://lbrack.github.io/testspace-colab/usage.html
 .. _`docker` : https://docker-py.readthedocs.io/en/stable/
 .. _`sebp/elk docker image` : https://hub.docker.com/r/sebp/elk
