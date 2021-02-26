@@ -1,2 +1,2 @@
 
-.. _ghp-testspace-colab: https://lbrack.github.io/testspace-colab/
+.. _ghp-testspace-colab: https://testspace-com.github.io/testspace-colab/
