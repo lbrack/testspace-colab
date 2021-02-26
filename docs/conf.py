@@ -25,7 +25,7 @@ def setup(app):
 # ------------------------------------------------------------------------------
 
 project = u"testspace-colab"
-copyright = u"2021, Laurent Brack"
+copyright = u"2021, S2 Technologies, Inc"
 author = "Laurent Brack"
 
 # ------------------------------------------------------------------------------
