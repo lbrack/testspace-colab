@@ -7,7 +7,7 @@ testspace-colab
         :target: https://pypi.python.org/pypi/testspace_colab
 
 .. image:: https://img.shields.io/badge/Documentation-On GHPages-<COLOR>.svg
-        :target: https://lbrack.github.io/testspace-colab
+        :target: https://testspace-com.github.io/testspace-colab
         :alt: Documentation Status
 
 A collaborative environment to experiment with data extracted from testspace.
@@ -16,7 +16,7 @@ persist it, and analyze it. The intent is to provide a prototyping environment
 for Testspace's Insight 2.0.
 
 * Free software: MIT license
-* GitHub: https://github.com/lbrack/testspace-colab
+* GitHub: https://github.com/testspace-com/testspace-colab
 
 
 Features
@@ -33,10 +33,10 @@ Development
 -----------
 
 Check the
-`contributing guidelines <https://lbrack.github.io/testspace-colab/contributing.html>`_
+`contributing guidelines <https://testspace-com.github.io/testspace-colab/contributing.html>`_
 to learn how to clone, install, develop and release this project.
 
 .. _`readthedocs` : https://testspace-colab.readthedocs.io
-.. _`user manual` : https://lbrack.github.io/testspace-colab/usage.html
+.. _`user manual` : https://testspace-com.github.io/testspace-colab/usage.html
 .. _`docker` : https://docker-py.readthedocs.io/en/stable/
 .. _`sebp/elk docker image` : https://hub.docker.com/r/sebp/elk

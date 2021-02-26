@@ -44,7 +44,7 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/lbrack/testspace_colab
+    $ git clone git://github.com/testspace-com/testspace-colab
 
 Once you have a copy of the source, you can install it with:
 
@@ -54,4 +54,4 @@ Once you have a copy of the source, you can install it with:
     $ pip install -e .
 
 
-.. _Github repo: https://github.com/lbrack/testspace_colab
+.. _Github repo: https://github.com/testspace-com/testspace-colab

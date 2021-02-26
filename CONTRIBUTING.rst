@@ -16,7 +16,7 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
 
     .. code-block:: console
 
-        $ git clone git@github.com:lbrack/testspace-colab.git
+        $ git clone git@github.com:testspace-com/testspace-colab.git
         $ git checkout -b my_feature_branch
 
 2. Install your local copy into a virtualenv. Note that the install
@@ -84,7 +84,7 @@ Ready to contribute? Here's how to set up `testspace_colab` for local developmen
 
         (testspace)⚡ ⇒  gh pr create
 
-        Creating pull request for lbrack:json-data-access into main in lbrack/testspace-colab
+        Creating pull request for testspace-com:json-data-access into main in testspace-com/testspace-colab
 
         ? Title my awesome work
         ? Body <Received>
@@ -188,11 +188,11 @@ Publishing Documentation To GitHub Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The GitHub Action Workflow to Publish the documentation is under
-`.github/workflows/publish_docs.yml <https://github.com/lbrack/testspace-colab/blob/main/.github/workflows/publish_docs.yml>`_
+`.github/workflows/publish_docs.yml <https://github.com/testspace-com/testspace-colab/blob/main/.github/workflows/publish_docs.yml>`_
 
-Once the documentation has been pushed to the `gh-pages <https://github.com/lbrack/testspace-colab/tree/gh-pages>`_
+Once the documentation has been pushed to the `gh-pages <https://github.com/testspace-com/testspace-colab/tree/gh-pages>`_
 branch, all you need to do is to enable github pages under
-`Settings <https://github.com/lbrack/testspace-colab/settings>`_ -> **GitHub Pages**
+`Settings <https://github.com/testspace-com/testspace-colab/settings>`_ -> **GitHub Pages**
 
 
 .. note::
@@ -209,7 +209,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/lbrack/testspace_colab/issues.
+Report bugs at https://github.com/testspace-com/testspace-colab/issues.
 
 If you are reporting a bug, please include:
 
@@ -239,7 +239,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/lbrack/testspace_colab/issues.
+The best way to send feedback is to file an issue at https://github.com/testspace-com/testspace-colab/issues.
 
 If you are proposing a feature:
 
