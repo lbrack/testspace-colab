@@ -2,6 +2,8 @@
 
 """
 import os
+import gzip
+import base64
 import pathlib
 import click
 import testspace_colab.ts_log
@@ -72,9 +74,10 @@ def json_to_table(json_data, ignore_columns=None):
         click.secho(nl=True)
 
 
-def xml_to_json(xml_data, progress_callback=None):
+def xml_to_json(xml_data, path, progress_callback=None):
     """converts an object of type element
     :param xml_data:
+    :param path: Path leading to the XML content
     :param progress_callback: a progress callback function
     :return:
     """
@@ -82,29 +85,66 @@ def xml_to_json(xml_data, progress_callback=None):
     element_type = xml_data.tag.replace("test_", "")
     json_data[element_type] = xml_data.attrib
 
-    children_type = "unknown"
+    children_type = None
 
     if xml_data.tag == "test_suite":
+        path = (
+            f"{path}/{xml_data.attrib['name']}"
+            if path
+            else f"/{xml_data.attrib['name']}"
+        )
         children_type = "cases"
         if progress_callback:
             progress_callback(object_type="suites", object_count=1)
     elif xml_data.tag == "test_case":
+        path = (
+            f"{path}/{xml_data.attrib['name']}"
+            if path
+            else f"/{xml_data.attrib['name']}"
+        )
         children_type = "annotations"
         if progress_callback:
             progress_callback(object_type="cases", object_count=1)
     elif xml_data.tag == "annotation":
-        children_type = "children"
+        path = (
+            f"{path}/{xml_data.attrib['name']}"
+            if path
+            else f"/{xml_data.attrib['name']}"
+        )
+        if isinstance(xml_data.text, str):
+            try:
+                json_data[element_type]["text"] = gzip.decompress(
+                    base64.b64decode(xml_data.text)
+                ).decode("utf-8")
+            except Exception as extract_error:
+                logger.error(
+                    f"Failed to decode annotation {path} error -> {extract_error}"
+                )
+        children_type = "comments"
         if progress_callback:
             progress_callback(object_type="annotations", object_count=1)
+    elif xml_data.tag == "comment":
+        # The text contains the actual comment
+        json_data[element_type]["text"] = xml_data.text
+        json_data[element_type]["path"] = path
     else:
+        print("What is this")
         if progress_callback:
             progress_callback(object_type=xml_data.tag, object_count=1)
-    json_data[element_type][children_type] = []
 
-    for children in xml_data:
-        children_data = xml_to_json(
-            xml_data=children, progress_callback=progress_callback
-        )
-        for children_datum in children_data.values():
-            json_data[element_type][children_type].append(children_datum)
+    if children_type:
+        json_data[element_type][children_type] = []
+
+        for children in xml_data:
+            children_data = xml_to_json(
+                xml_data=children, path=path, progress_callback=progress_callback
+            )
+            for children_datum in children_data.values():
+                children_datum["path"] = path if path else "/"
+                json_data[element_type][children_type].append(children_datum)
+        if not json_data[element_type][children_type]:
+            json_data[element_type].pop(children_type)
+    else:
+        pass
+
     return json_data

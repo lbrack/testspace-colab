@@ -116,6 +116,10 @@ class API:
         :param project: The project ID or name (optional - to override ctor argument)
         :param space: The project ID or name (optional - to override ctor argument)
         :return: a JSON structure (from testspace)
+
+        **Note**: Test suites that do not contain test cases are not loaded at this time.
+                  For example, annotations related to code coverage and static analysis
+                  are ignored.
         """
         logger.debug(
             f"get_result_details result={result} project={project} space={space}"
@@ -186,7 +190,7 @@ class API:
                         try:
                             xml_tree = ElementTree.fromstring(content)
                             json_data = utils_module.xml_to_json(
-                                xml_tree, progress_callback=progress_callback
+                                xml_tree, path=path, progress_callback=progress_callback
                             )
                         except ElementTree.ParseError:
                             # For manual testing the content is in JSON format
@@ -196,8 +200,11 @@ class API:
                         if "case" in json_data:
                             container["cases"].append(json_data["case"])
                 else:
-                    if progress_callback:
-                        progress_callback(object_type="suites", object_count=1)
+                    logger.debug(
+                        f"skipping suite {path}/{container['name']} as it contains not test cases"
+                    )
+                if progress_callback:
+                    progress_callback(object_type="suites", object_count=1)
             elif container["type"].startswith("folder"):
                 # FIXME: this is wrong - we should handle the return value
                 container["folders"] = self._load_results(
