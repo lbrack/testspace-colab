@@ -171,6 +171,8 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">click</span>
 <span class="kn">import</span> <span class="nn">testspace_colab.ts_log</span>
@@ -241,9 +243,10 @@
         <span class="n">click</span><span class="o">.</span><span class="n">secho</span><span class="p">(</span><span class="n">nl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="xml_to_json"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.utils.xml_to_json">[docs]</a><span class="k">def</span> <span class="nf">xml_to_json</span><span class="p">(</span><span class="n">xml_data</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="xml_to_json"><a class="viewcode-back" href="../../autogen/testspace_colab.html#testspace_colab.utils.xml_to_json">[docs]</a><span class="k">def</span> <span class="nf">xml_to_json</span><span class="p">(</span><span class="n">xml_data</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;converts an object of type element</span>
 <span class="sd">    :param xml_data:</span>
+<span class="sd">    :param path: Path leading to the XML content</span>
 <span class="sd">    :param progress_callback: a progress callback function</span>
 <span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -251,31 +254,68 @@
     <span class="n">element_type</span> <span class="o">=</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;test_&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span>
 
-    <span class="n">children_type</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+    <span class="n">children_type</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">if</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;test_suite&quot;</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">path</span>
+            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
         <span class="n">children_type</span> <span class="o">=</span> <span class="s2">&quot;cases&quot;</span>
         <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
             <span class="n">progress_callback</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="s2">&quot;suites&quot;</span><span class="p">,</span> <span class="n">object_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;test_case&quot;</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">path</span>
+            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
         <span class="n">children_type</span> <span class="o">=</span> <span class="s2">&quot;annotations&quot;</span>
         <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
             <span class="n">progress_callback</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="s2">&quot;cases&quot;</span><span class="p">,</span> <span class="n">object_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;annotation&quot;</span><span class="p">:</span>
-        <span class="n">children_type</span> <span class="o">=</span> <span class="s2">&quot;children&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">path</span>
+            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">xml_data</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xml_data</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span>
+                    <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">xml_data</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">extract_error</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to decode annotation </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2"> error -&gt; </span><span class="si">{</span><span class="n">extract_error</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="n">children_type</span> <span class="o">=</span> <span class="s2">&quot;comments&quot;</span>
         <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
             <span class="n">progress_callback</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="s2">&quot;annotations&quot;</span><span class="p">,</span> <span class="n">object_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;comment&quot;</span><span class="p">:</span>
+        <span class="c1"># The text contains the actual comment</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xml_data</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;What is this&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
             <span class="n">progress_callback</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="n">xml_data</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">object_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="n">children_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">children</span> <span class="ow">in</span> <span class="n">xml_data</span><span class="p">:</span>
-        <span class="n">children_data</span> <span class="o">=</span> <span class="n">xml_to_json</span><span class="p">(</span>
-            <span class="n">xml_data</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="n">progress_callback</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">children_datum</span> <span class="ow">in</span> <span class="n">children_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="n">children_type</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">children_datum</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">children_type</span><span class="p">:</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="n">children_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">children</span> <span class="ow">in</span> <span class="n">xml_data</span><span class="p">:</span>
+            <span class="n">children_data</span> <span class="o">=</span> <span class="n">xml_to_json</span><span class="p">(</span>
+                <span class="n">xml_data</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="n">progress_callback</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">children_datum</span> <span class="ow">in</span> <span class="n">children_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">children_datum</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="s2">&quot;/&quot;</span>
+                <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="n">children_type</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">children_datum</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">][</span><span class="n">children_type</span><span class="p">]:</span>
+            <span class="n">json_data</span><span class="p">[</span><span class="n">element_type</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">children_type</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+
     <span class="k">return</span> <span class="n">json_data</span></div>
 </pre></div>
 
@@ -290,7 +330,7 @@
     <p>
         &#169; Copyright 2021, S2 Technologies, Inc.
       <span class="lastupdated">
-        Last updated on 2021-02-26T05:19 UTC.
+        Last updated on 2021-03-01T16:55 UTC.
       </span>
 
     </p>

@@ -406,6 +406,11 @@ loads the information.</p>
 <dd class="field-even"><p>a JSON structure (from testspace)</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt><strong>Note</strong>: Test suites that do not contain test cases are not loaded at this time.</dt><dd><p>For example, annotations related to code coverage and static analysis
+are ignored.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -558,9 +563,10 @@ the testspace-colab logger is used</p></li>
 
 <dl class="py function">
 <dt id="testspace_colab.utils.xml_to_json">
-<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">xml_to_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#xml_to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.xml_to_json" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">testspace_colab.utils.</span></code><code class="sig-name descname"><span class="pre">xml_to_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/testspace_colab/utils.html#xml_to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#testspace_colab.utils.xml_to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>converts an object of type element
 :param xml_data:
+:param path: Path leading to the XML content
 :param progress_callback: a progress callback function
 :return:</p>
 </dd></dl>
@@ -588,7 +594,7 @@ the testspace-colab logger is used</p></li>
     <p>
         &#169; Copyright 2021, S2 Technologies, Inc.
       <span class="lastupdated">
-        Last updated on 2021-02-26T05:19 UTC.
+        Last updated on 2021-03-01T16:55 UTC.
       </span>
 
     </p>

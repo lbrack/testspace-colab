@@ -285,6 +285,10 @@
 <span class="sd">        :param project: The project ID or name (optional - to override ctor argument)</span>
 <span class="sd">        :param space: The project ID or name (optional - to override ctor argument)</span>
 <span class="sd">        :return: a JSON structure (from testspace)</span>
+
+<span class="sd">        **Note**: Test suites that do not contain test cases are not loaded at this time.</span>
+<span class="sd">                  For example, annotations related to code coverage and static analysis</span>
+<span class="sd">                  are ignored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;get_result_details result=</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2"> project=</span><span class="si">{</span><span class="n">project</span><span class="si">}</span><span class="s2"> space=</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -355,7 +359,7 @@
                         <span class="k">try</span><span class="p">:</span>
                             <span class="n">xml_tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
                             <span class="n">json_data</span> <span class="o">=</span> <span class="n">utils_module</span><span class="o">.</span><span class="n">xml_to_json</span><span class="p">(</span>
-                                <span class="n">xml_tree</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="n">progress_callback</span>
+                                <span class="n">xml_tree</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">progress_callback</span><span class="o">=</span><span class="n">progress_callback</span>
                             <span class="p">)</span>
                         <span class="k">except</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">ParseError</span><span class="p">:</span>
                             <span class="c1"># For manual testing the content is in JSON format</span>
@@ -365,8 +369,11 @@
                         <span class="k">if</span> <span class="s2">&quot;case&quot;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
                             <span class="n">container</span><span class="p">[</span><span class="s2">&quot;cases&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;case&quot;</span><span class="p">])</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
-                        <span class="n">progress_callback</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="s2">&quot;suites&quot;</span><span class="p">,</span> <span class="n">object_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;skipping suite </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">container</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> as it contains not test cases&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
+                    <span class="n">progress_callback</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="s2">&quot;suites&quot;</span><span class="p">,</span> <span class="n">object_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">container</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;folder&quot;</span><span class="p">):</span>
                 <span class="c1"># FIXME: this is wrong - we should handle the return value</span>
                 <span class="n">container</span><span class="p">[</span><span class="s2">&quot;folders&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_results</span><span class="p">(</span>
@@ -397,7 +404,7 @@
     <p>
         &#169; Copyright 2021, S2 Technologies, Inc.
       <span class="lastupdated">
-        Last updated on 2021-02-26T05:19 UTC.
+        Last updated on 2021-03-01T16:55 UTC.
       </span>
 
     </p>
