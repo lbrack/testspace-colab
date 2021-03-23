@@ -1,0 +1,111 @@
+[
+    { 
+        "name": "S1",
+        "result_count": 5,
+        "results": [
+            {
+                "case_counts": [
+                    3,
+                    0,
+                    0,
+                    0
+                ],
+                "cases": [
+                    {
+                        "duration": "1.0",
+                        "name": "c1",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "failed"
+                    },
+                    {
+                        "duration": "2.0",
+                        "name": "c2",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "passed"
+                    },
+                    {
+                        "duration": "3.0",
+                        "name": "c3",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "passed"
+                    },
+                    {
+                        "duration": "3.0",
+                        "name": "c4",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "failed"
+                    }
+                ],
+                "name": "R3"
+            },
+            {
+                "case_counts": [
+                    3,
+                    0,
+                    0,
+                    0
+                ],
+                "cases": [
+                    {
+                        "duration": "1.0",
+                        "name": "c1",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "passed"
+                    },
+                    {
+                        "duration": "2.0",
+                        "name": "c2",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "passed"
+                    },
+                    {
+                        "duration": "3.0",
+                        "name": "c3",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "failed"
+                    }
+                ],
+                "name": "R2"
+            },
+            {
+                "case_counts": [
+                    3,
+                    0,
+                    0,
+                    0
+                ],
+                "cases": [
+                    {
+                        "duration": "1.0",
+                        "name": "c1",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "failed"
+                    },
+                    {
+                        "duration": "2.0",
+                        "name": "c2",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "passed"
+                    },
+                    {
+                        "duration": "3.0",
+                        "name": "c3",
+                        "path": "S1",
+                        "start_time": "2021-03-09T16:25:31+00:00",
+                        "status": "passed"
+                    }
+                ],
+                "name": "R1"
+            }
+        ]
+    }
+]
